@@ -304,6 +304,9 @@ h5 {
     right:1.2rem;
 }
 */
+/*********************/
+/* global search box */
+/*********************/
 #search-global {
     width:30em;
     display:inline-block;
@@ -314,45 +317,63 @@ h5 {
     padding:0;
     overflow:visible;
 }
-#search-global input[type="search"]:focus + input[type="button"], 
-#search-global .search-button {
-    background-color:#567;
-    color:#adf;
-}
+/* input field and submit button (incl. when focused) */
 #search-global input[type="search"], 
 #search-global .query-input, 
 #search-global input[type="button"], 
 #search-global .search-button,
 #search-global input[type="search"]:focus, 
 #search-global .query-input:focus {
-    background-color:#3E424C;
+    /*background-color:#3E424C;*/
+    background-color:#323640;
     background-color:rgba(255,255,255,0.2);
     color:#fff;
 }
+#search-global input[type="search"], 
+#search-global .query-input {
+    transition:all 0.2s ease-in-out 0s;
+}
+#search-global input[type="button"], 
+#search-global .search-button {
+    right:-1px;
+}
+/* input field when focused */
 #search-global input[type="search"]:focus, 
 #search-global .query-input:focus {
-    background-color:rgba(255,255,255,0.15);
-    box-shadow:0 0 5em rgba(255,255,255,0.5);
+    /*background-color:rgba(255,255,255,0.15);*/
+    background-color:#eee;
+    background-color:rgba(255,255,255,0.9);
+    color:#000;
+    box-shadow:0 0 1em rgba(255,255,255,0.2);
 }
+/* submit button when input field has focus */
+#search-global input[type="search"]:focus + input[type="button"], 
+#search-global .search-button {
+    background-color:#567;
+    /*color:#adf;*/
+    color:#def;
+}
+/* submit button when hovering */
 #search-global input[type="search"]:focus + input[type="button"]:hover, 
 #search-global .search-button:hover {
     background-color:#678;
 }
+/* placeholder text */
 #search-global input[type="search"]::-moz-placeholder,
 #search-global .query-input::-moz-placeholder {
-  color:#aaa;
+    color:#aaa;
 }
 #search-global input[type="search"]:-moz-placeholder,
 #search-global .query-input:-moz-placeholder {
-  color:#aaa;
+    color:#aaa;
 }
 #search-global input[type="search"]::-webkit-input-placeholder,
 #search-global .query-input::-webkit-input-placeholder {
-  color:#aaa;
+    color:#aaa;
 }
 #search-global input[type="search"]:-ms-input-placeholder,
 #search-global .query-input:-ms-input-placeholder {
-  color:#aaa;
+    color:#aaa;
 }
 
 
