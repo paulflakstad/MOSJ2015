@@ -431,7 +431,7 @@ out.println(cms.getHeaderElement(CmsAgent.PROPERTY_HEAD_SNIPPET, requestFileUri)
         <!-- main menu -->
         <div id="navwrap" class="clearfix">
             
-            <nav id="nav" role="navigation" class="nav-colorscheme-dark">
+            <nav id="nav" role="navigation" class="not-nav-colorscheme-dark">
                 <!--<a href="javascript:void(0);" id="close-nav">x</a>-->
                 <a class="nav-toggler" id="hide-nav" href="#nonav">Skjul meny</a>
                 <%                
