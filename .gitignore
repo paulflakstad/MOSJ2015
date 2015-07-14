@@ -7,6 +7,7 @@
 /src/conf/
 /web/META-INF/
 /web/WEB-INF/
+/.gitignore~
 
 # Windows image file caches
 Thumbs.db
