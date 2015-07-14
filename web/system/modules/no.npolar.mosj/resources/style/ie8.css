@@ -1,0 +1,48 @@
+/*#nav > ul > li {
+	display:block;
+	float:left;
+}*/
+html {
+	overflow:auto;
+}
+body {
+    min-width:1200px;	
+}
+
+#nav > ul > li > a {
+    display:block;
+    padding:1em;
+}
+#nav,
+.fullwidth-centered,
+.main-content > * {
+    min-width:1200px;
+    /*max-width:1200px;*/
+}
+.main-content > .descr {
+    width:1200px;
+}
+.tabbed .tab .tab-content {
+    position:static;
+}
+.article-hero h1 {
+    padding:0.2em 1em;
+    background-color:#000;
+}
+.smallscr-only {
+    display:none !important;
+}
+.bigscr-only {
+    display:block !important;
+}
+#identity img {
+    width:6.8em;
+    margin-right:1em;
+}
+.searchbox .query-input {
+    padding:1em;
+}
+#search-global .query-input
+#search-global .query-input:focus {
+    color:#000;
+}

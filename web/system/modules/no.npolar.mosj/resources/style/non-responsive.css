@@ -1,0 +1,947 @@
+@charset "utf-8";
+
+#featured-prev,
+#featured-next,
+#featured-position {
+	width:8%;
+}
+
+#mob_nav_quicklinks {
+	float:left;
+	clear:none;
+}
+.person .contact-info-text {
+	clear:none;
+}
+
+.media.pull-right,
+.media.pull-left {
+	width:45%;
+	overflow:hidden;
+	clear:right;
+}
+.media.xs {
+	width:20%;
+}
+.media.thumb {
+	width:30%;
+}
+.media.pull-right {
+	margin-left:2%;
+}
+.media.pull-left {
+	margin-right:2%;
+}
+
+.paragraph .textbox {
+    clear:right;
+    float:right;
+    margin:0 0 1em 1em;
+    width:45%;
+	display:block;
+}
+.paragraph .textbox h5,
+.paragraph .textbox .textbox-content {
+	margin:0;
+	padding:0;
+}
+.paragraph .textbox h5 {
+	padding:0 0 0.2em 0;
+	margin-bottom:0.2em;
+}
+
+/* BEGIN npweb-r.css */
+.featured-text p {
+	display:block;
+}
+#icon-button-list li {
+}
+#icon-button-list li:nth-child(4n+4) {
+    clear:none;
+}
+#nav_quicklinks_wrap {
+	display:none;
+}
+
+.quotation {
+	padding:1em 5em 0 5em;
+	background:transparent url("quote.png") top left no-repeat;
+}
+.event-metadata-label {
+	float:left;
+}
+/* END npweb-r.css */
+
+/* BEGIN temp.css */
+.featured-box,
+.featured-box.pull-left,
+.featured-box.pull-right {
+	margin:0;
+}
+/* float all portal boxes */
+.portal-box .boxes > div,
+.featured-box .boxes > div,
+.portal .news-list .news {
+	float:left;
+}
+
+.quadruple .boxes > .span1,
+.quadruple .boxes > .span2,
+.triple .boxes > .span1,
+.triple .boxes > .span2,
+.double .boxes > .span1,
+.portal .news-list .news {
+	width:50%;
+}
+
+.quadruple .boxes > .span3 { 
+	width:100%;
+	margin:0 0 2% 0;
+}
+
+/* Remove left margin on boxes to the far left */
+.double .boxes > div:nth-child(odd),
+.quadruple .boxes > div:nth-child(2n+1),
+.triple .boxes > div:nth-child(odd),
+.portal .news-list .news:nth-child(odd) {
+	margin-left:0;
+	clear:left;
+	/*border-bottom:10px solid orange;*/
+}
+/* Remove right margin on boxes to the far right */
+.double .boxes > div:nth-child(even),
+.quadruple .boxes > div:nth-child(2n+2),
+.triple .boxes > div:nth-child(even),
+.portal .news-list .news:nth-child(even) {
+	margin-right:0;
+	/*border-bottom:10px solid green;*/
+}
+/*#identity span { width: 65%; }*/
+/* END temp.css */
+a.cta.more,
+nav.pagination a {
+	display:inline-block;
+	float:left;
+	margin:0 0.5em 0.5em 0;
+}
+nav.pagination a {
+	float:none;
+}
+nav .pageNumWrap {
+	width:66%;
+	height:auto;
+	overflow:visible;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#top {
+    background-image: url("9C0A3084.jpg");
+    background-position: center 20%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+	
+#mob_nav_quicklinks,
+#share-tools-smallscreen {
+	display:none;
+}
+#footer .link-group,
+#nav_breadcrumb_wrap,
+#nav_quicklinks,
+#nav_quicklinks_wrap,
+#nav_sticky,
+#nav_topmenu, 
+#nav_breadcrumb,
+#share-tools-normal,
+.event-metadata-label,
+#sm-links-bottom {
+    display: block;
+}
+/* Visibility toggler classes */
+.smallscr-only {
+	display:none;
+}
+.bigscr-only {
+	display:block;
+}
+
+
+.span2 {
+	/*width:47%;*/
+	width:49%;
+}
+.span2.pull-left {
+	margin-right:1%;
+}
+.span2.pull-right {
+	margin-left:1%;
+}
+#identity img {
+	width:2.5em;
+}
+#identity span {
+	font-size:1.8em;
+	vertical-align:middle;
+}
+#icon-button-list li {
+	width:16.6667%;
+	float:left;
+}
+#icon-button-list li a {
+	display:block;
+	padding:1.5em 0;
+	font-size:1em;
+}
+#icon-button-list a em {
+	font-size:3em;
+	display:block;
+	float:none;
+	clear:both;
+}
+#icon-button-list li {
+	width:20%;
+	text-align:center;
+}
+
+#sm-links-bottom {
+	margin:0 auto;
+	float:right;
+}
+
+/*
+#nav_topmenu li:nth-child(4n+4) {
+	clear:none;
+}
+*/
+#search-global {
+	display:inline-block;
+	width:auto;
+	float:none;
+	margin-right:1.2rem;
+	padding:0;
+}
+#search-global #query {
+    width:16em;
+	float:left;
+}
+#search-global button[type="submit"] {
+	right:0;
+}
+
+
+
+#nav_breadcrumb {
+	max-width:1200px;
+    /*border-bottom:none;*/
+    color:#eee;
+    float:none;
+	line-height:3em;
+	margin:0 auto;
+	/*background-color:#f5f5f5;*/
+	padding:0 1.2rem;
+    width:100%;
+}
+#nav_breadcrumb li {
+    margin-right:0.5em;
+    display:inline-block;
+    /*float:left;*/
+}
+#nav_breadcrumb a,
+#nav_breadcrumb i,
+#nav_breadcrumb span {
+	padding:0.5em 0;
+	line-height:1.5em;
+	display:inline-block;
+}
+#nav_breadcrumb span {
+	font-weight:bold;
+}
+
+.left {
+	float:left;
+}
+.right {
+	float:right;
+}
+
+.heading-more {
+    background-position:left 6px;
+}
+
+
+
+/* 3-column page layout */
+
+.main-content > * {
+    margin:0 auto;
+    max-width:1200px;
+    padding:0 1.2rem;
+}	
+.main-content > .article-hero {
+    background-color:#000;
+    color:#fff;
+    max-width: none;
+}
+.article-hero-content {
+    margin: 0 auto;
+    max-width:1200px;
+    position:relative;
+}
+
+.article-hero h1,
+.article-hero figcaption {
+	position:absolute;
+	display:inline-block;
+	padding:0.2em 1.2rem;
+	margin:0;
+	background-color:#777;	
+	background-color:rgba(0,0,0,0.75);
+	text-shadow:0 0 2px #000;
+}
+.article-hero h1 {
+	bottom:0.4em;
+	left:0;
+	font-weight:normal;
+	border:none;
+	color:#fff;
+}
+.article-hero figcaption {
+	top:0;
+	right:0;
+	left:auto;
+	bottom:auto;
+	font-size:0.65em;
+}
+
+.paragraph {
+	display:block;
+	margin-top:0;
+	width:auto;
+}
+/* END npweb-r.css*/
+
+#header,
+#navwrap {
+	overflow:visible;
+	background:transparent;
+}
+#navwrap {
+    margin:1em 0 2em 0;
+}
+#nav_breadcrumb_wrap {
+    background-color:rgba(0,0,0,0.75);
+}
+
+/* BEGIN temp.css*/
+#header #nav_topmenu {
+	display:block;
+}
+
+/* Column-enabled content */
+.quadruple .boxes > div:nth-child(2n+1),
+.triple .boxes > div:nth-child(odd) {
+	clear:none;
+}
+
+.quadruple .boxes > div:nth-child(2n+1),
+.quadruple .boxes > div:nth-child(2n+2),
+.triple .boxes > div:nth-child(odd),
+.triple .boxes > div:nth-child(even)  {
+	margin:0 1% 2% 1%;
+}
+.quadruple .boxes > div:nth-child(4n+0),
+.triple .boxes > div:nth-child(3n+0),
+.double .boxes > div:nth-child(2n+0),
+.quadruple .boxes > .span2:nth-child(2n+0),
+.quadruple .boxes > .span3:nth-child(2n+0) {
+	margin-right:0;
+}
+.quadruple .boxes > div:nth-child(4n+1),
+.triple .boxes > div:nth-child(3n+1) {
+	margin-left:0;
+}
+
+.quadruple .boxes > .span1 { width:23.5%; }
+.quadruple .boxes > .span2 { width:49%; }
+.quadruple .boxes > .span3 { width:74.5%; }
+
+.triple .boxes > .span1 { width:32%; }
+.triple .boxes > .span2 { width:65.16665%; }
+
+.single .boxes > .span1,
+.double .boxes > .span2,
+.triple .boxes > .span3 { width:100%; margin-left:0; margin-right:0; }
+
+/*
+orange  |  red  |  green
+orange  |  red  |  lightblue  |  green
+*/
+
+/* odd-number column boxes in rows divided into 3 or 4 columns */
+/*
+.quadruple .boxes > .span1:nth-child(2n+1),
+.triple .boxes > .span1:nth-child(2n+1) {
+	clear:none;
+	border-bottom:10px solid yellow;
+}
+*/
+/* 3rd column boxes in rows divided into 4 columns */
+.quadruple .boxes > .span1:nth-child(4n+3),
+.portal .news-list .news:nth-child(4n+3) {
+	clear:none;
+	/*border-bottom:3px solid lightblue;*/
+}
+
+/* 2nd column boxes in rows divided into 3 or 4 columns */
+.quadruple .boxes > .span1:nth-child(4n+2),
+.quadruple .boxes > .span2:nth-child(4n+1),
+.triple .boxes > .span1:nth-child(3n+2),
+.portal .news-list .news:nth-child(4n+2) {
+	clear:none;
+	/*border-bottom:3px solid red;*/
+}
+
+/* boxes to the far left */
+.quadruple .boxes > .span1:nth-child(4n+1),
+.quadruple .boxes > .span2:nth-child(2n+1),
+.triple .boxes > .span1:nth-child(3n+1),
+.double .boxes > .span1:nth-child(odd),
+.portal .news-list .news:nth-child(4n+1) {
+	clear:left;
+	/*border-bottom:3px solid orange;*/
+}
+
+/* boxes to the far right */
+.quadruple .boxes > .span1:nth-child(4n+0),
+.quadruple .boxes > .span2:nth-child(2n+0),
+.triple .boxes > .span1:nth-child(3n+0),
+.double .boxes > .span1:nth-child(even) {
+	/*border-bottom:3px solid green;*/
+}
+
+
+
+.portal > .paragraph .media.pull-right,
+.portal > .paragraph .media.pull-left {
+	width:50%;
+	margin:0 0 1em 1em;
+}
+.portal > .paragraph .media.pull-left {
+	margin:0 1em 1em 0;
+}
+.portal > .paragraph .media.thumb {
+	width:32%;
+}
+.portal > .paragraph .media.big {
+	width:66%;
+}
+
+.portal > .paragraph .media {
+	/*width:100%;*/
+	margin:0 0 1em 0;
+}
+.portal-box .media.pull-left {
+	margin:0 1em 1em 0;
+}
+
+
+.media {
+    background:url("loader.gif") no-repeat scroll center center #f5f5f5;
+}
+/*.paragraph .media,
+.paragraph .textbox {
+    width:40%;
+}*/	
+
+
+/* BEGIN horizontal news list */
+.portal .news-list {
+	float:left;
+	width:100%;
+	margin-top:0;
+}
+.portal .news-list .news {
+	float:left;
+	width:23.5%;
+	margin:0 1%;
+}
+.portal .news-list .news:first-child {
+	margin-left:0;
+}
+.portal .news-list .news:last-child {
+	margin-right:0;
+}
+.portal .news-list > p {
+}
+/* END horizontal news list */
+
+.quadruple .boxes > .span1, 
+.quadruple .boxes > .span2, 
+.triple .boxes > .span1, 
+.triple .boxes > .span2, 
+.double .boxes > .span1,
+.portal .news-list .news {
+    width:50%;
+}
+.double .boxes > div:nth-child(2n+1), 
+.quadruple .boxes > div:nth-child(2n+1)/*,
+.portal .news-list .news:nth-child(2n+1)*//*, 
+.triple .boxes > div:nth-child(2n+1)*/ {
+    clear:left;
+	margin-left:0;
+    margin-right:0;
+}
+
+.quadruple .boxes > div:nth-child(4n), 
+.triple .boxes > div:nth-child(3n), 
+.double .boxes > div:nth-child(2n), 
+.quadruple .boxes > .span2:nth-child(2n), 
+.quadruple .boxes > .span3:nth-child(2n),
+.portal .news-list .news:nth-child(4n),
+.portal .news-list .news:nth-child(2n) {
+    margin-right:0;
+	margin-left:0;
+}
+.quadruple .boxes > .span1,
+.portal .news-list .news {
+    width:25%;
+}
+.quadruple .boxes > div:nth-child(4n+1), 
+.triple .boxes > div:nth-child(3n+1),
+.portal .news-list .news:nth-child(4n+1) {
+    margin-left:0;
+	margin-right:0;
+}
+.quadruple .boxes > div:nth-child(2n+1), 
+.quadruple .boxes > div:nth-child(2n+2), 
+.triple .boxes > div:nth-child(2n+1), 
+.triple .boxes > div:nth-child(2n),
+.portal .news-list .news:nth-child(2n+1),
+.portal .news-list .news:nth-child(2n+2) {
+    margin:0 0 0 0;
+}
+.triple .boxes > .span1 {
+    width:33.3333%;
+}
+/* END temp-2.css */
+
+/* Frontpage banner */
+.media.banner,
+.portal-box .media.banner,
+.portal > .paragraph .media.banner,
+.media.banner img,
+.portal-box .media.banner img,
+.portal > .paragraph .media.banner img {
+}
+.media.banner .overlay {
+	position:absolute;
+	top:0;
+	width:100%;
+	height:100%;
+	background:none;
+	margin-top:-0.3em;
+}
+
+.media.banner .overlay h2 {
+	color:#fff;
+	padding:0 0 0 0.2em;
+}
+.banner-buttons {
+	display:block;
+	padding:0;
+	margin:0;
+	width:33%;
+	height:100%;
+	margin-top:1px;
+}
+.banner-buttons li {
+	display:inline-block;
+	float:left;
+	clear:both;
+}
+.banner-buttons li a {
+	padding:0;
+}
+.banner-buttons li a,
+.banner-buttons li a:hover {
+	display:block;
+	background:rgba(255, 255, 255, 0.2);
+	color:#fff;
+	margin:0.225em 0 0.225em 0.45em;
+	border-radius:0.2em;
+	text-shadow:1px 1px 1px #000;
+}
+.banner-buttons li a:hover,
+.banner-buttons li a:focus {
+	background:rgba(255, 255, 255, 0.15);
+	box-shadow:0 0 0.5em rgba(255,255,255,0.99);
+}
+.banner-buttons li a span {
+	display:block;
+	padding:0.3em;
+}
+
+#icon-button-list li:nth-child(4n+4) {
+    clear:none;
+}
+
+#sm-links-bottom {
+	right:1em;
+}
+#footer {
+	padding-bottom:1em; /* Because the extra padding needed due to the small-screen AddThis widget */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#nav .visible-sub-toggle,
+a.nav-toggler {
+	display:none;
+}
+#nav-wrap {
+	background-color:#08f;
+	padding-top:5em;
+}
+/* <nav> element (wrapper) */
+#nav {
+	display:block;
+	position:relative;
+	font-family:Arial,sans-serif;
+	font-size:0.8em;
+	margin:0 auto;
+    max-width:1200px;
+}
+/* all menu links */
+#nav a {
+	color:#08f;
+	text-decoration: none;
+}
+#nav.nav-colorscheme-dark a {
+	color:#8cf;
+}
+/* all lists + items in menu */
+#nav ul,
+#nav li {
+	margin:0;
+	padding:0;
+	list-style: none;
+}
+/* 3rd level lists */
+#nav ul ul ul {
+	list-style: disc;
+	padding-left:1em;
+	margin-left:1em;
+	border-left:1px solid #ddd;
+}
+/* 1st level list */
+#nav > ul {
+	/*background-color:#08f;*/
+}
+/* 1st level items */
+#nav > ul > li {
+	/*display:inline-block;
+	position:relative;*/
+	display:block;
+	position:relative;
+	float:left;
+}
+/* 1st level links */
+#nav > ul > li > a {
+	display:block;
+	padding:1em 1.2rem;
+	font-size:1.2em;
+	color:#fff;
+	transition:background 0.4s ease;
+	
+	background-color:#f5f5f5;
+	background-color:rgba(255,255,255,0.75);
+	color:#06c;
+}
+#nav > ul > li.inpath {
+}
+#nav > ul > li.inpath:after {
+    border-bottom: 3px solid orange;
+    content: "";
+    display: block;
+}
+#nav > ul > li.inpath > a {
+	background-color:#fff;
+	color:#08f;
+	/*position:relative;*/
+	/*bottom: -4px;*/
+	position:relative;
+	/*z-index:23;*/
+	/*bottom:-0.5em;*/
+    box-shadow:0 -0.5em .4em rgba(0, 0, 0, 0.1);
+}
+#nav.nav-colorscheme-dark > ul > li.inpath > a {
+	color:#369;
+}
+#nav > ul > li.inpath > a:hover,
+#nav > ul > li.inpath.infocus > a {
+	background-color:#fff;
+	color:#08f;
+}
+#nav.nav-colorscheme-dark > ul > li.inpath > a:hover,
+#nav.nav-colorscheme-dark > ul > li.inpath.infocus > a {
+	color:#adf;
+}
+/* 2nd level list (the submenu) */
+#nav > ul > li > ul {
+}
+#nav > ul > li:last-child > ul {
+	left:auto;
+	right:9999px;
+}
+/* 2nd level list (the submenu) */
+#nav > ul > li > ul > li.inpath {
+	border-left:3px solid orange;
+}
+#nav.nav-colorscheme-dark > ul > li > ul > li.inpath {
+	border-left-color:#adf;
+}
+/* 2nd level links */
+#nav > ul > li > ul > li > a {
+	display:block;
+	float:none;
+}
+
+.tabbing #nav > ul > li.infocus > ul,
+.tabbing #nav > ul > li > ul {
+	-webkit-animation: fadein 0s;
+    -moz-animation: fadein 0s;
+    -ms-animation: fadein 0s;
+    -o-animation: fadein 0s;
+	animation: fadein 0s;
+}
+/* 1st level items, when hovered */
+#nav > ul > li > a:hover,
+#nav > ul > li.infocus > a {
+	background-color:#444;
+	
+	background-color:#fff;
+}
+#nav.nav-colorscheme-dark > ul > li > a:hover,
+#nav.nav-colorscheme-dark > ul > li.infocus > a {
+	background-color:#444;
+}
+
+/* 2nd level list, when 1st level item is hovered ("SHOW submenu") */
+#nav > ul > li:hover > ul,
+/*#nav > ul > li.infocus > ul,*/
+#nav > ul li.infocus > ul { /* MUST BE FLAGGED WITH class="infocus" on focus */
+	left:0;
+	opacity:1;
+	-webkit-animation: fadein .2s;
+    -moz-animation: fadein .2s;
+    -ms-animation: fadein .2s;
+    -o-animation: fadein .2s;
+	animation: fadein .2s;
+	z-index:99;
+}
+#nav > ul > li:last-child:hover > ul/*,
+#nav > ul > li.infocus:last-child > ul*/ {
+	left:auto;
+	right:0;
+}
+
+/* 2nd level items */
+#nav > ul > li > ul > li {
+	border-bottom:1px solid #eee;
+}
+#nav.nav-colorscheme-dark > ul > li > ul > li {	
+	border-bottom:1px solid #555;
+}
+#nav > ul > li > ul > li:last-child {
+	border-bottom:none;
+}
+/* 2nd and deeper level lists */
+#nav ul ul {
+	background-color:#fff;
+	/*background-color:rgba(255,255,255,1);*/
+	box-shadow:0 3em 3em rgba(0,0,0,0.75);
+	color:#333;
+	padding:1em;
+	width:100%;
+	position: absolute;
+	left:-9999px;
+	opacity:0.5;
+	width:240px;
+}
+#nav.nav-colorscheme-dark ul ul {
+	background-color:#444;
+	color:#8cf;
+}
+/* 2nd and deeper level items */
+#nav ul ul li {
+	position:relative;
+}
+/* 2nd and deeper level links */
+#nav ul ul a {
+	padding:0.5em;
+	transition: all .5s ease;
+}
+#nav.nav-colorscheme-dark ul ul a {
+	color:#8cf;
+}
+
+/* 2nd and deeper level links, on hover */
+#nav ul ul a:hover {
+	background-color:#eee;
+	color:#06d;
+	color:#275379;
+}
+#nav.nav-colorscheme-dark ul ul a:hover {
+	background-color:#555;
+	color:#adf;
+}
+/* 3rd and deeper level lists */
+#nav ul ul ul {
+	/*display:none;*/
+	transition:opacity 0.4s ease;
+}
+#nav ul ul li.inpath {
+	background-color:#fafafa;
+}
+#nav.nav-colorscheme-dark ul ul li.inpath {
+	background-color:#555;
+}
+#nav.nav-colorscheme-dark ul ul li.inpath.current {
+	background-color:inherit;
+}
+
+#nav ul ul li.inpath > ul {
+	display:block;
+}
+#nav ul ul li:hover > ul,
+#nav ul ul li.infocus > ul,
+#nav ul ul li.subnav-popup > ul {
+	display:block;
+	/*top:0.25em;
+	left:90%;*/
+	opacity:1;
+	z-index:999;	
+	
+	top:0em;
+	left:94%;
+}
+/* 3rd and deeper level items */
+#nav ul ul ul li {
+	border:none;
+	z-index:999;
+}
+
+#nav ul ul li.has_sub:before,
+#nav ul ul li.subitems:before {
+	content:"\E82a";
+	content:"\E813";
+	font-family:'Fontello';
+	display:inline-block;
+	position:absolute;
+	right:0;
+	top:0;
+	bottom:0;
+	padding:0.5em 0;
+	color:#ddd;
+	z-index:0;
+}
+#nav.nav-colorscheme-dark ul ul li.has_sub:before,
+#nav.nav-colorscheme-dark ul ul li.subitems:before {
+	color:#bbb;
+}
+
+/* 3rd and deeper level links */
+#nav ul ul ul a {
+	display:block;
+	/*border:1px solid blue;*/
+}
+#nav ul ul li.inpath > a {
+	font-weight:bold;
+}
+#nav ul ul li.current > a span {
+	background-color:#08d;
+	padding:.5em;
+	border-radius:3px;
+	color:#fff;
+}
+#nav.nav-colorscheme-dark ul ul li.current > a span {
+	background-color:#adf;
+	color:#333;
+}
+/* 2nd level items that are nth-children */
+#nav > ul > li > ul > li:nth-child(4n+4) {
+	/*clear:right;*/
+}
+
+.js #nav > ul > li:hover > ul {
+	left:-9999px;
+}
+.js #nav > ul > li:last-child:hover > ul {
+	right:9999px;
+}
+.js #nav ul ul li:hover > ul {
+	display:none;
+}
+.js #nav > ul > li.infocus > ul {
+	left:0;
+}
+.js #nav > ul > li.infocus:last-child > ul {
+	right:0;
+}
+.js #nav ul ul li.infocus > ul {
+	display:block;
+}

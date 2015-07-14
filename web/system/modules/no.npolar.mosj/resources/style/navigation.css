@@ -1,0 +1,642 @@
+@media (min-width: 1px) and (max-width:799px) {
+#toggle-nav,
+#show-nav,
+#toggle-search {
+    display:block;
+    float:right;
+    font-size:1.2em;
+    padding:0.2em;
+    margin:1em;
+}
+.nav-toggler,
+#toggle-search {
+    cursor:pointer;
+}
+#toggle-search {
+    color:#8df;
+    font-size:1.6em;
+    margin:1px 0 0 0;
+    padding:0.5em 0.4em;
+}
+
+/* BEGIN navicon */
+a#nav_toggle,
+#show-nav {
+    display:none;
+}
+#toggle-nav,
+#show-nav {
+    box-sizing:border-box;
+    width:2em;
+    top:0.5em;
+    right:0;
+}
+#toggle-nav span,
+#show-nav span {
+    border-top:3px solid;
+    background:transparent;
+    display:block;
+    margin-top:4px;
+    height:100%;
+    width:100%;
+}
+#toggle-nav > span,
+#show-nav > span {
+    border-bottom:3px solid;
+    height:11px;
+    margin-left:0;
+    margin-top:0;
+    width:100%;
+}
+a#toggle-nav,
+a#toggle-nav:hover,
+#show-nav,
+#show-nav:hover {
+    background:transparent;
+    line-height:1em;
+    text-align:center;
+}
+
+/* END navicon */
+
+
+
+	
+	
+/*#show-nav {
+    display:inline-block;
+    border-radius:3px;
+    background-color:#047;
+    border:none;
+    color:#fff;
+    padding:1em;
+    margin:1%;
+}*/
+#nav a#hide-nav,
+#nav a#hide-nav:hover {
+    background-color:#900;
+    color:#fff;
+}
+/*
+.navigating #show-nav {
+	background-color:#5bf;
+}
+*/
+.js #nav #hide-nav {
+    display:none;
+}
+
+
+/*
+#nav-wrap {
+    overflow:hidden;
+}
+.navigating #nav-wrap {
+    overflow:visible;
+}
+*/
+
+/* <nav> element (wrapper) */
+#nav {
+    display:block;
+    position:fixed;
+    position:absolute;
+    z-index:9999;
+    /*left:-100%;*/
+    right:-120%;
+    font-family:Arial,sans-serif;
+    font-size:0.9em;
+    width:100%;
+    max-width:480px;
+    transition:all .5s ease;
+    box-shadow:0 3em 3em #000;
+    box-shadow:0 3em 5em rgba(0,0,0,0.9);
+}
+.navigating #nav,
+#nav:target {
+	/*left:0;*/
+	right:0;
+}
+.csstransforms3d #nav {
+    /*left:0;*/
+    right:0;
+    opacity:0;
+    /*transform-origin:0 0;*/
+
+    /*-webkit-transform:translate3d(-120%,0,0);
+    -moz-transform:translate3d(-120%,0,0);
+    transform:translate3d(-120%,0,0);*/
+
+    -webkit-transform:translate3d(100%,0,0);
+    -moz-transform:translate3d(100%,0,0);
+    transform:translate3d(100%,0,0);
+
+    -webkit-transition:-webkit-transform 0.45s ease-in, opacity 0.25s ease;
+    -moz-transition:-webkit-transform 0.45s ease-in, opacity 0.25s ease;
+    transition:transform 0.45s ease-in, opacity 0.25s ease;
+	
+}
+.csstransforms3d.navigating #nav {
+    /*left:0;*/
+    opacity:1;
+
+    -webkit-transform:translate3d(0,0,0);
+    -moz-transform:translate3d(0,0,0);
+    transform:translate3d(0,0,0);
+
+    -webkit-transition:-webkit-transform 0.45s ease-out, opacity 0.25s ease;
+    -moz-transition:-moz-transform 0.45s ease-out, opacity 0.25s ease;
+    transition:transform 0.45s ease-out, opacity 0.25s ease;
+}
+
+/* all menu links */
+#nav a {
+    /*color:#08d;*/
+    color:#275379;
+    text-decoration: none;
+}
+#nav.nav-colorscheme-dark a {
+    color:#8cf;
+}
+/* all lists + items in menu */
+#nav ul,
+#nav li {
+    margin:0;
+    padding:0;
+    list-style: none;
+}
+/* 2nd level lists */
+#nav ul ul {
+    padding-left:1em;
+    margin-left:1em;
+    border-left:1px solid #ddd;
+}
+#nav.nav-colorscheme-dark ul ul {
+	border-color:#555;
+    border-color:#31404f;
+}
+/* 1st level list */
+#nav > ul {
+	background-color:#fff;
+	padding:1em;
+}
+#nav.nav-colorscheme-dark > ul {
+	background-color:#333;
+    background-color:#1F2E3D;
+}
+/* All items */
+#nav li {
+	display:block;
+}
+/* All links */
+#nav a {
+	display:block;
+}
+#nav ul {
+	color:#333;
+}
+#nav.nav-colorscheme-dark ul {
+	color:#ddd;
+}
+/* "Inpath" item */
+#nav > ul > li.inpath {
+	border-left:3px solid orange;
+}
+#nav.nav-colorscheme-dark > ul > li.inpath {
+	border-left-color:#8cf;
+}
+/* manually "SHOW submenu" */
+#nav ul > li.visible-sub > ul,
+#nav > ul > li.visible-sub > ul {
+	max-height:1000px;
+}
+/* All items */
+#nav li {
+	position:relative;
+	border-bottom:1px solid #eee;
+}
+#nav.nav-colorscheme-dark li {
+	border-bottom-color:#444;
+    border-bottom-color:#31404f;
+}
+#nav li:last-child {
+	border-bottom:none;
+}
+/* Links */
+#nav a {
+	display:block;
+	padding:0.5em 3em 0.5em 0.5em;
+	transition: all .5s ease;
+}
+/* Links, on hover */
+#nav a:hover {
+	background-color:#eee;
+	color:#275379;
+}
+#nav.nav-colorscheme-dark a:hover {
+	background-color:#555;
+    background-color:#3c4e60;
+	color:#adf;
+}
+/* 2nd and deeper level lists */
+#nav ul ul {
+	max-height:0;
+	overflow:hidden;
+}
+#nav li.inpath {
+	background-color:#fafafa;
+}
+#nav.nav-colorscheme-dark li.inpath {
+	background-color:#444;
+    background-color:#31404f;
+}
+#nav li.inpath > ul {
+	max-height:1000px;
+}
+#nav li.inpath > a {
+	font-weight:bold;
+}
+#nav li.current > a {
+	/*background-color:#08d;*/
+        background-color:#275379;
+	color:#fff;
+}
+#nav.nav-colorscheme-dark li.current > a {
+	background-color:#adf;
+	color:#333;
+    background-color:#8cf;
+    color:#1f2e3d;
+}
+#nav li.inpath.hidden-sub > ul {
+	max-height:0;
+	overflow:hidden;
+}
+
+#nav li a.visible-sub-toggle {
+    padding-left:0.5em;
+    padding-right:0.5em;
+    color:#666;
+    font-weight:normal;
+    text-align:center;
+    position:absolute;
+    right:0;
+    top:0;
+    width:1em;
+    z-index:2;
+}
+#nav li.current a.visible-sub-toggle {
+    color:#fff;
+}
+#nav.nav-colorscheme-dark li a.visible-sub-toggle {
+	color:#bbb;
+}
+#nav.nav-colorscheme-dark li.current a.visible-sub-toggle {
+	color:#1f2e3d;
+}
+.tabbing #nav li.hidden-sub ul {
+	display:none;
+}
+/* 2nd level items that are nth-children */
+#nav > ul > li > ul > li:nth-child(4n+4) {
+	/*clear:right;*/
+}
+
+.visible-sub-toggle:after {
+	content:"\e811";
+    font-family:"Fontello";
+}
+
+.visible-sub > .visible-sub-toggle:after {
+	content:"\e814";
+}
+}
+
+
+
+
+
+
+@media (min-width: 800px) {
+
+#nav .visible-sub-toggle,
+a.nav-toggler {
+    display:none;
+}
+#navwrap {
+    padding-top:0;
+}
+/* <nav> element (wrapper) */
+#nav {
+    display:block;
+    position:relative;
+    font-family:Arial,sans-serif;
+    font-size:0.8em;
+    margin:0 auto;
+    max-width:1200px;
+}
+/* all menu links */
+#nav,
+#nav a {
+    color:#08f;
+    color:#06c;
+    text-decoration: none;
+}
+#nav.nav-colorscheme-dark,
+#nav.nav-colorscheme-dark a {
+    color:#8cf;
+}
+/* all lists + items in menu */
+#nav ul,
+#nav li {
+    margin:0;
+    padding:0;
+    list-style: none;
+}
+/* 3rd level lists */
+#nav ul ul ul {
+    list-style: disc;
+    padding-left:1em;
+    margin-left:1em;
+    border-left:1px solid #ddd;
+}
+#nav.nav-colorscheme-dark ul ul ul {
+    border-left-color:#393939;
+}
+/* 1st level list */
+#nav > ul {
+    /*background-color:#08f;*/
+}
+/* 1st level items */
+#nav > ul > li {
+    /*display:inline-block;
+    position:relative;*/
+    display:block;
+    position:relative;
+    float:left;
+}
+/* 1st level links */
+#nav > ul > li > a {
+    display:block;
+    padding:1em 1.2rem;
+    font-size:1.2em;
+    /*color:#fff;*/
+    transition:background 0.4s ease;
+
+    background-color:#f5f5f5;
+    background-color:rgba(255,255,255,0.75);
+    /*color:#06c;*/
+    border-right:1px solid #eee;
+}
+#nav > ul > li:last-child > a {
+    border-right:none;
+}
+#nav > ul > li.has_sub > a:after {
+    content:"\E82c"; /* Small arrow down */
+    font-family:"Fontello";
+    margin-left:0.4em;
+}
+#nav.nav-colorscheme-dark > ul > li > a {
+    background-color:rgba(0,0,0,0.75);
+    border-right-color:rgba(0,0,0,0.2);
+}
+#nav > ul > li.inpath {
+}
+#nav > ul > li.inpath:after {
+    border-bottom: 3px solid orange;
+    content: "";
+    display: block;
+}
+#nav.nav-colorscheme-dark > ul > li.inpath:after {
+    border-bottom-color:#000;
+}
+#nav > ul > li.inpath > a {
+    background-color:#fff;
+    color:#08f;
+    /*position:relative;*/
+    /*bottom: -4px;*/
+    position:relative;
+    /*z-index:23;*/
+    /*bottom:-0.5em;*/
+    box-shadow:0 -0.5em .4em rgba(0, 0, 0, 0.1);
+}
+#nav.nav-colorscheme-dark > ul > li.inpath > a {
+    background-color:rgba(0,0,0,0.9);
+    color:#adf;
+    color:#8cf;
+}
+#nav > ul > li.inpath > a:hover,
+#nav > ul > li.inpath.infocus > a {
+    background-color:#fff;
+    color:#08f;
+}
+#nav.nav-colorscheme-dark > ul > li.inpath > a:hover,
+#nav.nav-colorscheme-dark > ul > li.inpath.infocus > a {
+    color:#adf;
+}
+/* 2nd level list (the submenu) */
+#nav > ul > li > ul {
+}
+#nav > ul > li:last-child > ul {
+    left:auto;
+    right:9999px;
+}
+/* 2nd level list (the submenu) */
+#nav > ul > li > ul > li.inpath {
+    border-left:3px solid orange;
+}
+#nav.nav-colorscheme-dark > ul > li > ul > li.inpath {
+    border-left-color:#adf;
+}
+/* 2nd level links */
+#nav > ul > li > ul > li > a {
+    display:block;
+    float:none;
+}
+
+.tabbing #nav > ul > li.infocus > ul,
+.tabbing #nav > ul > li > ul {
+    -webkit-animation: fadein 0s;
+    -moz-animation: fadein 0s;
+    -ms-animation: fadein 0s;
+    -o-animation: fadein 0s;
+    animation: fadein 0s;
+}
+/* 1st level items, when hovered */
+#nav > ul > li > a:hover,
+#nav > ul > li.infocus > a {
+    background-color:#fff;
+}
+#nav.nav-colorscheme-dark > ul > li > a:hover,
+#nav.nav-colorscheme-dark > ul > li.infocus > a {
+    background-color:#2a2a2a;
+}
+
+/* 2nd level list, when 1st level item is hovered ("SHOW submenu") */
+#nav > ul > li:hover > ul,
+/*#nav > ul > li.infocus > ul,*/
+#nav > ul li.infocus > ul { /* MUST BE FLAGGED WITH class="infocus" on focus */
+    left:0;
+    opacity:1;
+    -webkit-animation: fadein .2s;
+    -moz-animation: fadein .2s;
+    -ms-animation: fadein .2s;
+    -o-animation: fadein .2s;
+    animation: fadein .2s;
+    z-index:99;
+}
+#nav > ul > li:last-child:hover > ul/*,
+#nav > ul > li.infocus:last-child > ul*/ {
+    left:auto;
+    right:0;
+}
+
+/* 2nd level items */
+#nav > ul > li > ul > li {
+    border-bottom:1px solid #eee;
+}
+#nav.nav-colorscheme-dark > ul > li > ul > li {
+    border-bottom:1px solid #393939;
+}
+#nav > ul > li > ul > li:last-child {
+    border-bottom:none;
+}
+/* 2nd and deeper level lists */
+#nav ul ul {
+    background-color:#fff;
+    /*background-color:rgba(255,255,255,1);*/
+    box-shadow:0 3em 3em rgba(0,0,0,0.75);
+    color:#333;
+    padding:1em;
+    width:100%;
+    position: absolute;
+    left:-9999px;
+    opacity:0.5;
+    width:240px;
+}
+#nav.nav-colorscheme-dark ul ul {
+    background-color:#444;
+    background-color:#2a2a2a;
+    /*background-color:rgba(0,0,0,0.8);*/
+    color:#8cf;
+}
+/* 2nd and deeper level items */
+#nav ul ul li {
+	position:relative;
+}
+/* 2nd and deeper level links */
+#nav ul ul a {
+	padding:0.5em;
+	transition: all .5s ease;
+}
+#nav.nav-colorscheme-dark ul ul a {
+	color:#8cf;
+}
+
+/* 2nd and deeper level links, on hover */
+#nav ul ul a:hover {
+    background-color:#eee;
+    color:#06d;
+}
+#nav.nav-colorscheme-dark ul ul a:hover {
+    background-color:#393939;
+    color:#adf;
+}
+/* 3rd and deeper level lists */
+#nav ul ul ul {
+    transition:opacity 0.4s ease;
+}
+#nav ul ul li.inpath {
+    background-color:#fafafa;
+}
+#nav.nav-colorscheme-dark ul ul li.inpath {
+    /*background-color:#555;*/
+    background-color:inherit;
+}
+#nav.nav-colorscheme-dark ul ul li.inpath.current {
+    background-color:inherit;
+}
+
+#nav ul ul li.inpath > ul {
+    display:block;
+}
+#nav ul ul li:hover > ul,
+#nav ul ul li.infocus > ul,
+#nav ul ul li.subnav-popup > ul {
+    display:block;
+    /*top:0.25em;
+    left:90%;*/
+    opacity:1;
+    z-index:999;	
+
+    top:0em;
+    left:94%;
+}
+/* 3rd and deeper level items */
+#nav ul ul ul li {
+    border:none;
+    z-index:999;
+}
+
+#nav ul ul li.has_sub > a:after,
+#nav ul ul li.subitems > a:after {
+    content:"\E813"; /* Big arrow right (fat) */
+    content:"\E82e"; /* Small arrow right */
+    content:"\E82a"; /* Big arrow right (thin) */
+    font-family:"Fontello";
+    display:inline-block;
+    position:absolute;
+    right:4px;
+    top:0;
+    bottom:0;
+    padding:0.5em 0;
+    z-index:0;
+}
+#nav.nav-colorscheme-dark ul ul li.has_sub > a:after,
+#nav.nav-colorscheme-dark ul ul li.subitems > a:after {
+    color:#bbb;
+    color:#8cf;
+}
+
+/* 3rd and deeper level links */
+#nav ul ul ul a {
+	display:block;
+	/*border:1px solid blue;*/
+}
+#nav ul ul li.inpath > a {
+	font-weight:bold;
+}
+#nav ul ul li.current > a span {
+    background-color:#08d;
+    padding:.5em;
+    border-radius:3px;
+    color:#fff;
+    display:block;
+}
+#nav.nav-colorscheme-dark ul ul li.current > a span {
+	background-color:#adf;
+	color:#333;
+}
+/* 2nd level items that are nth-children */
+#nav > ul > li > ul > li:nth-child(4n+4) {
+	/*clear:right;*/
+}
+
+.js #nav > ul > li:hover > ul {
+	left:-9999px;
+}
+.js #nav > ul > li:last-child:hover > ul {
+	right:9999px;
+}
+.js #nav ul ul li:hover > ul {
+	display:none;
+}
+.js #nav > ul > li.infocus > ul {
+	left:0;
+}
+.js #nav > ul > li.infocus:last-child > ul {
+	right:0;
+}
+.js #nav ul ul li.infocus > ul {
+	display:block;
+}
+}

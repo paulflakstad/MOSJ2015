@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+
+	<xsd:include schemaLocation="opencms://opencms-xmlcontent.xsd" />
+    <xsd:include schemaLocation="opencms://system/modules/no.npolar.mosj/schemas/parameter.xsd"/>
+    <xsd:include schemaLocation="opencms://system/modules/no.npolar.mosj/schemas/monitoring-data.xsd"/>
+    <xsd:include schemaLocation="opencms://system/modules/no.npolar.mosj/schemas/manual-list.xsd"/>
+    <xsd:include schemaLocation="opencms://system/modules/no.npolar.mosj/schemas/indicator-relations.xsd"/>
+    <xsd:include schemaLocation="opencms://system/modules/no.npolar.mosj/schemas/mosj-reference-list.xsd"/>
+    <xsd:include schemaLocation="opencms://system/modules/no.npolar.common.pageelements/schemas/paragraph.xsd" />
+    <xsd:include schemaLocation="opencms://system/modules/no.npolar.common.pageelements/schemas/linklist.xsd" />
+
+    <xsd:element name="MOSJIndicators" type="OpenCmsMOSJIndicators" />
+
+    <xsd:complexType name="OpenCmsMOSJIndicators">
+        <xsd:sequence>
+            <xsd:element name="MOSJIndicator" type="OpenCmsMOSJIndicator"
+                minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="OpenCmsMOSJIndicator">
+        <xsd:sequence>
+            <xsd:element name="Title" type="OpenCmsString" />
+            <xsd:element name="LatinName" type="OpenCmsString" />
+            <xsd:element name="Summary" type="OpenCmsHtml" />
+            <xsd:element name="Image" type="OpenCmsVfsFile" />
+            <xsd:element name="StatusAndTrend" type="OpenCmsParagraph" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="CausalFactors" type="OpenCmsParagraph" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="Consequences" type="OpenCmsParagraph" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="About" type="OpenCmsParagraph" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="Places" type="OpenCmsMOSJManualList" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="RelatedMonitoring" type="OpenCmsMOSJIndicatorRelation" minOccurs="0" maxOccurs="1" />
+            <!--<xsd:element name="Test" type="OpenCmsString" minOccurs="0" maxOccurs="10" />-->
+            <!--<xsd:element name="City" type="OpenCmsString" />-->
+            <!--<xsd:element name="MOSJParameter" type="OpenCmsMOSJParameter" minOccurs="0" maxOccurs="10" />-->
+            <xsd:element name="MonitoringData" type="OpenCmsMOSJMonitoringData" minOccurs="0" maxOccurs="10" />
+            <xsd:element name="Links" type="OpenCmsLinkList" minOccurs="0" maxOccurs="1" />
+            <!--<xsd:element name="References" type="OpenCmsHtml" minOccurs="0" maxOccurs="1" />-->
+            <xsd:element name="References" type="OpenCmsMOSJReferenceList" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+        <xsd:attribute name="language" type="OpenCmsLocale" use="optional" />
+    </xsd:complexType>
+
+    <xsd:annotation>
+        <xsd:appinfo>
+            <resourcebundles>
+                <xmlbundle name="no.npolar.mosj">
+                    <bundle locale="en">
+                        <resource key="label.OpenCmsMOSJIndicator.Title">Title</resource>
+                        <resource key="label.OpenCmsMOSJIndicator.Title.help">The title of this indicator.</resource>
+                        <!--<resource key="dev.demo.ddheadincludearticle.default.Title">New article for Dev Demo template using
+                                headinclude tag</resource>-->
+                        <resource key="label.OpenCmsMOSJIndicator.Summary">Summary</resource>
+                        <resource key="label.OpenCmsMOSJIndicator.Summary.help">The summary.</resource>
+                        <!--<resource key="dev.demo.ddheadincludearticle.default.Text">Add the summary here.</resource>-->
+                        <resource key="label.OpenCmsMOSJIndicator.Image">Image</resource>
+                        <resource key="label.OpenCmsMOSJIndicator.Image.help">The image for this indicator.</resource>
+                        <resource key="label.OpenCmsMOSJIndicator.TimeSeries">Time series</resource>
+                        <resource key="label.OpenCmsMOSJIndicator.TimeSeries.help">Start typing.</resource>
+                    </bundle>
+                </xmlbundle>
+            </resourcebundles>
+            <mappings>
+                <mapping element="Title" mapto="property:Title" />
+                <mapping element="Summary" mapto="property:Description" />
+                <mapping element="Image" mapto="property:image.thumb" />
+                <!-- Enables nice url name for detail pages -->
+                <!--<mapping element="Title" mapto="urlName" />-->
+            </mappings>
+            <layouts>
+                <layout element="Summary" widget="HtmlWidget" configuration="height:200px,link,source" />
+                <layout element="Image" widget="ImageGalleryWidget" configuration="{useformat:false}" />
+                <!--<layout element="City" widget="StringSuggestWidget" configuration="{uri='http://api.geonames.org/searchJSON?new&amp;maxRows=10&amp;username=npolar.no',results:'%(geonames)',pname_query:'q',extract:'%(name)',tpl_suggestion:{uri:'/system/modules/no.npolar.opencms.widgets/resources/tpl/geonames-city-suggest.tpl'},tpl_info:{uri:'/system/modules/no.npolar.opencms.widgets/resources/tpl/geonames-city-info.tpl'}}" />-->
+                <!--<layout element="MOSJParameter" widget="StringSuggestWidget" configuration="{conf_uri:'conf/mosj-param-id.conf'}" />-->
+                <!--<layout element="TimeSeries" widget="SelectBySuggestWidget" configuration="uri=http://www.npolar.no/ws-employees-with-id" />-->
+                <!--<layout element="TimeSeries" widget="SelectBySuggestWidget" configuration="{uri='http://api.npolar.no/person/?fields=last_name,first_name,email,jobtitle.en&amp;format=json&amp;limit=30&amp;facets=false&amp;variant=array',pname_unique:'q-email',pname_query:'q',pname_callback:'callback',extract:'%(email)',tpl_suggestion:{uri:'/system/modules/no.npolar.util/resources/tpl/mosj_suggest.tpl'},tpl_info:{uri:'tpl/mosj_info.tpl'}}" />-->
+                <!--<layout element="Test" widget="StringSuggestWidget" configuration="{conf_uri:'conf/npi-employees-id.conf'}" />-->				
+            </layouts>
+            <validationrules />
+            <tabs>
+                <tab element="Title" collapse="false" name="General content" />
+                <tab element="Places" name="Places and areas" />
+                <tab element="RelatedMonitoring" name="Related monitoring" />
+                <!--<tab element="MOSJParameter" name="Parameters" />-->
+                <tab element="MonitoringData" name="Monitoring data" />
+                <tab element="Links" name="Links and references" />
+            </tabs>
+            <!--<defaults>
+                <default element="Title" value="%(key.dev.demo.ddheadincludearticle.default.Title)" />
+                <default element="Text" value="%(key.dev.demo.ddheadincludearticle.default.Text)" />
+            </defaults>-->
+            <relations />
+            <!--<formatters>
+                <formatter minwidth="1" maxwidth="250"
+                        uri="/system/modules/org.opencms.dev.demo/formatters/article_with_headincludes/side.jsp"
+                        searchcontent="false" />
+                <formatter minwidth="250"
+                        uri="/system/modules/org.opencms.dev.demo/formatters/article_with_headincludes/center.jsp" />
+            </formatters>-->
+            <!--<headincludes>
+                <headinclude type="javascript" uri="/system/modules/org.opencms.dev.demo/resources/js/headinclude_script.js" />
+                <headinclude type="css" uri="/system/modules/org.opencms.dev.demo/resources/css/headinclude_css.css" />
+            </headincludes>-->
+        </xsd:appinfo>
+    </xsd:annotation>
+</xsd:schema>

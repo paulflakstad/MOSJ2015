@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+
+    <xsd:include schemaLocation="opencms://opencms-xmlcontent.xsd" />
+    <xsd:include schemaLocation="opencms://system/modules/no.npolar.mosj/schemas/possible-link.xsd" />
+
+    <xsd:element name="MOSJIndicatorRelations" type="OpenCmsMOSJIndicatorRelations" />
+
+    <xsd:complexType name="OpenCmsMOSJIndicatorRelations">
+        <xsd:sequence>
+            <xsd:element name="MOSJIndicatorRelation" type="OpenCmsMOSJIndicatorRelation" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="OpenCmsMOSJIndicatorRelation">
+        <xsd:sequence>
+            <xsd:element name="Text" type="OpenCmsHtml" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="MonitoringProgramme" type="OpenCmsMOSJPossibleLink" minOccurs="0" maxOccurs="10" />
+            <xsd:element name="InternationalAgreements" type="OpenCmsMOSJPossibleLink" minOccurs="0" maxOccurs="10" />
+            <xsd:element name="VoluntaryInternationalCooperation" type="OpenCmsMOSJPossibleLink" minOccurs="0" maxOccurs="10" />
+            <xsd:element name="RelatedStuff" type="OpenCmsMOSJPossibleLink" minOccurs="0" maxOccurs="10" />
+            <xsd:element name="Other" type="OpenCmsMOSJPossibleLink" minOccurs="0" maxOccurs="10" />
+        </xsd:sequence>
+        <xsd:attribute name="language" type="OpenCmsLocale" use="optional" />
+    </xsd:complexType>
+
+    <xsd:annotation>
+        <xsd:appinfo>
+            <resourcebundles>
+                <xmlbundle name="no.npolar.mosj">
+                    <bundle locale="en">
+                        <resource key="label.OpenCmsMOSJIndicatorRelation.Text">Text</resource>
+                        <resource key="label.OpenCmsMOSJIndicatorRelation.MonitoringProgramme">Monitoring programme</resource>
+                        <resource key="label.OpenCmsMOSJIndicatorRelation.InternationalAgreements">International agreements</resource>
+                        <resource key="label.OpenCmsMOSJIndicatorRelation.VoluntaryInternationalCooperation">Voluntary international cooperation</resource>
+                        <resource key="label.OpenCmsMOSJIndicatorRelation.RelatedStuff">Related monitoring</resource>
+                        <resource key="label.OpenCmsMOSJIndicatorRelation.Other">Other</resource>
+                    </bundle>
+                    <bundle locale="no">
+                        <resource key="label.OpenCmsMOSJIndicatorRelation.Text">Text</resource>
+                        <resource key="label.OpenCmsMOSJIndicatorRelation.MonitoringProgramme">Monitoring programme</resource>
+                        <resource key="label.OpenCmsMOSJIndicatorRelation.InternationalAgreements">International agreements</resource>
+                        <resource key="label.OpenCmsMOSJIndicatorRelation.VoluntaryInternationalCooperation">Voluntary international cooperation</resource>
+                        <resource key="label.OpenCmsMOSJIndicatorRelation.RelatedStuff">Related monitoring</resource>
+                        <resource key="label.OpenCmsMOSJIndicatorRelation.Other">Other</resource>
+                    </bundle>
+                </xmlbundle>
+            </resourcebundles>
+            <mappings />
+            <layouts>
+                <layout element="Text" widget="HtmlWidget" configuration="link,source" />
+            </layouts>
+            <validationrules />
+            <relations />
+        </xsd:appinfo>
+    </xsd:annotation>
+</xsd:schema>

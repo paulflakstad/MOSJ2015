@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+
+    <xsd:include schemaLocation="opencms://opencms-xmlcontent.xsd" />
+    <xsd:include schemaLocation="opencms://system/modules/no.npolar.common.pageelements/schemas/linklist.xsd"/>
+
+    <xsd:element name="MOSJMonitoringDataDetails" type="OpenCmsMOSJMonitoringDataDetails" />
+
+    <xsd:complexType name="OpenCmsMOSJMonitoringDataDetails">
+        <xsd:sequence>
+            <xsd:element name="MOSJMonitoringDataDetail" type="OpenCmsMOSJMonitoringDataDetail"
+                    minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="OpenCmsMOSJMonitoringDataDetail">
+        <xsd:sequence>
+            <xsd:element name="UpdateInterval" type="OpenCmsString" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="NextUpdate" type="OpenCmsString" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="Method" type="OpenCmsHtml" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="Quality" type="OpenCmsHtml" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="ReferenceLevel" type="OpenCmsHtml" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="AuthorativeInstitutions" type="OpenCmsLinkList" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="ExecutiveInstitutions" type="OpenCmsLinkList" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="ContactPersons" type="OpenCmsLinkList" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+        <xsd:attribute name="language" type="OpenCmsLocale" use="optional" />
+    </xsd:complexType>
+
+    <xsd:annotation>
+        <xsd:appinfo>
+            <resourcebundles>
+                <xmlbundle name="no.npolar.mosj">
+                    <bundle locale="en">
+                        <resource key="label.OpenCmsMOSJParameter.UpdateInterval">Update interval</resource>
+                        <resource key="label.OpenCmsMOSJParameter.NextUpdate">Next update</resource>
+                        <resource key="label.OpenCmsMOSJParameter.Method">Method</resource>
+                        <resource key="label.OpenCmsMOSJParameter.Quality">Quality</resource>
+                        <resource key="label.OpenCmsMOSJParameter.ReferenceLevel">Reference level</resource>
+                        <resource key="label.OpenCmsMOSJParameter.AuthorativeInstitutions">Authorative institution(s)</resource>
+                        <resource key="label.OpenCmsMOSJParameter.ExecutiveInstitutions">Executive institution(s)</resource>
+                        <resource key="label.OpenCmsMOSJParameter.Contact persons">Contact person(s)</resource>
+                    </bundle>
+                </xmlbundle>
+            </resourcebundles>
+            <!--<mappings>
+                <mapping element="ID" mapto="property:parameter.id" />
+            </mappings>-->
+            <layouts>
+                <layout element="Method" widget="HtmlWidget" configuration="link,source" />
+                <layout element="Quality" widget="HtmlWidget" configuration="link,source" />
+                <layout element="ReferenceLevel" widget="HtmlWidget" configuration="link,source" />
+            </layouts>
+            <validationrules />
+            <relations />
+        </xsd:appinfo>
+    </xsd:annotation>
+</xsd:schema>

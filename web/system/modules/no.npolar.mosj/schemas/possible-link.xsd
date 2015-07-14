@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+    <xsd:include schemaLocation="opencms://opencms-xmlcontent.xsd" />
+
+    <xsd:element name="MOSJPossibleLinks" type="OpenCmsMOSJPossibleLinks" />
+
+    <xsd:complexType name="OpenCmsMOSJPossibleLinks">
+        <xsd:sequence>
+            <xsd:element name="MOSJPossibleLink" type="OpenCmsMOSJPossibleLink" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="OpenCmsMOSJPossibleLink">
+        <xsd:sequence>
+            <xsd:element name="Text" type="OpenCmsString" />
+            <xsd:element name="URL" type="OpenCmsString" />
+            <xsd:element name="Comment" type="OpenCmsString" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+        <xsd:attribute name="language" type="OpenCmsLocale" use="optional" />
+    </xsd:complexType>
+
+    <xsd:annotation>
+        <xsd:appinfo>
+            <resourcebundles>
+                <xmlbundle name="no.npolar.mosj">
+                    <bundle locale="en">
+                        <resource key="label.OpenCmsMOSJPossibleLink.Text">Text</resource>
+                        <resource key="label.OpenCmsMOSJPossibleLink.URL">URL</resource>
+                        <resource key="label.OpenCmsMOSJPossibleLink.Comment">Comment</resource>
+                    </bundle>
+                    <bundle locale="no">
+                        <resource key="label.OpenCmsMOSJPossibleLink.Text">Text</resource>
+                        <resource key="label.OpenCmsMOSJPossibleLink.URL">URL</resource>
+                        <resource key="label.OpenCmsMOSJPossibleLink.Comment">Comment</resource>
+                    </bundle>
+                </xmlbundle>
+            </resourcebundles>
+            <mappings />
+            <layouts />
+            <validationrules>
+                <rule element="URL" regex="!(^$)|(^\s.*)|(.*\s$)" type="warning" message="Please avoid empty value, trailing space, and leading space here." />
+            </validationrules>
+            <relations />
+        </xsd:appinfo>
+    </xsd:annotation>
+</xsd:schema>

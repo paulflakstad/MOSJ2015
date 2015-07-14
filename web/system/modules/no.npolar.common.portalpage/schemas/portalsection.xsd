@@ -1,0 +1,48 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	
+    <xsd:include schemaLocation="opencms://opencms-xmlcontent.xsd"/>	
+    <xsd:include schemaLocation="opencms://system/modules/no.npolar.common.portalpage/schemas/portalsectioncontent.xsd" />
+    
+    <xsd:element name="PortalSections" type="OpenCmsPortalSections"/>
+
+    <xsd:complexType name="OpenCmsPortalSections">
+        <xsd:sequence>
+            <xsd:element name="PortalSection" type="OpenCmsPortalSection" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="OpenCmsPortalSection">
+        <xsd:sequence>
+            <xsd:element name="Heading" type="OpenCmsString" />
+            <xsd:element name="Columns" type="OpenCmsString" />
+            <!--<xsd:element name="Alignment" type="OpenCmsString" />-->
+            <xsd:element name="OverlayHeadings" type="OpenCmsBoolean" default="false" />
+            <xsd:element name="Boxed" type="OpenCmsBoolean" default="false" />
+            <xsd:element name="TextAsHoverBox" type="OpenCmsBoolean" default="true" />
+            <xsd:element name="CssClass" type="OpenCmsString" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="DynamicContent" type="OpenCmsVfsFile" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="Content" type="OpenCmsPortalSectionContent" minOccurs="1" maxOccurs="20" />
+        </xsd:sequence>
+        <xsd:attribute name="language" type="OpenCmsLocale" use="optional"/>
+    </xsd:complexType>
+
+    <xsd:annotation>
+        <xsd:appinfo>
+            <resourcebundle name="no.npolar.common.portalpage.workplace"/>
+            <layouts>
+                <layout element="Columns" widget="SelectorWidget" configuration="1|2|3|4" />
+                <!--<layout element="Alignment" widget="SelectorWidget" configuration="none:Unspecified|left:Left|right:Right" />-->
+            </layouts>
+            <searchsettings>
+                <searchsetting element="Columns" searchcontent="false" />
+                <!--<searchsetting element="Alignment" searchcontent="false" />-->
+                <searchsetting element="OverlayHeadings" searchcontent="false" />
+                <searchsetting element="Boxed" searchcontent="false" />
+                <searchsetting element="TextAsHoverBox" searchcontent="false" />
+                <searchsetting element="DynamicContent" searchcontent="false" />
+                <searchsetting element="CssClass" searchcontent="false" />
+            </searchsettings>
+        </xsd:appinfo>
+    </xsd:annotation>
+    
+</xsd:schema>

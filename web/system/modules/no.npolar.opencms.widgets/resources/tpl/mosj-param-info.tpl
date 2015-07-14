@@ -1,0 +1,1 @@
+<p><strong>%(titles:title[lang=__PROP[locale.secondary]])</strong><br>%(__function:getTimeSeriesForParam[lang=__PROP[locale.secondary]])</p>

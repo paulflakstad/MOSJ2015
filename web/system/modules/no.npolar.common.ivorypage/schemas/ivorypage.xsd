@@ -1,0 +1,75 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	
+    <xsd:include schemaLocation="opencms://opencms-xmlcontent.xsd"/>
+    <xsd:include schemaLocation="opencms://system/modules/no.npolar.common.pageelements/schemas/paragraph.xsd"/>
+    <xsd:include schemaLocation="opencms://system/modules/no.npolar.common.pageelements/schemas/extension.xsd"/>
+    <xsd:include schemaLocation="opencms://system/modules/no.npolar.common.pageelements/schemas/linklist.xsd"/>
+    <xsd:include schemaLocation="opencms://system/modules/no.npolar.common.pageelements/schemas/linklistgroup.xsd"/>
+    
+    <xsd:element name="IvoryPages" type="OpenCmsIvoryPages"/>
+
+    <xsd:complexType name="OpenCmsIvoryPages">
+        <xsd:sequence>
+            <xsd:element name="IvoryPage" type="OpenCmsIvoryPage" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="OpenCmsIvoryPage">
+        <xsd:sequence>
+            <xsd:element name="PageTitle" type="OpenCmsString" />
+            <xsd:element name="Author" type="OpenCmsString" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="AuthorMail" type="OpenCmsString" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="ShareLinks" type="OpenCmsBoolean" default="false" />
+            <xsd:element name="Category" type="OpenCmsString" minOccurs="0" maxOccurs="20" />
+            <xsd:element name="Extension" type="OpenCmsExtension" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="Intro" type="OpenCmsHtml" />
+            <xsd:element name="Paragraph" type="OpenCmsParagraph" minOccurs="1" maxOccurs="unbounded" />
+            <xsd:element name="FactPages" type="OpenCmsVfsFile" minOccurs="0" maxOccurs="10" />
+            <!-- attached links -->
+            <xsd:element name="Attachments" type="OpenCmsLinkList" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="RelatedPages" type="OpenCmsLinkList" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="FactSheets" type="OpenCmsLinkList" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="ExternalLinks" type="OpenCmsLinkList" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="OtherLinks" type="OpenCmsLinkListGroup" minOccurs="0" maxOccurs="10" />
+        </xsd:sequence>
+        <xsd:attribute name="language" type="OpenCmsLocale" use="optional" />
+    </xsd:complexType>
+
+    <xsd:annotation>
+        <xsd:appinfo>
+            <resourcebundle name="no.npolar.common.ivorypage.workplace" />
+            <mappings>
+                <mapping element="PageTitle" mapto="property:Title" />
+                <mapping element="Intro" mapto="property:Description" />
+                <mapping element="Extension/URI" mapto="property:template-include-file" />
+                <mapping element="Extension/WrapInside" mapto="property:template-include-file-wrap" />
+                <mapping element="Extension/SearchFolder" mapto="property:template-search-folder" />
+                <mapping element="FactPages" mapto="propertyList:uri.related" />
+            </mappings>
+            <layouts>
+                <layout element="Intro" widget="HtmlWidget" configuration="height:100px,source,link" />
+                <layout element="Category" widget="CategoryWidget" configuration="onlyleafs=false|property=category" />
+            </layouts>
+            <!--
+            <relations>
+                    <relation element="Paragraph/FillImage/URI" type="strong" invalidate="false" />
+            </relations>
+            -->
+            <searchsettings>
+                <searchsetting element="Category" searchcontent="false" />
+                <searchsetting element="Attachments" searchcontent="false" />
+                <searchsetting element="RelatedPages" searchcontent="false" />
+                <searchsetting element="FactSheets" searchcontent="false" />
+                <searchsetting element="FactPages" searchcontent="false" />
+                <searchsetting element="ExternalLinks" searchcontent="false" />
+                <searchsetting element="OtherLinks" searchcontent="false" />
+                <searchsetting element="ShareLinks" searchcontent="false" />
+            </searchsettings>
+            <!--<defaults>
+                <default element="Author" value="${currentuser.fullname}"/>
+                <default element="AuthorMail" value="${currentuser.email}"/>
+            </defaults>-->
+        </xsd:appinfo>
+    </xsd:annotation> 
+    
+</xsd:schema>

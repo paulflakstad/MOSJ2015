@@ -1,0 +1,41 @@
+#header,
+#leftside,
+#footer,
+#ocms-page-info,
+#cms_res_info_toggler,
+#skipnav,
+#jsbox,
+#nav_breadcrumb_wrap,
+#contentstart {
+	display:none !important;
+}
+#docwrap,
+#mainwrap,
+#content {
+	width:100%;
+	max-width:100%;
+}
+a {
+	word-wrap: break-word;
+}
+a:after {
+	content: " (" attr(href) ")";
+	font-size: 80%;
+}
+a[href^="#"]:after,
+a.highslide:after {
+	display: none;
+}
+body {
+	/*font-family:Georgia, "Times New Roman", Times, serif !important;*/
+	color:#000;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+.searchbox-big {
+	/*page-break-after:avoid;*/
+}

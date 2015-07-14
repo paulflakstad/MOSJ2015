@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+
+    <xsd:include schemaLocation="opencms://opencms-xmlcontent.xsd" />
+    <xsd:include schemaLocation="opencms://system/modules/no.npolar.mosj/schemas/time-series-customization.xsd"/>
+    <xsd:include schemaLocation="opencms://system/modules/no.npolar.mosj/schemas/custom-setting.xsd"/>
+    <xsd:include schemaLocation="opencms://system/modules/no.npolar.common.pageelements/schemas/linklist.xsd"/>
+
+    <xsd:element name="MOSJParameters" type="OpenCmsMOSJParameters" />
+
+    <xsd:complexType name="OpenCmsMOSJParameters">
+        <xsd:sequence>
+            <xsd:element name="MOSJParameter" type="OpenCmsMOSJParameter"
+                    minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="OpenCmsMOSJParameter">
+        <xsd:sequence>
+            <!-- Parameter ID: Hooks the parameter to its data set(s) -->
+            <xsd:element name="ID" type="OpenCmsString" />
+            <!-- Chart customization -->
+            <xsd:element name="ParameterCustomization" type="OpenCmsMOSJCustomSetting" minOccurs="0" maxOccurs="30" />
+            <xsd:element name="TimeSeriesCustomization" type="OpenCmsMOSJTimeSeriesCustomization" minOccurs="0" maxOccurs="30" />
+            <!-- Parameter textual details -->
+            <xsd:element name="UpdateInterval" type="OpenCmsString" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="NextUpdate" type="OpenCmsString" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="Method" type="OpenCmsHtml" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="Quality" type="OpenCmsHtml" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="ReferenceLevel" type="OpenCmsHtml" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="AuthorativeInstitutions" type="OpenCmsLinkList" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="ExecutiveInstitutions" type="OpenCmsLinkList" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="ContactPersons" type="OpenCmsLinkList" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+        <xsd:attribute name="language" type="OpenCmsLocale" use="optional" />
+    </xsd:complexType>
+
+    <xsd:annotation>
+        <xsd:appinfo>
+            <resourcebundles>
+                <xmlbundle name="no.npolar.mosj">
+                    <bundle locale="en">
+                        <resource key="label.OpenCmsMOSJParameter.ID">ID</resource>
+                        <resource key="label.OpenCmsMOSJParameter.ID.help">The ID of this parameter.</resource>
+                        <!--<resource key="dev.demo.ddheadincludearticle.default.Title">New article for Dev Demo template using
+                                headinclude tag</resource>-->
+                        <resource key="label.OpenCmsMOSJParameter.ParameterCustomization">Parameter customization</resource>
+                        <resource key="label.OpenCmsMOSJParameter.ParameterCustomization.help">Custom settings for the chart visualization of all time series in this parameter.</resource>
+                        <resource key="label.OpenCmsMOSJParameter.TimeSeriesCustomization">Time series customization</resource>
+                        <resource key="label.OpenCmsMOSJParameter.TimeSeriesCustomization.help">Custom settings for the chart visualization of individual time series in this parameter.</resource>
+                        <resource key="label.OpenCmsMOSJParameter.UpdateInterval">Update interval</resource>
+                        <resource key="label.OpenCmsMOSJParameter.NextUpdate">Next update</resource>
+                        <resource key="label.OpenCmsMOSJParameter.Method">Method</resource>
+                        <resource key="label.OpenCmsMOSJParameter.Quality">Quality</resource>
+                        <resource key="label.OpenCmsMOSJParameter.ReferenceLevel">Reference level</resource>
+                        <resource key="label.OpenCmsMOSJParameter.AuthorativeInstitutions">Authorative institution(s)</resource>
+                        <resource key="label.OpenCmsMOSJParameter.ExecutiveInstitutions">Executive institution(s)</resource>
+                        <resource key="label.OpenCmsMOSJParameter.Contact persons">Contact person(s)</resource>
+                    </bundle>
+                </xmlbundle>
+            </resourcebundles>
+            <!--<mappings>
+                <mapping element="ID" mapto="property:parameter.id" />
+            </mappings>-->
+            <layouts>
+                <layout element="ID" widget="StringSuggestWidget" configuration="{conf_uri:'conf/mosj-param-id.conf'}" />
+                <layout element="Method" widget="HtmlWidget" configuration="link,source" />
+                <layout element="Quality" widget="HtmlWidget" configuration="link,source" />
+                <layout element="ReferenceLevel" widget="HtmlWidget" configuration="link,source" />
+            </layouts>
+            <validationrules />
+            <relations />
+        </xsd:appinfo>
+    </xsd:annotation>
+</xsd:schema>

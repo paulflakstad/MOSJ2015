@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+    <xsd:include schemaLocation="opencms://opencms-xmlcontent.xsd" />
+
+    <xsd:element name="MOSJReferences" type="OpenCmsMOSJReferences" />
+
+    <xsd:complexType name="OpenCmsMOSJReferences">
+        <xsd:sequence>
+            <xsd:element name="MOSJReference" type="OpenCmsMOSJReference" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="OpenCmsMOSJReference">
+        <xsd:sequence>
+            <xsd:element name="ID" type="OpenCmsString" />
+            <xsd:element name="Text" type="OpenCmsHtml" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+        <xsd:attribute name="language" type="OpenCmsLocale" use="optional" />
+    </xsd:complexType>
+
+    <xsd:annotation>
+        <xsd:appinfo>
+            <resourcebundles>
+                <xmlbundle name="no.npolar.mosj">
+                    <bundle locale="en">
+                        <resource key="label.OpenCmsMOSJReference.ID">ID</resource>
+                        <resource key="label.OpenCmsMOSJReference.Text">Text</resource>
+                    </bundle>
+                </xmlbundle>
+            </resourcebundles>
+            <layouts>
+                <layout element="ID" widget="StringSuggestWidget" configuration="{conf_uri:'conf/mosj-publication-id.conf'}" />
+                <layout element="Text" widget="HtmlWidget" configuration="link,source" />
+            </layouts>
+            <validationrules />
+            <relations />
+            <searchsettings>
+                <searchsetting element="ID" searchcontent="false" />
+            </searchsettings>
+        </xsd:appinfo>
+    </xsd:annotation>
+    
+</xsd:schema>

@@ -1,0 +1,58 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+    <xsd:include schemaLocation="opencms://opencms-xmlcontent.xsd"/>
+    
+    <xsd:element name="Images" type="OpenCmsImages"/>
+
+    <xsd:complexType name="OpenCmsImages">
+        <xsd:sequence>
+            <xsd:element name="Image" type="OpenCmsImage" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="OpenCmsImage">
+        <xsd:sequence>
+            <xsd:element name="URI" type="OpenCmsVfsFile" />
+            <xsd:element name="Title" type="OpenCmsString" />
+            <xsd:element name="Text" type="OpenCmsHtml" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="Source" type="OpenCmsString" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="ImageType" type="OpenCmsString" />
+            <xsd:element name="Size" type="OpenCmsString" />
+            <xsd:element name="Float" type="OpenCmsString" />
+        </xsd:sequence>
+        <xsd:attribute name="language" type="OpenCmsLocale" use="optional"/>
+    </xsd:complexType>
+
+    <xsd:annotation>
+        <xsd:appinfo>
+            <resourcebundle name="no.npolar.common.pageelements.workplace"/>
+            <layouts>
+                <layout element="URI" widget="ImageGalleryWidget" configuration="{useformat:true}" />
+                <layout element="Text" widget="HtmlWidget" configuration="height:100px,source,link" />
+                <layout element="ImageType" widget="SelectorWidget" configuration="Photo*|Graphics|Figure|Map|Illustration" />
+                <layout element="Size" widget="SelectorWidget" configuration="XS|S|M*|L|XL" />
+                <layout element="Float" widget="SelectorWidget" configuration="Left|Right*|None:Full width, before the text|After:Full width, after the text" />
+            </layouts>
+            <!-- validation rules, kept just for the sake of reference -->
+            <!--<validationrules>
+                <rule element="Title" regex="!.*[Ee]rror.*" message="${key.editor.errormessage.Article.mustnotcontainerror|${validation.path}}" />
+                <rule element="Title" regex="!.*[Ww]arn.*" type="warning" message="${key.editor.warning.Article.mustnotcontainwarn|${validation.path}}"/>
+                <rule element="Text" regex="!.*[Ww]arn.*" type="warning" message="${key.editor.warning.Article.mustnotcontainwarn|${validation.path}}"/>
+            </validationrules>-->
+			<validationrules>
+                <rule element="Title" type="warning" regex="^.*[\S]+.*$" message="You should provide an alternative text for the image." />
+                <rule element="URI" regex="^.*[\S]+.*$" message="You must provide a URI for this image." />
+            </validationrules>
+            <relations>
+                <relation element="URI" invalidate="false" type="strong" /><!-- make the image a strong link to whatever file it is used inside -->
+            </relations>
+            <searchsettings>
+                <searchsetting element="URI" searchcontent="false" />
+                <searchsetting element="ImageType" searchcontent="false" />
+                <searchsetting element="Size" searchcontent="false" />
+                <searchsetting element="Float" searchcontent="false" />
+            </searchsettings>
+        </xsd:appinfo>
+    </xsd:annotation>  
+    
+</xsd:schema>

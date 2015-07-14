@@ -1,0 +1,53 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	
+    <xsd:include schemaLocation="opencms://opencms-xmlcontent.xsd" />
+    <xsd:include schemaLocation="opencms://system/modules/no.npolar.common.pageelements/schemas/image.xsd" />
+    <xsd:include schemaLocation="opencms://system/modules/no.npolar.common.pageelements/schemas/paragraph.xsd"/>
+    <xsd:include schemaLocation="opencms://system/modules/no.npolar.common.portalpage/schemas/portalcarousel.xsd" />
+    <xsd:include schemaLocation="opencms://system/modules/no.npolar.common.portalpage/schemas/portalsection.xsd" />
+    <xsd:include schemaLocation="opencms://system/modules/no.npolar.common.portalpage/schemas/portalsectioncontent.xsd" />
+    
+    <xsd:element name="PortalPages" type="OpenCmsPortalPages" />	
+
+    <xsd:complexType name="OpenCmsPortalPages">
+        <xsd:sequence>
+            <xsd:element name="PortalPage" type="OpenCmsPortalPage" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="OpenCmsPortalPage">
+        <xsd:sequence>
+            <!--<xsd:element name="Columns" type="OpenCmsString" />-->
+            <xsd:element name="Title" type="OpenCmsString" />
+            <!--<xsd:element name="ShareLinks" type="OpenCmsBoolean" default="true" />-->
+            <xsd:element name="Intro" type="OpenCmsHtml" />
+            <xsd:element name="IntroAsOverlay" type="OpenCmsBoolean" default="false" />
+            <xsd:element name="IntroStyle" type="OpenCmsString" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="HeroImage" type="OpenCmsImage" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="ReadMore" type="OpenCmsParagraph" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="Carousel" type="OpenCmsPortalCarousel" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="BigSection" type="OpenCmsParagraph" minOccurs="0" maxOccurs="5" />
+            <xsd:element name="Section" type="OpenCmsPortalSection" minOccurs="1" maxOccurs="20" />
+        </xsd:sequence>
+        <xsd:attribute name="language" type="OpenCmsLocale" use="optional" />
+    </xsd:complexType>
+
+    <xsd:annotation>
+        <xsd:appinfo>
+            <resourcebundle name="no.npolar.common.portalpage.workplace" />
+            <mappings>
+                <mapping element="Title" mapto="property:Title" />
+                <mapping element="Intro" mapto="property:Description" />
+            </mappings>
+            <layouts>
+                <!--<layout element="Columns" widget="SelectorWidget" configuration="4|3" />-->
+                <layout element="Intro" widget="HtmlWidget" configuration="source,link,height:100px" />
+            </layouts>
+            <searchsettings>
+                <!--<searchsetting element="ShareLinks" searchcontent="false" />-->
+                <searchsetting element="Carousel" searchcontent="false" />
+            </searchsettings>
+        </xsd:appinfo>
+    </xsd:annotation>
+    
+</xsd:schema>

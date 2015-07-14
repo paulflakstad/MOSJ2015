@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+
+    <xsd:include schemaLocation="opencms://opencms-xmlcontent.xsd" />
+    <xsd:include schemaLocation="opencms://system/modules/no.npolar.mosj/schemas/custom-setting.xsd" />
+    <!--<xsd:include schemaLocation="opencms://system/modules/no.npolar.mosj/schemas/override-setting.xsd" />-->
+
+    <xsd:element name="MOSJTimeSeriesCustomizations" type="OpenCmsMOSJTimeSeriesCustomizations" />
+
+    <xsd:complexType name="OpenCmsMOSJTimeSeriesCustomizations">
+        <xsd:sequence>
+            <xsd:element name="MOSJTimeSeriesCustomization" type="OpenCmsMOSJTimeSeriesCustomization"
+                    minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="OpenCmsMOSJTimeSeriesCustomization">
+        <xsd:sequence>
+            <xsd:element name="TimeSeriesID" type="OpenCmsString" />
+            <xsd:element name="Setting" type="OpenCmsMOSJCustomSetting" minOccurs="1" maxOccurs="20" />
+        </xsd:sequence>
+        <xsd:attribute name="language" type="OpenCmsLocale" use="optional" />
+    </xsd:complexType>
+
+    <xsd:annotation>
+        <xsd:appinfo>
+            <resourcebundles>
+                <xmlbundle name="no.npolar.mosj">
+                    <bundle locale="en">
+                        <resource key="label.OpenCmsMOSJTimeSeriesCustomization.TimeSeriesID">Time series ID</resource>
+                        <resource key="label.OpenCmsMOSJTimeSeriesCustomization.TimeSeriesID.help">The ID of the time series.</resource>
+                        <!--<resource key="dev.demo.ddheadincludearticle.default.Title">New article for Dev Demo template using
+                                headinclude tag</resource>-->
+                        <resource key="label.OpenCmsMOSJTimeSeriesCustomization.Setting">Setting</resource>
+                        <resource key="label.OpenCmsMOSJTimeSeriesCustomization.Setting.help">Custom setting for the chart visualization of this time series.</resource>
+                    </bundle>
+                </xmlbundle>
+            </resourcebundles>
+            <layouts />
+            <validationrules />
+            <relations />
+        </xsd:appinfo>
+    </xsd:annotation>
+</xsd:schema>
