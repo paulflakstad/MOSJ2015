@@ -137,7 +137,8 @@
 /* Remove left margin on boxes to the far left */
 .double .boxes > div:nth-child(odd),
 .quadruple .boxes > div:nth-child(2n+1),
-.triple .boxes > div:nth-child(odd),
+/*.triple .boxes > div:nth-child(odd),*/
+.triple .boxes > div:nth-child(2n+2),
 .portal .news-list .news:nth-child(odd) {
 	margin-left:0;
 	clear:left;

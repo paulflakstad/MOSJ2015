@@ -564,7 +564,8 @@ h5 {
 
 /* Column-enabled content */
 .quadruple .boxes > div:nth-child(2n+1),
-.triple .boxes > div:nth-child(odd) {
+/*.triple .boxes > div:nth-child(odd)*/
+.triple .boxes > div:nth-child(2n+2) {
     clear:none;
 }
 
