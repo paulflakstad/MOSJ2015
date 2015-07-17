@@ -8,6 +8,9 @@
 /web/META-INF/
 /web/WEB-INF/
 *~
+# Subversion files
+.svn/
+.svn/
 
 # Windows image file caches
 Thumbs.db

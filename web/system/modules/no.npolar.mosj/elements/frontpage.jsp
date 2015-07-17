@@ -127,9 +127,11 @@ $(document).ready(function() {
     if (!nonResIE()) {
         $('head').append('<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.min.css" type="text/css" />');
         $.getScript('//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js', function() {
-            $.getScript('<%= cms.link("/system/modules/no.npolar.opencms.widgets/resources/js/string-suggest-widget-helpers.js") %>', function() {
-                $.getScript('<%= cms.link("/system/modules/no.npolar.opencms.widgets/resources/js/string-suggest-widget.js") %>', function() {
-                    setupSuggest(JSON.stringify(myConf), document.getElementById('search-indicator-name'), '');
+            $.getScript('<%= cms.link("/system/modules/no.npolar.opencms.widgets/resources/js/underscore.min.js") %>', function() {
+                $.getScript('<%= cms.link("/system/modules/no.npolar.opencms.widgets/resources/js/string-suggest-widget-helpers.js") %>', function() {
+                    $.getScript('<%= cms.link("/system/modules/no.npolar.opencms.widgets/resources/js/string-suggest-widget.js") %>', function() {
+                        setupSuggest(JSON.stringify(myConf), document.getElementById('search-indicator-name'), '');
+                    });
                 });
             });
         });
