@@ -2,7 +2,7 @@
     Document   : ivorypage.jsp
     Created on : 02.jun.2010, 15:18:49
     Author     : Paul-Inge Flakstad <flakstad at npolar.no>
---%><%@ page import="no.npolar.util.CmsAgent,
+--%><%@ page import="no.npolar.util.*,
                  no.npolar.util.contentnotation.*,
                  java.util.Locale,
                  java.util.Date,
@@ -64,13 +64,14 @@ I_CmsXmlContentContainer container  = null;
 // String variables for structured content elements
 String pageTitle                    = null;
 String pageIntro                    = null;
+String imgUri                       = null;
 // Include-file variables
 String includeFile                  = cms.property("template-include-file");
 boolean wrapInclude                 = cms.property("template-include-file-wrap") != null ?
                                             (cms.property("template-include-file-wrap").equalsIgnoreCase("outside") ? false : true) : true;
 // Template ("outer" or "master" template)
 String template                     = cms.getTemplate();
-String[] elements                   = null;
+String[] elements                   = new String[] { "head", "foot" };
 try { elements = cms.getTemplateIncludeElements(); } catch (Exception e) { elements = new String[] { "head", "foot" }; } // Should move this to CmsAgent
 
 
@@ -128,6 +129,7 @@ while (container.hasMoreContent()) {
     pageIntro = cms.contentshow(container, "Intro");
     author = cms.contentshow(container, "Author");
     authorMail = cms.contentshow(container, "AuthorMail");
+    imgUri = cms.contentshow(container, "HeroImage");
     /*shareLinksString= cms.contentshow(container, "ShareLinks");
     if (!CmsAgent.elementExists(shareLinksString))
         shareLinksString = "false"; // Default value if this element does not exist in the file (backward compatibility)
@@ -198,9 +200,26 @@ while (container.hasMoreContent()) {
     }
     */
     if (CmsAgent.elementExists(pageTitle)) {
+        if (cms.elementExists(imgUri)) {
+        %>
+
+
+        <section class="article-hero">
+            <div class="article-hero-content">
+                <h1><%= pageTitle %></h1>
+                <figure>
+                    <!--<img src="<%= cms.link(imgUri) %>" alt="" />-->
+                    <%= ImageUtil.getImage(cms, imgUri) %>
+                    <figcaption><%= cms.property("byline", imgUri, "") %></figcaption>
+                </figure>            
+            </div>
+        </section>
+        <%
+        } else {
         %>
         <h1><%= pageTitle %></h1>
         <%
+        }
     }
     if (byline != null)
         out.println(byline);

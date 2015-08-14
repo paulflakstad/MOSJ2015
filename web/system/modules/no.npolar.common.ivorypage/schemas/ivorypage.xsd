@@ -17,20 +17,21 @@
     <xsd:complexType name="OpenCmsIvoryPage">
         <xsd:sequence>
             <xsd:element name="PageTitle" type="OpenCmsString" />
-            <xsd:element name="Author" type="OpenCmsString" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="AuthorMail" type="OpenCmsString" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="ShareLinks" type="OpenCmsBoolean" default="false" />
-            <xsd:element name="Category" type="OpenCmsString" minOccurs="0" maxOccurs="20" />
+            <!--<xsd:element name="Author" type="OpenCmsString" minOccurs="0" maxOccurs="1" />-->
+            <!--<xsd:element name="AuthorMail" type="OpenCmsString" minOccurs="0" maxOccurs="1" />-->
+            <!--<xsd:element name="ShareLinks" type="OpenCmsBoolean" default="false" />-->
+            <!--<xsd:element name="Category" type="OpenCmsString" minOccurs="0" maxOccurs="20" />-->
+            <xsd:element name="HeroImage" type="OpenCmsVfsFile" minOccurs="0" maxOccurs="1" />
             <xsd:element name="Extension" type="OpenCmsExtension" minOccurs="0" maxOccurs="1" />
             <xsd:element name="Intro" type="OpenCmsHtml" />
             <xsd:element name="Paragraph" type="OpenCmsParagraph" minOccurs="1" maxOccurs="unbounded" />
-            <xsd:element name="FactPages" type="OpenCmsVfsFile" minOccurs="0" maxOccurs="10" />
+            <!--<xsd:element name="FactPages" type="OpenCmsVfsFile" minOccurs="0" maxOccurs="10" />-->
             <!-- attached links -->
             <xsd:element name="Attachments" type="OpenCmsLinkList" minOccurs="0" maxOccurs="1" />
             <xsd:element name="RelatedPages" type="OpenCmsLinkList" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="FactSheets" type="OpenCmsLinkList" minOccurs="0" maxOccurs="1" />
+            <!--<xsd:element name="FactSheets" type="OpenCmsLinkList" minOccurs="0" maxOccurs="1" />-->
             <xsd:element name="ExternalLinks" type="OpenCmsLinkList" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="OtherLinks" type="OpenCmsLinkListGroup" minOccurs="0" maxOccurs="10" />
+            <!--<xsd:element name="OtherLinks" type="OpenCmsLinkListGroup" minOccurs="0" maxOccurs="10" />-->
         </xsd:sequence>
         <xsd:attribute name="language" type="OpenCmsLocale" use="optional" />
     </xsd:complexType>
@@ -44,26 +45,26 @@
                 <mapping element="Extension/URI" mapto="property:template-include-file" />
                 <mapping element="Extension/WrapInside" mapto="property:template-include-file-wrap" />
                 <mapping element="Extension/SearchFolder" mapto="property:template-search-folder" />
-                <mapping element="FactPages" mapto="propertyList:uri.related" />
+                <!--<mapping element="FactPages" mapto="propertyList:uri.related" />-->
             </mappings>
             <layouts>
+                <layout element="HeroImage" widget="ImageGalleryWidget" configuration="{useformat:true}" />
                 <layout element="Intro" widget="HtmlWidget" configuration="height:100px,source,link" />
-                <layout element="Category" widget="CategoryWidget" configuration="onlyleafs=false|property=category" />
+                <!--<layout element="Category" widget="CategoryWidget" configuration="onlyleafs=false|property=category" />-->
             </layouts>
-            <!--
             <relations>
-                    <relation element="Paragraph/FillImage/URI" type="strong" invalidate="false" />
+                <relation element="HeroImage" type="strong" invalidate="false" />
             </relations>
-            -->
             <searchsettings>
-                <searchsetting element="Category" searchcontent="false" />
+                <!--<searchsetting element="Category" searchcontent="false" />-->
                 <searchsetting element="Attachments" searchcontent="false" />
                 <searchsetting element="RelatedPages" searchcontent="false" />
-                <searchsetting element="FactSheets" searchcontent="false" />
-                <searchsetting element="FactPages" searchcontent="false" />
+                <searchsetting element="HeroImage" searchcontent="false" />
+                <!--<searchsetting element="FactSheets" searchcontent="false" />-->
+                <!--<searchsetting element="FactPages" searchcontent="false" />-->
                 <searchsetting element="ExternalLinks" searchcontent="false" />
-                <searchsetting element="OtherLinks" searchcontent="false" />
-                <searchsetting element="ShareLinks" searchcontent="false" />
+                <!--<searchsetting element="OtherLinks" searchcontent="false" />-->
+                <!--<searchsetting element="ShareLinks" searchcontent="false" />-->
             </searchsettings>
             <!--<defaults>
                 <default element="Author" value="${currentuser.fullname}"/>
