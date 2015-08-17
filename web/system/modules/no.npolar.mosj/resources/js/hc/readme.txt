@@ -1,0 +1,1 @@
+The hc folder contains Highcharts files (unmodified). See http://www.highcharts.com/download
