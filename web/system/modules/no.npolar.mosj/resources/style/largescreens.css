@@ -466,6 +466,12 @@ h5 {
     box-shadow:0 0 150px rgba(0, 0, 0, 1);
 }
 .article-hero > img {
+    display:block;
+    position:absolute;
+    z-index:1;
+    /*top:-35%;*/
+    top:-20%;
+    max-height:120%;
     filter:blur(50px) brightness(95%);
     -ms-filter:blur(30px) brightness(100%);
     -moz-filter:blur(30px) brightness(100%);
@@ -473,12 +479,6 @@ h5 {
     -webkit-filter:blur(30px) brightness(100%);
     filter:blur(30px) brightness(100%);
     filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='30');
-    position:absolute;
-    /*top:-35%;*/
-    top:-20%;
-    z-index:1;
-    display:block;
-    max-height:150%;
 }
 .article-hero > canvas/*,
 #hero-canvas-overlay*/ {
