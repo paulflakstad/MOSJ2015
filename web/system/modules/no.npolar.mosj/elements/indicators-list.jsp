@@ -166,7 +166,7 @@ if (!portal) {
         iIndicatorFiles = indicatorFiles.iterator();
         %>
         <h3><%= LABEL_INDICATORS %></h3>
-        <ul class="blocklist">
+        <ul class="blocklist line-items">
         <%
         while (iIndicatorFiles.hasNext()) {
             CmsResource indicatorFile = iIndicatorFiles.next();
@@ -175,7 +175,7 @@ if (!portal) {
             String iUri = cmso.getSitePath(indicatorFile);
             String iMenuItemPath = getMenuItemPath(menu, iUri);
             %>
-            <li style="border-bottom:1px solid #ddd; margin:0; padding:1em 0 0.5em 0;">
+            <li>
                 <h3><a href="<%= iUri %>"><%= iTitle %></a></h3>
                 <p class="page-descr">
                     <%= iMenuItemPath != null ? "<aside class=\"page-path tag\">".concat(iMenuItemPath).concat("</aside> ") : "" %>
