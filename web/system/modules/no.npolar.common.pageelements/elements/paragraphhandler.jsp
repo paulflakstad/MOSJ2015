@@ -302,6 +302,8 @@ while (container.hasMoreContent()) {
                 if (!CmsAgent.elementExists(imageSizeChoice))
                     imageSizeChoice = "M"; // Default
                 imageFloatChoice= cms.contentshow(imageContainer, "Float");
+                if ("none".equalsIgnoreCase(imageFloatChoice) || "after".equalsIgnoreCase(imageFloatChoice))
+                    imageSizeChoice = "XL";
                 imageRescaleWidth = "right".equalsIgnoreCase(imageFloatChoice) || "left".equalsIgnoreCase(imageFloatChoice) ? IMAGE_WIDTH_FLOAT : IMAGE_WIDTH_FULL;
 
                 int imageHeight = -1;
@@ -337,7 +339,25 @@ while (container.hasMoreContent()) {
                                     + (scaled ? "" : " style=\"width:" + imageWidth + "px;\"")
                                     + " />";
                     // BEGIN NEW
-                    imageTag = ImageUtil.getImage(cms, imagePath, (CmsAgent.elementExists(imageTitle) ? imageTitle : null));
+                    //ImageUtil paragraphImage = new ImageUtil(cms, imageContainer); // Should make this work (but maybe in a separate class, not ImageUtil)
+                    List sizes = Arrays.asList(new String[] { "UNDEFINED", "S", "M", "L", "XL" }); // Fetched from ImageUtil.java ... for crying out loud ... this must be fixed.
+                    int sizeChoiceInt = sizes.indexOf(imageSizeChoice);
+                    int maxAbsSize = sizeChoiceInt <= ImageUtil.SIZE_M ? ImageUtil.DEFAULT_MAX_WIDTH/2 : ImageUtil.DEFAULT_MAX_WIDTH; // 600 or 1200
+                    if (sizeChoiceInt <= ImageUtil.SIZE_S) {
+                        maxAbsSize = ImageUtil.DEFAULT_MAX_WIDTH/3; // 400
+                    }
+                    // imageTag = ImageUtil.getImage(cms, imagePath, (CmsAgent.elementExists(imageTitle) ? imageTitle : null));
+                    imageTag = ImageUtil.getImage(
+                                                    cms, 
+                                                    imagePath, 
+                                                    (CmsAgent.elementExists(imageTitle) ? imageTitle : null), // null = "Use 'Description' property value"
+                                                    ImageUtil.CROP_RATIO_NO_CROP,
+                                                    maxAbsSize,
+                                                    100,
+                                                    sizeChoiceInt,
+                                                    90, // Slight compression should be all right
+                                                    "400px" // Floated images become linear at this width
+                                                );
                     
                     String hsLinkedImageUri = ImageUtil.getWidthConstrainedUri(cms, imagePath); // NOTE: Will be ready linked with cms.link(...)
                     
