@@ -30,8 +30,8 @@ public String getImageContainer(CmsAgent cms,
                                 String imageSize, 
                                 String imageFloat) {
     
-    final String IMAGE_CONTAINER = "span";
-    final String TEXT_CONTAINER = "span";
+    final String IMAGE_CONTAINER = "figure";
+    final String TEXT_CONTAINER = "figcaption";
     // CSS class strings to append to the HTML, defined by the given image size
     final Map<String, String> sizeClasses = new HashMap<String, String>();
     sizeClasses.put("S", " thumb");
