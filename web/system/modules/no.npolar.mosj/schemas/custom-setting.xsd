@@ -38,7 +38,7 @@
             </resourcebundles>
             <layouts>
                 <layout element="Name" widget="SelectorWidget" 
-                        configuration="name|type*|step|enforceEqualSteps|dots|maxStaggerLines|xLabelRotation|stacking|errorToggler|trendLine|orderIndex|connectNulls|color|lineThickness|dotThickness|minValue|integerValues|xAxisOnTop" />
+                        configuration="name|type*|step|enforceEqualSteps|dots|maxStaggerLines|xLabelRotation|stacking|errorToggler|trendLine|orderIndex|connectNulls|color|lineThickness|dotThickness|minValue|integerValues|xAxisOnTop|invertGrouping" />
                 <!--<layout element="Stacking" widget="SelectorWidget" configuration="normal*|percent" />-->
             </layouts>
             <validationrules>

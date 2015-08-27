@@ -739,6 +739,55 @@ $(document).ready( function() {
 	//loadAddThis();
 });
 
+/**
+ * Swaps the grouping of series name(s) and grouping of a HighCharts chart.
+ * 
+ * Example (try uncommenting the function code in chart.event.load):
+ * http://jsfiddle.net/dcus5fjs/1/
+ * 
+ * @param {jQuery} chart jQuery object referencing a HighCharts chart, e.g. $('#hc-container').highcharts();
+ * @returns {Boolean} True if all went well, false if not.
+ */
+function toggleHighChartsGrouping(/*jQuery*/chart) {
+    try {
+        var newLabels = [];
+        var newCatagories = [];
+        var newData = [];
+        //var chart = highChartsChart;//
+        var seriez = chart.series;
+        $.each(chart.xAxis[0].categories, function (i, name) {
+            newLabels.push(name);
+        });
+        $.each(seriez, function (x, serie) {
+            newCatagories.push(serie.name);
+            $.each(serie.data, function (z, point) {
+                if (newData[z] === undefined) {
+                    newData[z] = [];
+                }
+                if (newData[z][x] === undefined) {
+                    newData[z][x] = '';
+                }
+                newData[z][x] = point.y;
+            });
+        });
+        while (chart.series.length > 0) {
+            chart.series[0].remove(true);
+        }
+        chart.xAxis[0].setCategories(newCatagories, false);
+        $.each(newData, function (key, newSeries) {
+            chart.addSeries({
+                name: newLabels[key],
+                data: newSeries
+            }, false);
+        });
+        chart.redraw();
+    } catch (err) {
+        console.log('commons.js: Toggle HighCharts grouping failed: ' + err.message);
+        return false;
+    }
+    return true;
+}
+
 
 /**
  * Highslide settings
