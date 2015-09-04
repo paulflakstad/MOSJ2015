@@ -747,6 +747,7 @@ $(document).ready( function() {
  * 
  * @param {jQuery} chart jQuery object referencing a HighCharts chart, e.g. $('#hc-container').highcharts();
  * @returns {Boolean} True if all went well, false if not.
+ * @see http://jsfiddle.net/srLtL5qd/
  */
 function toggleHighChartsGrouping(/*jQuery*/chart) {
     try {
