@@ -616,10 +616,11 @@ ul.line-items li {
     display:block;
     color:#1570B1;
     transition:all .5s;
+    position:relative;
 }
 .toggletrigger:hover {
     background:#eee;
-    box-shadow:0 0 10em rgba(0,0,0,0.08) inset;
+    /*box-shadow:0 0 10em rgba(0,0,0,0.25) inset;*/
 }
 .toggletarget {
     border:1px solid #f5f5f5;
@@ -632,10 +633,9 @@ ul.line-items li {
 .toggletrigger .icon-up-open-big,
 .toggletrigger .icon-down-open-big {
     background-color:#fff;
-    border-radius:50%;
+    border-radius:3px;
     transition:all 0.5s;
-    box-shadow:0 0 2px rgba(0,0,0,0.1);
-    
+    box-shadow:none;
     float:right;
 }
 .toggletrigger:hover .icon-up-open-big,
@@ -667,6 +667,9 @@ ul.line-items li {
     color: #fff;
     text-decoration:none;
 }
+.parameter-wrapper > .toggletrigger:hover {
+    background-color:#680101;
+}
 .parameter-wrapper .toggletrigger {
     padding-top:0.4em;
     padding-bottom:0.4em;
@@ -678,7 +681,7 @@ ul.line-items li {
     /*background-color:#eac8c8;*/
     /*border-color:#8b0000;*/
     
-    background-color:#dba4a4;
+    background-color:#f4d3d3;
     border:none;
 }
 .parameter-wrapper > .toggletrigger .icon-up-open-big,
@@ -699,18 +702,32 @@ ul.line-items li {
     background-color:#af5f5f;
     color:#fff;
 }
+.parameter-details-wrapper .toggletrigger:hover {
+    background-color:#7C2E2E;
+}
 .parameter-data-table-wrapper {
     margin-bottom:1em;
     margin-top:-1em;
 }
-.parameter-data-table-wrapper .toggletrigger {
+.parameter-data-table-wrapper .toggletrigger,
+.parameter-data-table-wrapper .toggletrigger:hover {
     /*background-color:#3a68a6;
     color:#fff;*/
+    background-color:#307CB2;
+    color:#fff;
+}
+.parameter-data-table-wrapper .toggletrigger:hover {
+    background-color:#125B90;
+}
+.parameter-data-table-wrapper .toggletrigger .icon-up-open-big, 
+.parameter-data-table-wrapper .toggletrigger .icon-down-open-big {
+    color:#307CB2;
 }
 .parameter-data-table-wrapper > .toggletarget {
     width:100%;
     overflow:auto;
     background-color:#fff;
+    padding-top:3em;
 }
 
 .parameter-wrapper table {
@@ -2082,7 +2099,8 @@ nav .pageNumWrap {
 
 /* General (& primary) call-to-action links */
 /*a*/.cta {
-    background-color: #3a68a6;
+    /*background-color: #3a68a6;*/
+    background-color: #307CB2;
     border-radius: 5px;
     box-shadow: 0 0 1px rgba(0, 0, 0, 0.5), 0 0 2px rgba(0, 0, 0, 0.3) inset;
     color: #f5f5f5;
@@ -2098,7 +2116,8 @@ nav .pageNumWrap {
     cursor:pointer;
     box-shadow:none;
     /*border-color:#666;*/
-    background-color:#33598c;
+    /*background-color:#33598c;*/
+    background-color:#125B90;
     color:#fff;
 }
 /* Alternative (secondary) call-to-action links */
