@@ -242,7 +242,7 @@ while (container.hasMoreContent()) {
             //wrapperClass = "";
         }
         
-        try { accordion = wrapperClass.contains("toggleable") ? true : false; } catch (Exception e) {}
+        try { accordion = wrapperClass.contains("toggleable") ? true : false; } catch (Exception e) { accordion = false; }
         try { accordionCollapsed = accordion && wrapperClass.contains("collapsed") ? true : false; } catch (Exception e) {}
         
         //out.println("<div class=\"paragraph\">");
