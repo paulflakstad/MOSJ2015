@@ -1862,7 +1862,7 @@ h4.news-title {
 }
 .main-content {
     width:100%;
-    padding-bottom:1em;
+    padding-bottom:6em;
     background-color:#fff;
     /*margin-top:-2.5rem;*/ /* = height of breadcrumb */
 }
