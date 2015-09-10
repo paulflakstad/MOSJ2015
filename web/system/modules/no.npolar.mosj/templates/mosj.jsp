@@ -491,6 +491,9 @@ out.println(cms.getHeaderElement(CmsAgent.PROPERTY_HEAD_SNIPPET, requestFileUri)
     <!--</div>--><!-- #docwrap -->
     
     <footer id="footer">
+        <aside class="partner-logos">
+            <%= cms.getContent("/"+loc+"/partner-logos.txt") %>
+        </aside>
         <div id="footer-content">
             <div class="clearfix double layout-group">
                 <div class="clearfix boxes">

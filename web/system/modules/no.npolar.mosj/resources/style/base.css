@@ -240,7 +240,8 @@ body {
     box-shadow:0 -0.3em 0.2em rgba(0,0,0,0.25);
     /*background-color:#000;*/
     /*background-color:#1e4559;*/
-    background-color:#0e131f;
+    /*background-color:#0e131f;*/
+    background-color:#eee;
     text-align:center;
 }
 #footer-content {
@@ -252,10 +253,10 @@ body {
 #footer h4,
 #footer h5 {
     /*color:#eee;*/
-    color:#b9d2df;
+    color:#666;
 }
 #footer a:hover {
-    color:#fff;
+    color:#333;
 }
 #footer ul {
     list-style:none;
@@ -1398,6 +1399,93 @@ h4.news-title {
 }
 
 
+/*
+* Cooperating institution logos
+*/
+.partner-logos {
+    padding:1em;
+}
+.partner-logos ul {
+    text-align:center;
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:block;
+}
+.partner-logos li {
+    display:inline;
+}
+.partner-logos a,
+.partner-logos a:after {
+    /*background-image:url('logos-sprite.png');*/
+    background-image:url('logos-sprite-50px.png');
+    display:inline-block;
+}
+.partner-logos a {
+    /*width:100px;
+    height:100px;*/
+    width:50px;
+    height:50px;
+    position:relative;
+}
+.partner-logos a:after {
+    content:"";
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    opacity:1;
+    -webkit-transition:opacity 0.3s;
+    -moz-transition:opacity 0.3s;
+    -o-transition:opacity 0.3s;
+    transition:opacity 0.3s;
+}
+.partner-logos a:hover:after {
+    opacity:0;
+}
+/* 100px */
+/*.logo-npi:after { background-position:0 0; }
+.logo-imr:after { background-position:-100px 0; }
+.logo-sms:after { background-position:-200px 0; }
+.logo-met:after { background-position:-300px 0; }
+.logo-ra:after { background-position:-400px 0; }
+.logo-md:after { background-position:-500px 0; }
+.logo-nilu:after { background-position:-600px 0; }
+.logo-nifes:after { background-position:-700px 0; }
+.logo-nrpa:after { background-position:-800px 0; }
+.logo-fdir:after { background-position:-900px 0; }
+.logo-npi { background-position:0 100px; }
+.logo-imr { background-position:-100px 100px; }
+.logo-sms { background-position:-200px 100px; }
+.logo-met { background-position:-300px 100px; }
+.logo-ra { background-position:-400px 100px; }
+.logo-md { background-position:-500px 100px; }
+.logo-nilu { background-position:-600px 100px; }
+.logo-nifes { background-position:-700px 100px; }
+.logo-nrpa { background-position:-800px 100px; }
+.logo-fdir { background-position:-900px 100px; }*/
+/* 50px */
+.logo-npi:after { background-position:0 0; }
+.logo-imr:after { background-position:-50px 0; }
+.logo-sms:after { background-position:-100px 0; }
+.logo-met:after { background-position:-150px 0; }
+.logo-ra:after { background-position:-200px 0; }
+.logo-md:after { background-position:-250px 0; }
+.logo-nilu:after { background-position:-300px 0; }
+.logo-nifes:after { background-position:-350px 0; }
+.logo-nrpa:after { background-position:-400px 0; }
+.logo-fdir:after { background-position:-450px 0; }
+.logo-npi { background-position:0 50px; }
+.logo-imr { background-position:-50px 50px; }
+.logo-sms { background-position:-100px 50px; }
+.logo-met { background-position:-150px 50px; }
+.logo-ra { background-position:-200px 50px; }
+.logo-md { background-position:-250px 50px; }
+.logo-nilu { background-position:-300px 50px; }
+.logo-nifes { background-position:-350px 50px; }
+.logo-nrpa { background-position:-400px 50px; }
+.logo-fdir { background-position:-450px 50px; }
 
 
 
