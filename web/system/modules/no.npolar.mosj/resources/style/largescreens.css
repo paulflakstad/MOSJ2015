@@ -793,6 +793,7 @@ orange  |  red  |  lightblue  |  green
     transform: translate(-50%, -50%);
     width: auto;*/
 }
+h2.portal-box-heading.overlay,
 .indicators-list .card h2.portal-box-heading.overlay {
     font-size:1.65em;
 }

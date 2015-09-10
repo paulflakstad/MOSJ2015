@@ -2660,7 +2660,7 @@ a .overlay {
     display:block;
 }
 h2.portal-box-heading.overlay {
-    font-size: 1.65em;
+    font-size: 1.1em; /**/
 }
 
 section h3.section-heading {
