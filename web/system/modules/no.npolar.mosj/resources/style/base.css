@@ -732,6 +732,7 @@ ul.line-items li {
 
 .parameter-wrapper table {
     table-layout:fixed;
+    margin-bottom:2em;
     /*border:2px solid red;*/
     /*width:100%;*/
 }
@@ -970,6 +971,7 @@ h1 .scientific-name {
 .paragraph ol,
 .paragraph dl {
     line-height:1.5em;
+    margin-bottom:1.5em;
 }
 .paragraph p {
     margin-top: 0;
