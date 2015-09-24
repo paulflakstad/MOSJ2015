@@ -2,11 +2,14 @@
     Document   : indicator
     Created on : Dec 10, 2014, 1:30:18 PM
     Author     : Paul-Inge Flakstad, Norwegian Polar Institute
---%><%@page import="org.opencms.jsp.*,
+--%><%@page import="org.apache.commons.lang.StringEscapeUtils,
+            org.opencms.jsp.*,
             org.opencms.file.*,
             org.opencms.main.*,
             org.opencms.xml.*,
             org.opencms.json.*,
+            org.opencms.util.CmsRequestUtil,
+            org.opencms.util.CmsStringUtil,
             java.util.*,
             org.opencms.security.*,
             no.npolar.util.*,
@@ -76,6 +79,21 @@ public String getDefinitionListItem(String title, String data, boolean preTagged
     return "<dt>" + title + "</dt>\n" + (preTaggedData ? "" : "<dd>") + data + (preTaggedData ? "" : "</dd>");
 }
 
+/**
+ * Determine if the given URL identifies something that should open in a new
+ * tab / window (target="_blank").
+ * 
+ * @param url  The URL to evaluate.
+ * @return True if the URL identifies something that should open in a new tab / window, false if not.
+ */
+public boolean isTargetBlank(String url) {
+    if (url == null || url.trim().isEmpty())
+        return false;
+    return url.contains("//svalbardkartet.npolar.no/") 
+            || url.contains("//toposvalbard.npolar.no/")
+            || url.endsWith(".pdf") || url.endsWith(".PDF");
+}
+
 public String createLinkList(I_CmsXmlContentContainer linksContainer, String elementName, CmsAgent cms, boolean asDefinitionDataItems, String defaultItemContent) {
     String linkItems = "";
     String linkItemTag = asDefinitionDataItems ? "dd" : "li";
@@ -91,7 +109,13 @@ public String createLinkList(I_CmsXmlContentContainer linksContainer, String ele
                 if (CmsAgent.elementExists(linkText) || CmsAgent.elementExists(linkUrl)) {
                     linkItems += "\n<" + linkItemTag + " class=\"parameter-meta-data\">";
                     if (CmsAgent.elementExists(linkUrl)) {
-                        linkItems += "<a href=\"" + linkUrl + "\">";
+                        // Enforce lang=en for Placenames links in English-language pages
+                        if (linkUrl.contains("//placenames.npolar.no/") && !cms.getRequestContext().getLocale().toString().equals("no") && !linkUrl.contains("lang=en")) {
+                            linkUrl = CmsRequestUtil.appendParameter(linkUrl, "lang", "en");
+                        }
+                        // Ensure proper escaping of special characters like "&"
+                        linkUrl = CmsStringUtil.escapeHtml(StringEscapeUtils.unescapeXml(linkUrl));
+                        linkItems += "<a href=\"" + linkUrl + "\"" + (isTargetBlank(linkUrl) ? " target=\"_blank\"" : "") + ">";
                         if (!CmsAgent.elementExists(linkText))
                             linkItems += linkUrl;
                     }
