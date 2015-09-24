@@ -423,11 +423,23 @@ h5 {
 #nav ul ul {
     width:225px;
 }
+#nav > ul > li.inpath {
+    box-shadow:0 -2px 4px rgba(0, 0, 0, 0.5);
+    z-index:2;
+}
+#nav > ul > li.inpath::after {
+    border-color:#fff;
+}
 #nav > ul > li.inpath > a {
-    color: #06a;
+    color:#06a;
 }
 #nav ul ul li.current > a span {
-    background-color:#06a;
+    /*background-color:#06a;*/
+    background-color:transparent;
+    color:#8b0000;
+}
+#nav > ul > li > ul > li.inpath {
+    border-left:3px solid #8b0000;
 }
 
 .left { float:left; }
