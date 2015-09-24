@@ -993,6 +993,15 @@ h1 .scientific-name {
 .paragraph dd ul {
     margin-left:0;
 }
+.paragraph dd.parameter-meta-data {
+    display:list-item;
+}
+.paragraph .parameter-standard-meta dd.parameter-meta-data {
+    display:block;
+}
+.paragraph li.parameter-meta-data p {
+    margin-bottom:0;
+}
 
 /* Embedded text box (typically "fact box") */
 .paragraph .textbox {
