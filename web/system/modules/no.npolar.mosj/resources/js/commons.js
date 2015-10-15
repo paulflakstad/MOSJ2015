@@ -1,8 +1,16 @@
 /**
  * Common javascript funtions, used throughout the site.
- * Dependency: jQuery (must be loaded before this script)
- * Dependency: Highslide (must be loaded before this script)
+ * Dependencies (must/should be loaded before this script):
+ *  - jQuery 
+ *  - Modernizr (loose dependecy)
+ *  
+ * Highslide should also be loaded before this script.
  */
+
+/**
+ * Global variable used to detect changes in the viewport width.
+ */
+var lastDetectedWidth = $(window).width();
 
 /*
  * jQuery hover delay plugin. 
@@ -62,7 +70,7 @@ $.fn.hoverDelay = function(options) {
 /**
  * Function for altering table rows by class insertion.
  */
-function makeNiceTables() {
+/*function makeNiceTables() {
     // Get all tables on the page
     var tables = document.getElementsByTagName("table");
 
@@ -99,7 +107,7 @@ function makeNiceTables() {
             //alert("This table was not of required class.");
         }
     }
-}
+}*/
 
 /**
  * Handle hash (fragment) change
@@ -167,7 +175,7 @@ navigator.sayswho = (function() {
 /**
  * Calculates the width of the browser's scrollbar
  */
-function getScrollbarWidth() {
+/*function getScrollbarWidth() {
     // Create a small div with a large div inside (will trigger scrollbar)
     var div = $("<div style=\"width:50px;height:50px;overflow:hidden;position:absolute;top:-200px;left:-200px;\"><div style=\"height:100px;\"></div></div>");
     // Append our div, do our calculation and then remove it
@@ -177,7 +185,7 @@ function getScrollbarWidth() {
     var w2 = $("div", div).innerWidth();
     $(div).remove();
     return (w1 - w2);
-}
+}*/
 
 /**
  * Returns true if the browser is IE8 (or an older IE version)
@@ -202,31 +210,56 @@ function nonResIE() {
  */
 function emptyOrNonExistingElement(id) {
     var el = document.getElementById(id); // Get the element
-    if (!(el == null || el == undefined)) { // Check for non-exising element first
+    if (!(el === null || el === undefined)) { // Check for non-exising element first
         var html = el.innerHTML; // Get the content inside the element
-        if (html != null) {
+        if (html !== null) {
             html = html.replace(/(\r\n|\n|\r)/gm, ''); // Remove any and all linebreaks
             html = html.replace(/^\s+|\s+$/g, ''); // Remove empty spaces at front and end
-            if (html == '')
+            if (html === '')
                 return true; // The element didn't contain anything (except maybe whitespace and linebreaks)
             return false; // The element contained something
         }
     }
     return true; // The element didn't exist
 }
-
+/*
 function getVisibleWidth() {
     return $(window).width() + getScrollbarWidth();
 }
-
+*/
+/**
+ * Gets the small-screen breakpoint. Viewport widths equal to or below the 
+ * returned value are considered "small screens".
+ * @returns {Number} The small-screen breakpoint
+ */
 function getSmallScreenBreakpoint() {
-    return 800; // Viewport widths equal to or below this value are considered "small screens"
+    return 800;
 }
-
+/**
+ * Evaluates whether or not the current viewport is a "small screen" or not.
+ * @returns {Boolean} True if the viewport width is < getSmallScreenBreakpoint()
+ */
 function isSmallScreen() {
-    return getVisibleWidth() <= getSmallScreenBreakpoint();
+    return !isBigScreen();
+    //return getVisibleWidth() <= getSmallScreenBreakpoint();
 }
-
+/**
+ * Evaluates whether or not the current viewport is a "big screen" or not. 
+ * Browsers without media query support will always get true in return.
+ * @returns {Boolean|MediaQueryList.matches} True if the viewport width is >= getSmallScreenBreakpoint(), false if not
+ */
+function isBigScreen() {
+    var big = true;
+    try {
+        big = window.matchMedia('(min-width: ' + getSmallScreenBreakpoint() + 'px)').matches; // Update value for browsers supporting matchMedia
+    } catch (err) {
+        // No browser support (= likely IE8 or older) - retain default
+    }
+    return big;
+}
+/**
+ * Initializes .toggleable accordians.
+ */
 function initToggleables() {
     $('.toggleable.collapsed > .toggletarget').slideUp(1); // Hide normally-closed ("collapsed") accordion content		
     $('.toggleable.collapsed > .toggletrigger').prepend('<em class="icon-down-open-big"></em> '); // Append arrow icon to "show accordion content" triggers
@@ -236,7 +269,7 @@ function initToggleables() {
         $(this).children('em').first().toggleClass('icon-up-open-big icon-down-open-big'); // ... and toggle the icon class, so the arrows change corresponding to the slide up/down
     });
 }
-
+/*
 function showOutlines() {
     try { 
         document.getElementById("_outlines").innerHTML="a:focus, input:focus, button:focus, select:focus { outline:thin dotted; outline:2px solid orange; }"; 
@@ -247,12 +280,12 @@ function showOutlines() {
 }
 function hideOutlines() {
     try { 
-        document.getElementById("_outlines").innerHTML="a, a:focus, input:focus, select:focus { outline:none !important; } /*a:focus { border:none !important; }*/"; 
+        document.getElementById("_outlines").innerHTML="a, a:focus, input:focus, select:focus { outline:none !important; } "; 
     } catch (err) { 
         return false; 
     } 
     return true;
-}
+}*/
 
 /**
  * @see http://support.addthis.com/customer/portal/articles/1293805-using-addthis-asynchronously#.UxSMJuIkAU8
@@ -270,6 +303,7 @@ function loadAddThis() {
     addthis.init();
 }
 */
+
 /**
  * Creates a blurry background for the hero image, based on the hero image itself.
  * @param {String} jsUriStackBlur The URI to the StackBlur javascript.
@@ -277,12 +311,12 @@ function loadAddThis() {
  */
 function makeBlurryHeroBackground(jsUriStackBlur) {
     var iPadClient = false; 
-    try { iPadClient = navigator.userAgent.match(/iPad/i) != null; } catch(err) {}
+    try { iPadClient = navigator.userAgent.match(/iPad/i) !== null; } catch(err) {}
 
     try {
         //console.log('starting blurry hero background ...');
         //$(function() {
-            if (bigScreen && !iPadClient) {
+            if (isBigScreen() && !iPadClient) {
                 if (!nonResIE()) {
                     if (Modernizr.cssfilters) {
                         // CSS approach
@@ -478,7 +512,7 @@ function makeScrollToSmooth() {
     try {
         //$('a[href*=#]:not([href=#])').click(function() { // Apply to all on-page links
         $('.reflink,.scrollto').click(function() {
-            if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') || location.hostname == this.hostname) {
+            if (location.pathname.replace(/^\//,'') === this.pathname.replace(/^\//,'') || location.hostname === this.hostname) {
                 var hashStr = this.hash.slice(1);
                 var target = $(this.hash);
                 target = target.length ? target : $('[name=' + hashStr +']');
@@ -497,7 +531,7 @@ function makeScrollToSmooth() {
 }
 
 /**
- * Makes ready Highslide, by loading the necessary css/js if necessary.
+ * Makes ready Highslide, by injecting the necessary css/js in the HTML head.
  * @param {String} cssUri The URI to the Highslide css.
  * @param {String} jsUri The URI to the Highslide javascript.
  * @returns {Boolean} True if no error is thrown, false if not.
@@ -515,228 +549,239 @@ function readyHighslide(cssUri, jsUri) {
 }
 
 /**
+ * Define "keyboard optimized" styles in the style element with 
+ * ID "__adaptive-styles".
+ */
+function keyFriendly() {
+    try { 
+        document.getElementById("__adaptive-styles").innerHTML = "a:focus, input:focus, button:focus, select:focus { outline:thick solid #f44; outline-offset:4px; }";
+    } catch (err) {}
+}
+
+/**
+ * Define "mouse/touch optimized" styles in the style element with 
+ * ID "__adaptive-styles".
+ */
+function mouseFriendly() {
+    try { 
+        document.getElementById("__adaptive-styles").innerHTML = "a, a:focus, input:focus, select:focus { outline:none !important; }";
+    } catch (err) {}
+}
+
+/**
+ * Indicates whether or not the small screen global menu is currently visible.
+ * @returns {Boolean} True if the small screen menu is visible, false if not.
+ */
+function smallScreenMenuIsVisible() {
+    return $('html').hasClass('navigating');
+}
+
+/**
+ * Updates elements like the global search, global menu etc. to fit the current
+ * viewport width.
+ */
+function layItOut() {
+    var menu = $('#nav');
+    var search = $('#search-global');
+    
+    if (isBigScreen()) {
+        // Remove class used only on the small-screen menu
+        menu.removeClass('nav-colorscheme-dark');
+        // Show the global search
+        search.removeClass('not-visible');
+    } else {
+        // Small-screen menu class
+        menu.addClass('nav-colorscheme-dark');
+        // Hide the global search (small screens use a show/hide search button)
+        search.hide(); // Prevent "search box collapse" animation on page load
+        search.addClass('not-visible');
+    }
+}
+/**
+ * Opens or closes the small-screen menu.
+ * 
+ * This method will also manipulate the "tabindex" attribute of all links in
+ * the menu, to prevent or enable the menu items from being keyboard (tab) 
+ * accessible. (Prevents tabbing users from entering a closed menu.)
+ */
+function toggleMenuVisibility() {
+    var menu = $('#nav');
+    var html = $('html');
+    
+    if (smallScreenMenuIsVisible()) { // = menu was already open at click time
+        // // About to open the menu: make its links NOT tab accessible
+        menu.find('a').attr('tabindex', '-1');
+    } else {
+        // About to open the menu: make its links tab accessible
+        menu.find('a').removeAttr('tabindex');
+    }
+    
+    // Toggle the class that triggers the actual opening/closing of the 
+    // menu.
+    html.toggleClass('navigating');
+}
+/**
+ * Initializes the user controls - menu/search (incl. togglers), outline style 
+ * optimization, language switch, etc.
+ */
+function initUserControls() {
+    var menu = $('#nav');
+    var html = $('html');
+    
+    // inject sub-navigation togglers (shows/hides children of a parent menu item)
+    menu.find('li.has_sub').not('.inpath').addClass('hidden-sub');
+    menu.find('li.has_sub.inpath').addClass('visible-sub');
+    menu.find('li.has_sub > a').after('<a class="visible-sub-toggle" href="#"></a>');
+    
+    // handle click on sub-navigation toggler
+    $('.visible-sub-toggle').click(function(e) {
+        e.preventDefault();
+        $(this).parent('li').toggleClass('visible-sub hidden-sub');
+    });
+
+    // handle click on menu toggler
+    $('.nav-toggler').click(function(e) {
+        e.preventDefault();
+        toggleMenuVisibility();
+    });
+
+    // handle click somewhere on the page content when small-screen menu was open
+    html.click(function(event) { 
+        if (smallScreenMenuIsVisible()) {
+            if (!($(event.target).closest('#nav').length || $(event.target).closest('#header').length)) {
+                toggleMenuVisibility();
+            }
+        }
+    });
+    
+    // handle focus transition "out from the bottom" of the open small-screen menu
+    $('body *').focus(function(event) {
+        if (smallScreenMenuIsVisible()) {
+            if (!($(event.target).closest('#nav').length || $(event.target).closest('#header').length)) {
+                toggleMenuVisibility();
+            }
+        }
+    });
+
+    // bugfix - the #wrap div is sometimes able to receive focus (even tho it has no tabindex)
+    $('#wrap').attr('tabindex', '-1');
+	
+    // toggle "focus" class on the top-level menus when appropriate
+    menu.find('a').focus(function() {
+        $(this).parents('li').addClass('infocus');
+    });
+    menu.find('a').blur(function() {
+        $(this).parents('li').removeClass('infocus');
+    });
+    
+    // hover delay handling for mouse users (usability bonus)
+    if (!Modernizr.touch) {
+        menu.find('li').hoverDelay({
+            delayIn: 250,
+            delayOut: 400,
+            handlerIn: function($element)   { $element.addClass('infocus'); },
+            handlerOut: function($element)  { $element.removeClass('infocus'); }
+        });
+        /*
+        // use hoverintent to add usability bonus for mouse users
+        $('#nav li').hoverIntent({
+            over: mouseinMenuItem
+            ,out: mouseoutMenuItem
+            ,timeout:400
+            ,interval:250
+        });
+        */
+    } else {
+        // Touch units will typically emulate these mouse events
+        menu.find('li').mouseover(function()   { $(this).addClass('infocus'); });
+        menu.find('li').mouseout(function()    { $(this).removeClass('infocus'); });
+    }
+    
+    // inject "adaptive styles" (accessibility bonus)
+    $('head').append('<style id="__adaptive-styles" />');
+    $('body').bind('mousedown', function(e) {
+        html.removeClass('tabbing');
+        mouseFriendly();
+    });
+    $('body').bind('keydown', function(e) {
+        html.addClass('tabbing');
+        if (e.keyCode === 9) {
+            keyFriendly();
+        }
+    });
+    
+    // handle click on search box toggler
+    $('#toggle-search').click(function(e) {
+        e.preventDefault();
+        var search = $('#search-global');
+        search.removeAttr('style'); // Remove any "display:none" style set by jQuery's hide()
+        html.toggleClass('search-open');
+        search.toggleClass('not-visible');
+        if (!search.hasClass('not-visible') && !html.hasClass('tabbing')) { // Don't auto-shift focus if the user is tabbing
+            $('#query').focus();
+        }
+    });
+    
+    
+    // Clone the language switch and put it in the menu
+    if (!$('.language-switch-menu-item')[0]) { // do it only if necessary
+        var clonedLangSwitch = $('.language-switch').clone().attr('class', 'language-switch-menu-item').attr('style', '');
+        var liLangSwitch = $('<li/>').attr('style', 'border-top:1px solid orange').attr('class', 'smallscr-only').appendTo($('#nav_topmenu'));
+        liLangSwitch.append(clonedLangSwitch.prepend('<i class="icon-cog" style="font-size:1.2em;"></i> '));
+    }
+    $('.language-switch').addClass('bigscr-only');
+    
+    // Make sure all links in the small-screen menu are initially NOT keyboard-accessible
+    // (because the small-screen menu is initially hidden)
+    if (!isBigScreen()) {
+        menu.find('a').attr('tabindex', '-1');
+    }
+}
+
+/**
  * Things to do when the document is ready
  */
 $(document).ready( function() {
-	// responsive tables
-        makeResponsiveTables();
-        // tabbed content (enhancement - works with pure css but not optimal)
-        makeTabs();
+    // responsive tables
+    makeResponsiveTables();
+    // tabbed content (enhancement - works with pure css but not optimal)
+    makeTabs();
 
-	// Add style definition for links: No outlines for mouse navigation, dotted outlines for keyboard navigation
-	/*$('head').append('<style id="_outlines" />');
-	$('body').attr('onmousedown', 'hideOutlines()');
-	$('body').attr('onkeydown', 'showOutlines()');*/
+    // qTip tooltips
+    //makeTooltips();
+
+    // Animated verical scrolling to on-page locations
+    makeScrollToSmooth();
+
+    // Add facebook-necessary attribute to the html element
+    $("html").attr('xmlns:fb', 'http://ogp.me/ns/fb#"');
+
+    // Format tables
+    //makeNiceTables();
+
+    // Fragment-based highlighting
+    $("a").click(function() { highlightReference(); }); // On click (it's not sufficient to track only .reflink clicks - that will cause any previous highlighting to stick "forever")
+    highlightReference(); // On page load
+
+    // "Read more"-links
+    $(".cta.more").append('<i class="icon-right-open-big"></i>');
 	
-	var fmsg = false;
-	/*
-	// Hide small screen navigation if necessary & show big screen navigation if necessary
-    if (!nonResIE()) { // IE versions that cannot chew media queries will get a non-responsive version, so those should always have the big screen navigation available
-        var ssNavBreakpoint = getSmallScreenBreakpoint(); // Viewport widths equal to or below this value will use small screen navigation
-        var slideDuration = 200; // Animation time (milliseconds): Toggle small screen navigation
-        var scrollWidth = getScrollbarWidth();
-        var visibleWidth = getVisibleWidth();//$(window).width() + scrollWidth;
-
-        if (visibleWidth <= ssNavBreakpoint) {// && ("#nav_sticky").css("display") == "block") {
-            $("#nav_sticky").hide();
-        }
-
-        $("#nav_toggle").click(function() {
-            $("#nav_sticky").slideToggle(slideDuration);
-        });
-		
-        $(window).resize(function() {
-            visibleWidth = getVisibleWidth();//$(window).width() + scrollWidth; // NB refresh value on resize
-			var searchBoxFocus = $("#query").is(":focus");
-			//if (visibleWidth > ssNavBreakpoint && $("#nav_sticky").css("display") != "block") { // original
-            //if (visibleWidth > getSmallScreenBreakpoint() && $("#nav_sticky").css("display") != "block") {
-			if (!isSmallScreen() && $("#nav_sticky").css("display") != "block") {
-                $("#nav_sticky").show();
-            }
-            //else if (visibleWidth <= ssNavBreakpoint && $("#nav_sticky").css("display") == "block") { // original
-			//else if (visibleWidth <= getSmallScreenBreakpoint() && $("#nav_sticky").css("display") == "block") {
-			else if (isSmallScreen() && $("#nav_sticky").css("display") == "block" && !searchBoxFocus) {
-                $("#nav_sticky").hide();
-            }
-        });
-    }
-	*/
+    // Initialize accordions of type "toggleable"
+    initToggleables();
     
-    /*
-    // "Hide" the left column when it doesn't contain anything
-	if (document.getElementById("leftside")) {
-		if ($("#leftside").html()) {
-			if ($.trim($("#leftside").html()) == '') {
-				//if (!$("#leftside").html().trim()) {
-					$("#leftside").css("width", "0");
-					$("#content").css("width", "100%");
-				//}
-			}
-		}
-	}*/
+    // Setup the user controls (global menu, global search etc.)
+    initUserControls();
     
-	/*
-    $("#nav_toggler").click(function () {
-        //var contentWidth = $("#content").css("width"); // Store the CSS-defined width, complete with unit, e.g. "75%"
-		//alert(contentWidth);
-		
-        if ($("#leftside").css("display") == "none") { // Show navigation
-			$("#nav_top_wrap").slideToggle(300);
-            //$("#nav_top_wrap").slideToggle(300, function() { $("#sm-links-top").fadeIn(); });
-            $("#leftside").css({"display" : "block"});
-            if (!emptyOrNonExistingElement("leftside")) {
-                $("#leftside").animate({
-                        marginLeft: "0"
-                    }, 250, function(){});
-                $("#content").animate({
-                        width: "78%"
-						//width: contentWidth
-                    }, 250, function(){ });
-            }
-            $(this).addClass("pinned"); // Toggle the class
-            $.post("/settings", { pinned_nav: "true" }); // Store the navbar visibility state in the user session
-        } 
-        
-        else { // Hide navigation
-			$("#nav_top_wrap").slideToggle(300);
-            //$("#sm-links-top").fadeOut(50, function() { $("#nav_top_wrap").slideToggle(300); });
-            $("#leftside").css({"display" : "none"});
-            if (!emptyOrNonExistingElement("leftside")) {
-                $("#leftside").animate({
-                        marginLeft: "-500px"
-                    }, 250, function(){});
-                $("#content").animate({
-                        width: "100%"
-                    }, 250, function(){  });
-            }
-            $(this).removeClass("pinned"); // Toggle the class
-            $.post("/settings", { pinned_nav: "false" }); // Store the navbar visibility state in the user session
+    // Invoke the layout handler
+    layItOut();
+
+    // Invoke the layout handler again whenever the viewport width changes
+    $(window).resize(function() {
+        if($(this).width() !== lastDetectedWidth) { // True => width changed during resize
+            lastDetectedWidth = $(this).width();
+            layItOut();
         }
     });
-	
-	// Make menu togglers keyboard accessible
-	$(document).keyup(function(e){
-		if (e.keyCode == 13 && $(document.activeElement).attr("id") == "nav_toggler") {
-			$("#nav_toggler").click();
-		} else if (e.keyCode == 13 && $(document.activeElement).attr("id") == "nav_toggle") {
-			$("#nav_toggle").click();
-		}
-	});
-	*/
-	
-	/*
-	// Expand the main content to the left when the left column is empty or missing
-	// REMOVED: Can't do this safely because it often contains js-injected content
-	if (emptyOrNonExistingElement('leftside')) {
-        alert("Empty or non-existing #leftside, hiding it.");
-        $("#leftside").css("width", "0");
-        $("#leftside").css("height", "0");
-        $("#content").css("width", "100%");
-    }
-	*/
-	/*
-	// Expand the main content to the right when the right column is empty or missing
-    if (emptyOrNonExistingElement('rightside')) {
-        //alert("Empty or non-existing #rightside, hiding it.");
-        $(".main-content").css("width", "100%");
-        $("#rightside").css("width", "0");
-        $("#rightside").css("height", "0");
-    }
-	// Expand the main content area vertically, so the footer will be normal-sized even on very short pages
-	//if (!($("body").height() > $(window).height()) && !isSmallScreen()) { // if not vertical scrollbar
-	if (!($(document).height() > $(window).height()) && !isSmallScreen()) { // if not vertical scrollbar & not smallscreen
-		//var extraHeight = 64;
-		//var extraHeight = 50;
-		var extraHeight = 45;
-		var mainContentHeight = $(window).height() - $("#header").height() - $("#footer").height() - extraHeight; // [viewport height] - [header height] - [footer height] - [value found by trial-and-error]
-		//$("#docwrap").animate({height: mainContentHeight+"px"}, 600);
-		//$("#docwrap").height(mainContentHeight);
-		$("#docwrap").css("min-height", mainContentHeight+"px");
-	}
-	*/
-	
-	// qTip tooltips
-        //makeTooltips();
-	
-        
-	// Animated verical scrolling to on-page locations
-	makeScrollToSmooth();
-	
-	// Add facebook-necessary attribute to the html element
-	$("html").attr('xmlns:fb', 'http://ogp.me/ns/fb#"');
-	
-	// Format tables
-	makeNiceTables();
-	
-	// Fragment-based highlighting
-	//$(".reflink").click(function() { highlightReference(); }); // On click 
-	$("a").click(function() { highlightReference(); }); // On click (it's not sufficient to track only .reflink clicks - that will cause any previous highlighting to stick "forever")
-	highlightReference(); // On page load
-	
-	// "Read more"-links
-	// Reg. version: a full-width bar button
-	$(".cta.more").append('<i class="icon-right-open-big"></i>');
-	// Alt. version: a "tab" under a line (uses a span inside the link)
-	//$(".cta.more > span").append('<i class="icon-right-open-big"></i>');
-	//$(".cta.more:not(:has(span))").append('<i class="icon-right-open-big"></i>').css('padding', '0.5em'); // In case there are any without span child
-	
-	// Initialize toggleable content
-    initToggleables();
-	
-	// Social sharers
-	/*
-	$("#share_button_top").attr('displayText','Del denne siden');
-    $("#share_button_facebook").attr('displayText','Facebook');
-    $("#share_button_twitter").attr('displayText','Twitter');
-    $("#share_button_gplus").attr('displayText','Google+');
-    $("#share_button_email").attr('displayText','E-post');
-    $("#share_button_bottom").attr('displayText','Mer ...');
-	*/
-	
-	// Overlay logos (if necessary)
-	//$('<span class="overlay-logo"><img src="/images/logos/logo-fram-f-20.png" /></span>').insertAfter('.featured-box.logo-fram img');
-	//$('<span class="overlay-logo"><img src="/images/logos/logo-ice-20.png" /></span>').insertAfter('.featured-box.logo-ice img');
-	
-	/*
-	try {
-		$("#slides").carouFredSel({
-				width: "100%",
-				height: "59%",
-				direction: "left",
-				circular: true,
-				responsive: true,
-				auto: 6500,
-				items: {
-						visible: 1,
-						width: "90",
-						height: "variable"
-				},
-				scroll: {
-						fx: "crossfade",
-						duration: 500,
-						pauseOnHover: true
-				},
-				prev: {
-						button: "#featured-prev",
-						key: "left"
-				},
-				next: {
-						button: "#featured-next",
-						key: "right"
-				},
-				pagination: "#featured .pagination"
-		});
-	} catch (err) {}
-	*/
-	/*
-	try {
-		// Make image maps responsive
-		$('img[usemap]').rwdImageMaps(); // Scale image maps (note: this should be the LAST call in $(document).ready(...))
-	} catch (err) {}
-	*/
-	
-	// AddThis
-	//loadAddThis();
 });
 
 /**
@@ -794,41 +839,56 @@ function toggleHighChartsGrouping(/*jQuery*/chart) {
  * Highslide settings
  */
 try {
-	//hs.align = 'center';
-	//hs.marginBottom = 10;
-	//hs.marginTop = 10;
-	hs.marginBottom = 50; // Make room for the "Share" widget
-	hs.marginTop = 50; // Make room for the thumbstrip
-	hs.marginLeft = 50;
-	hs.marginRight = 50; 
-	//hs.maxHeight = 600;
-	//hs.outlineType = 'rounded-white';
-	hs.outlineType = 'drop-shadow';
-	
-	hs.lang = {
-		loadingText :     'Laster...',
-		loadingTitle :    'Klikk for å avbryte',
-		focusTitle :      'Klikk for å flytte fram',
-		fullExpandText :  'Full størrelse',
-		fullExpandTitle : 'Utvid til full størrelse',
-		creditsText :     'Drevet av <i>Highslide JS</i>',
-		creditsTitle :    'Gå til hjemmesiden til Highslide JS',
-		previousText :    'Forrige',
-		previousTitle :   'Forrige (pil venstre)',
-		nextText :        'Neste',
-		nextTitle :       'Neste (pil høyre)',
-		moveText :        'Flytt',
-		moveTitle :       'Flytt',
-		closeText :       'Lukk',
-		closeTitle :      'Lukk (esc)',
-		resizeTitle :     'Endre størrelse',
-		playText :        'Spill av',
-		playTitle :       'Vis bildeserie (mellomrom)',
-		pauseText :       'Pause',
-		pauseTitle :      'Pause (mellomrom)',
-		number :          'Bilde %1 av %2',
-		restoreTitle :    'Klikk for å lukke bildet, klikk og dra for å flytte. Bruk piltastene for forrige og neste.'
-	};
+    //hs.align = 'center';
+    //hs.marginBottom = 10;
+    //hs.marginTop = 10;
+    hs.marginBottom = 50; // Make room for the "Share" widget
+    hs.marginTop = 50; // Make room for the thumbstrip
+    hs.marginLeft = 50;
+    hs.marginRight = 50; 
+    //hs.maxHeight = 600;
+    //hs.outlineType = 'rounded-white';
+    hs.outlineType = 'drop-shadow';
+
+    hs.lang = {
+            loadingText :     'Laster...',
+            loadingTitle :    'Klikk for å avbryte',
+            focusTitle :      'Klikk for å flytte fram',
+            fullExpandText :  'Full størrelse',
+            fullExpandTitle : 'Utvid til full størrelse',
+            creditsText :     'Drevet av <i>Highslide JS</i>',
+            creditsTitle :    'Gå til hjemmesiden til Highslide JS',
+            previousText :    'Forrige',
+            previousTitle :   'Forrige (pil venstre)',
+            nextText :        'Neste',
+            nextTitle :       'Neste (pil høyre)',
+            moveText :        'Flytt',
+            moveTitle :       'Flytt',
+            closeText :       'Lukk',
+            closeTitle :      'Lukk (esc)',
+            resizeTitle :     'Endre størrelse',
+            playText :        'Spill av',
+            playTitle :       'Vis bildeserie (mellomrom)',
+            pauseText :       'Pause',
+            pauseTitle :      'Pause (mellomrom)',
+            number :          'Bilde %1 av %2',
+            restoreTitle :    'Klikk for å lukke bildet, klikk og dra for å flytte. Bruk piltastene for forrige og neste.'
+    };
 } catch (err) {
-	// Highslide probably undefined
+    // Highslide probably undefined
 }
+
+/**
+ * Toggle class name on link when it receives focus.
+ */
+document.getElementsByTagName('a').onfocus = function(e) {
+    this.toggleClass('has-focus');
+};
+/*
+function mouseinMenuItem(menuItem) {
+    $(this).addClass('infocus');
+}
+function mouseoutMenuItem(menuItem) {
+    $(this).removeClass('infocus');
+}
+*/

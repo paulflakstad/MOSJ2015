@@ -290,7 +290,7 @@ out.println(cms.getHeaderElement(CmsAgent.PROPERTY_HEAD_SNIPPET, requestFileUri)
 <script type="text/javascript" src="<%= cms.link("/system/modules/no.npolar.mosj/resources/js/commons.js") %>"></script>
 <!--<script type="text/javascript" src="<%= cms.link("/system/modules/no.npolar.mosj/resources/js/nav-off-canvas.js") %>"></script>-->
 <!--<script type="text/javascript" src="<%= cms.link("/system/modules/no.npolar.common.jquery/resources/jquery.qtip.min.js") %>"></script>-->
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+<!--<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>-->
 
 <!--[if lte IE 8]>
 <script type="text/javascript" src="<%= cms.link("/system/modules/no.npolar.util/resources/js/html5.js") %>"></script>
@@ -394,7 +394,7 @@ out.println(cms.getHeaderElement(CmsAgent.PROPERTY_HEAD_SNIPPET, requestFileUri)
 
                     <!-- navigation + search togglers (small screen) -->
                     <a id="toggle-nav" class="nav-toggler" tabindex="6" href="#nav"><span><span></span></span></a>
-                    <a id="toggle-search" class="smallscr-only" tabindex="3" href="javascript:void(0);"><i class="icon-search"></i></a>
+                    <a id="toggle-search" class="smallscr-only" tabindex="3" href="#search-global"><i class="icon-search"></i></a>
                     <%
                     try { cms.include(LANGUAGE_SWITCH); } catch (Exception e) {}
                     %>
@@ -505,6 +505,7 @@ out.println(cms.getHeaderElement(CmsAgent.PROPERTY_HEAD_SNIPPET, requestFileUri)
     
     </div></div><!-- wrappers -->
 <script type="text/javascript">
+function warnOldBrowsers() {
     // Procedure to warn users on MSIE v8 and older
     if (nonResIE()) {
         /*if (!String.prototype.trim) {
@@ -545,228 +546,58 @@ out.println(cms.getHeaderElement(CmsAgent.PROPERTY_HEAD_SNIPPET, requestFileUri)
             //console.log('Cookie should now be set.');
         }
     }
-</script>
-<script type="text/javascript">
+}
+
+/*
+// Requires webfont script to load in head
 WebFont.load({
     google: {
-        families: ['Open Sans']
+        families: ['Open+Sans:400,300,700,800,300italic,400italic,700italic,800italic:latin']
+        //families: ['Open Sans']
         //families: ['Open Sans', 'Droid Serif', 'Playfair Display']
         //families: ['Old Standard TT', 'Open Sans', 'Droid Sans', 'Droid Serif']
     }
-});
+});*/
       
-var width = $(window).width();
-var large = getSmallScreenBreakpoint();
-var bigScreen = true;  // Default: Browsers with no support for matchMedia (like IE9 and below) will use this value
+
+//var large = getSmallScreenBreakpoint();
+/*var bigScreen = true;  // Default: Browsers with no support for matchMedia (like IE9 and below) will use this value
 try {
-    bigScreen = window.matchMedia('(min-width: ' + large + 'px)').matches; // Update value for browsers supporting matchMedia
+    bigScreen = window.matchMedia('(min-width: ' + getSmallScreenBreakpoint() + 'px)').matches; // Update value for browsers supporting matchMedia
 } catch (err) {
     // Retain default value
-}
+}*/
 
 $(document).ready(function() {
-    //alert('doc ready');
-    initUserControls();
+    // Issue warning to users with obsolete browsers
+    warnOldBrowsers();
     
     // Prepare Highslide (if necessary)
     readyHighslide('<%= cms.link("/system/modules/no.npolar.common.highslide/resources/js/highslide/highslide.min.css") %>', 
                     '<%= cms.link("/system/modules/no.npolar.common.highslide/resources/js/highslide/highslide.js") %>');
     
-    if (bigScreen) {
+    // Replace the identity image (header logo) with SVG version
+    if (isBigScreen()) {
         $('.svg #identity > img').attr('src', '<%= cms.link("/system/modules/no.npolar.mosj/resources/style/logo-mosj.svg") %>');
     } else {
         //alert('smallscreen mode ...');
     }
+    
+    // Blurry hero image background
     if ($('.article-hero')[0]) {
-        // blurry hero image background
         makeBlurryHeroBackground('<%= cms.link("/system/modules/no.npolar.util/resources/js/stackblur.min.js") %>');
     }
+    
     // qTip tooltips
     makeTooltips('<%= cms.link("/system/modules/no.npolar.common.jquery/resources/qtip2/2.1.1/jquery.qtip.min.css") %>',
                     '<%= cms.link("/system/modules/no.npolar.common.jquery/resources/jquery.qtip.min.js") %>');
 });
-
-function initUserControls() {
-    //if (smallScreenMenuIsVisible) {
-        $('#nav').find('li.has_sub').not('.inpath').addClass('hidden-sub');
-        $('#nav').find('li.has_sub.inpath').addClass('visible-sub');
-        //$('#nav').find('li.has_sub').append('<a class="visible-sub-toggle" href="javascript:void(0)"></a>');
-        $('#nav').find('li.has_sub > a').after('<a class="visible-sub-toggle" href="javascript:void(0)"></a>');
-        $('.visible-sub-toggle').click(function(e) {
-            $(this).parent('li').toggleClass('visible-sub hidden-sub');
-        });
-
-        $('.nav-toggler').click(function(e) {
-            e.preventDefault();
-            $('html').toggleClass('navigating');
-        });
-
-        // ToDo: Fix - #docwrap does not exist anymore
-        $('#docwrap').click(function() {
-            if (smallScreenMenuIsVisible()) {
-                $('html').toggleClass('navigating');
-            }
-        });
-    //}
-	
-    // toggle a "focus" class on the top-level menus when appropriate
-    $('#nav a').focus(function() {
-        $(this).parents('li').addClass('infocus');
-    });
-    $('#nav a').blur(function() {
-        $(this).parents('li').removeClass('infocus');
-    });
-    
-    if (!Modernizr.touch) {
-        // use "hover delay" to add usability bonus
-        $('#nav li').hoverDelay({
-            delayIn: 250,
-            delayOut: 400,
-            handlerIn: function($element)   { $element.addClass('infocus'); },
-            handlerOut: function($element)  { $element.removeClass('infocus'); }
-        });
-        /*
-        // use hoverintent to add usability bonus for mouse users
-        $('#nav li').hoverIntent({
-            over: mouseinMenuItem
-            ,out: mouseoutMenuItem
-            ,timeout:400
-            ,interval:250
-        });
-        */
-    } else {
-        // Touch units will typically emulate these mouse events
-        $('#nav li').mouseover(function()   { $(this).addClass('infocus'); });
-        $('#nav li').mouseout(function()    { $(this).removeClass('infocus'); });
-    }
-    
-    // accessibility bonus: clearer outlines
-    $('head').append('<style id="behave" />');
-    $('body').bind('mousedown', function(e) {
-        $('html').removeClass('tabbing');
-        mouseFriendly();
-    });
-    $('body').bind('keydown', function(e) {
-        $('html').addClass('tabbing');
-        if (e.keyCode === 9) {
-            keyFriendly();
-        }
-    });
-    
-    // handle clicks on "show/hide search field"
-    $('#toggle-search').click(function(e) {	
-        var search = $('#search-global');
-        search.removeAttr('style');
-        $('html').toggleClass('search-open');
-        search.toggleClass('not-visible');
-        if (!search.hasClass('not-visible')) {
-            $('#query').focus();
-        }
-    });
-    
-    
-    // Clone the language switch and put it in the menu
-    if (!$('.language-switch-menu-item')[0]) { // do it only if necessary
-        var clonedLangSwitch = $('.language-switch').clone().attr('class', 'language-switch-menu-item').attr('style', '');
-        var liLangSwitch = $('<li/>').attr('style', 'border-top:1px solid orange').attr('class', 'smallscr-only').appendTo($('#nav_topmenu'));
-        liLangSwitch.append(clonedLangSwitch.prepend('<i class="icon-cog" style="font-size:1.2em;"></i> '));
-    }
-    $('.language-switch').addClass('bigscr-only');
-
-    // Add resize listener
-    $(window).resize(function() {
-        // Trigger only on width resize
-        if($(this).width() != width) {
-            width = $(this).width();
-            layItOut();
-        }
-    });
-
-    layItOut();
-}
-
-function mouseinMenuItem(menuItem) {
-    $(this).addClass('infocus');
-}
-function mouseoutMenuItem(menuItem) {
-    $(this).removeClass('infocus');
-}
-
-function layItOut() {
-    var bigScreen = true;
-    try {
-        bigScreen = window.matchMedia('(min-width: ' + large + 'px)').matches; // Update value for browsers supporting matchMedia
-    } catch (err) {
-        // Retain default value
-    }
-    if (bigScreen) {
-        // Large viewport
-
-        // Create the large screen submenu: 
-        // Clone the current top-level navigation's submenu, add it to the DOM and wrap it in a <nav>
-        if (emptyOrNonExistingElement('subnavigation')) { // Don't keep adding the submenu again and again ... Du-uh
-            var submenu = $('.inpath.subitems > ul').clone(); // Clone it
-            submenu.removeAttr('class').removeAttr('style'); // Strip classes and attributes (which may have been modified by togglers in small screen view)
-            submenu.children('ul').removeAttr('class').removeAttr('style'); // Do the same for all deeper levels
-            $('#leftside').append('<nav id="subnavigation" role="navigation"><ul>' + submenu.html() + '</ul></nav>');
-        }
-        $('#nav').removeClass('nav-colorscheme-dark');
-        
-        $('#search-global').removeClass('not-visible');
-        $('#search-global').removeAttr('style');
-        
-        //$('.language-switch').show();
-
-        // 3rd and deeper level menus
-        /*
-        $('#nav ul ul li.has_sub').not('.inpath').mouseenter(function() {
-                $(this).addClass('subnav-popup');
-        });
-        $('#nav ul ul li.has_sub').not('.inpath').mouseleave(function() {
-            $(this).removeClass('subnav-popup');
-        });
-        */
-        /*$('#nav ul ul li.has_sub').not('.inpath').children('a').first().focus(function() {
-            $(this).parents('li').first().addClass('subnav-popup');
-        });
-        $('#nav ul ul li.has_sub').not('.inpath').children('a').first().blur(function() {
-            $(this).parents('li').first().removeClass('subnav-popup');
-        });*/
-    }
-    else {
-        $('#nav').addClass('nav-colorscheme-dark');
-        
-        $('#subnavigation').remove(); // Remove the big screen submenu
-        $('#search-global').hide(); // Prevent "search box collapse" animation on page load
-        //$('#search-global').attr('style', 'display:none;'); // Prevent search box collapsing animation on page load
-        $('#search-global').addClass('not-visible');
-    }
-}
-
-function keyFriendly() {
-    try { 
-        document.getElementById("behave").innerHTML="a:focus, input:focus, button:focus, select:focus { outline:thin dotted; outline:3px solid #1f98f6; }"; 
-    } catch (err) {}
-}
-function mouseFriendly() {
-    try { 
-        document.getElementById("behave").innerHTML="a, a:focus, input:focus, select:focus { outline:none !important; }"; 
-    } catch (err) {}
-}
-
-function smallScreenMenuIsVisible() {
-    return $('html').hasClass('navigating');
-}
-
-function showSubMenu() {
-}
-
-
-document.getElementsByTagName('a').onfocus = function(e) {
-    this.toggleClass('has-focus');
-};
 </script>
-<% if (!loggedInUser) { %>
+<% 
+// Enable Analytics 
+// (... but not if the "visitor" is actually a logged-in user)
+if (!loggedInUser) { 
+%>
 <script type="text/javascript">
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
