@@ -1,5 +1,5 @@
 @charset "utf-8";
-@import url('//fonts.googleapis.com/css?family=Open+Sans:400,700,300,300italic,400italic,700italic');
+@import url('//fonts.googleapis.com/css?family=Open+Sans:300,400,700,300italic,400italic,700italic');
 @import url('../fonts/fontello/css/fontello-embedded.css'); /* Need the embedded CSS for things to work properly in IE */
 
 @keyframes fadein {
@@ -29,6 +29,64 @@
 @-o-keyframes fadein {
     from { opacity: 0; }
     to   { opacity: 1; }
+}
+
+
+@-moz-keyframes load8 {
+  from {
+    -moz-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes load8 {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-ms-keyframes load8 {
+  from {
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes load8 {
+  from {
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load8 {
+  from {
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
 
 
@@ -72,26 +130,6 @@
     max-height:200px;
     overflow-x:hidden;
     overflow-y:auto;
-}
-@-webkit-keyframes load8 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-@keyframes load8 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
 }
  
 /**
@@ -1690,19 +1728,26 @@ h4.news-title {
     position:relative;
     clear:both;
     width:100%;
-    opacity:1;
-    -moz-transition:max-height 300ms ease;
-    -webkit-transition:max-height 300ms ease;
-    transition:max-height 0.25s ease-in-out 0s, opacity 0.4s ease-in-out 0s;
-    visibility:visible;
+    opacity:0;
+    -moz-transition:max-height 0.25s ease 0s, opacity 0.3s ease 0.2s, padding 0.25s ease 0s;
+    -webkit-transition:max-height 0.25s ease 0s, opacity 0.3s ease 0.2s, padding 0.25s ease 0s;
+    transition:max-height 0.25s ease 0s, opacity 0.3s ease 0.2s, padding 0.25s ease 0s;
+    visibility:hidden;
     
     background-color:inherit;
-    max-height:6em;
+    max-height:0;
     /*padding:1.2em 0;*/
     
-    padding:1em;
+    padding:0;
     max-width:100%;
     overflow:hidden;
+}
+#search-global:target,
+.search-open #search-global {
+    max-height:6em;
+    opacity:1;
+    padding:1em;
+    visibility:visible;
 }
 #search-global.not-visible {
     max-height:0;

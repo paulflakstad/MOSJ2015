@@ -582,19 +582,13 @@ function smallScreenMenuIsVisible() {
  */
 function layItOut() {
     var menu = $('#nav');
-    var search = $('#search-global');
     
     if (isBigScreen()) {
         // Remove class used only on the small-screen menu
         menu.removeClass('nav-colorscheme-dark');
-        // Show the global search
-        search.removeClass('not-visible');
     } else {
         // Small-screen menu class
         menu.addClass('nav-colorscheme-dark');
-        // Hide the global search (small screens use a show/hide search button)
-        search.hide(); // Prevent "search box collapse" animation on page load
-        search.addClass('not-visible');
     }
 }
 /**
@@ -609,7 +603,7 @@ function toggleMenuVisibility() {
     var html = $('html');
     
     if (smallScreenMenuIsVisible()) { // = menu was already open at click time
-        // // About to open the menu: make its links NOT tab accessible
+        // About to open the menu: make its links NOT tab accessible
         menu.find('a').attr('tabindex', '-1');
     } else {
         // About to open the menu: make its links tab accessible
@@ -713,11 +707,8 @@ function initUserControls() {
     // handle click on search box toggler
     $('#toggle-search').click(function(e) {
         e.preventDefault();
-        var search = $('#search-global');
-        search.removeAttr('style'); // Remove any "display:none" style set by jQuery's hide()
         html.toggleClass('search-open');
-        search.toggleClass('not-visible');
-        if (!search.hasClass('not-visible') && !html.hasClass('tabbing')) { // Don't auto-shift focus if the user is tabbing
+        if (!html.hasClass('tabbing')) { // Don't auto-shift focus if the user is tabbing
             $('#query').focus();
         }
     });
@@ -777,7 +768,7 @@ $(document).ready( function() {
 
     // Invoke the layout handler again whenever the viewport width changes
     $(window).resize(function() {
-        if($(this).width() !== lastDetectedWidth) { // True => width changed during resize
+        if ($(this).width() !== lastDetectedWidth) { // True => width changed during resize
             lastDetectedWidth = $(this).width();
             layItOut();
         }

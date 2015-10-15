@@ -316,6 +316,9 @@ h5 {
     font-size:0.9em;
     padding:0;
     overflow:visible;
+    visibility:visible;
+    opacity:1;
+    max-height:auto;
 }
 /* input field and submit button (incl. when focused) */
 #search-global input[type="search"], 
