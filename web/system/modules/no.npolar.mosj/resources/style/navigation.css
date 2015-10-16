@@ -333,6 +333,7 @@ a.nav-toggler {
     font-size:0.8em;
     margin:0 auto;
     max-width:1200px;
+    z-index:99;
 }
 /* all menu links */
 #nav,

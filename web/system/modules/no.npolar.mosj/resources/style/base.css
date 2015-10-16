@@ -441,12 +441,14 @@ h6 {
     
     background-color:#fff;
     color:#444;
+    position:relative;
+    z-index:2;
 }
 
 /* Hero image */
 .main-content > .article-hero {
     padding:0;
-    overflow:hidden;
+    overflow:visible;
 }
 .article-hero img {
     width:100%;
