@@ -304,7 +304,84 @@ out.println(cms.getHeaderElement(CmsAgent.PROPERTY_HEAD_SNIPPET, requestFileUri)
 <link rel="stylesheet" type="text/css" href="<%= cms.link("/system/modules/no.npolar.mosj/resources/style/non-responsive-dynamic.css") %>" />
 <link rel="stylesheet" type="text/css" href="<%= cms.link("/system/modules/no.npolar.mosj/resources/style/ie8.css") %>" />
 <![endif]-->
+<<<<<<< HEAD
 <!--<script type="text/javascript" src="<%= cms.link("/system/modules/no.npolar.common.jquery/resources/jquery.hoverintent-1-8-0.min.js") %>"></script>--> 
+=======
+<!--<script type="text/javascript" src="<%= cms.link("/system/modules/no.npolar.common.jquery/resources/jquery.hoverintent-1-8-0.min.js") %>"></script>-->
+<% if (requestFileTypeId == OpenCms.getResourceManager().getResourceType("mosj_indicator").getTypeId()) { %>
+<!--<script type="text/javascript" src="<%= cms.link("/system/modules/no.npolar.mosj/resources/js/hc/js/highcharts.js") %>"></script>-->
+<!--<script type="text/javascript" src="<%= cms.link("/system/modules/no.npolar.mosj/resources/js/hc/js/highcharts-more.js") %>"></script>-->
+<!--<script type="text/javascript" src="<%= cms.link("/system/modules/no.npolar.mosj/resources/js/hc/js/modules/data.js") %>"></script>-->
+<!--<script type="text/javascript" src="<%= cms.link("/system/modules/no.npolar.mosj/resources/js/hc/js/modules/exporting.js") %>"></script>-->
+<script type="text/javascript">
+    /*
+    Highcharts.theme = {
+        colors: [
+            '#0277D5',// bright blue
+            '#E52418',// bright red
+            '#49A801',// bright green
+            '#393331',// asphalt
+            '#8E1FAC',// bright purple
+            '#C74F18',// orange
+            '#7D6F42',// earth
+            '#78753E',// olive
+            '#CD238E',// bright pink
+            '#197d86',// teal
+            '#054477',// deep blue
+            '#4E0C13' // plum
+        ],
+        chart: {
+            backgroundColor: {
+                linearGradient: [0, 0, 500, 500],
+                stops: [
+                    [0, 'rgb(255, 255, 255)']
+                ]
+            },
+        },
+        title: {
+            style: {
+                color: '#000',
+                font: '1.5em "Open sans", "Trebuchet MS", Verdana, sans-serif'
+            }
+        },
+        tooltip: {
+            backgroundColor: '#fff',
+            borderColor: '#666',
+            borderRadius: 5,
+            borderWidth: 2
+        },
+        legend: {
+            itemStyle: {
+                font: '1em "Open sans", Trebuchet MS, Verdana, sans-serif',
+                color: '#000'
+            },
+            itemHiddenStyle:{
+                color: '#aaa'
+            } ,
+            itemHoverStyle:{
+                color: '#000',
+                font: 'bold'
+            }   
+        },
+        lang: {
+            decimalPoint: '<%= loc.equalsIgnoreCase("no") ? "," : "." %>',
+            downloadJPEG: '<%= loc.equalsIgnoreCase("no") ? "Last ned som JPG" : "Download as JPG" %>',
+            downloadPNG: '<%= loc.equalsIgnoreCase("no") ? "Last ned som PNG" : "Download as PNG" %>',
+            downloadPDF: '<%= loc.equalsIgnoreCase("no") ? "Last ned som PDF" : "Download as PDF" %>',
+            downloadSVG: '<%= loc.equalsIgnoreCase("no") ? "Last ned som SVG" : "Download as SVG" %>',
+            drillUpText: '<%= loc.equalsIgnoreCase("no") ? "Tilbake til {series.name}" : "Back to {series.name}" %>',
+            loading: '<%= loc.equalsIgnoreCase("no") ? "Laster..." : "Loading..." %>',
+            printChart: '<%= loc.equalsIgnoreCase("no") ? "Skriv ut figur" : "Print chart" %>',
+            resetZoom: '<%= loc.equalsIgnoreCase("no") ? "Nullstill zoom" : "Reset zoom" %>',
+            resetZoomTitle: '<%= loc.equalsIgnoreCase("no") ? "Sett zoomnivået til 1:1" : "Reset zoom level to 1:1" %>',
+            thousandsSep: '<%= loc.equalsIgnoreCase("no") ? " " : "," %>'
+        }
+    };
+    Highcharts.setOptions(Highcharts.theme);
+    */
+</script>
+<% } %>
+>>>>>>> d46e618e44cc554230c5b339ff1c7055975bfa28
 <style type="text/css">
     html, body { height: 100%; width: 100%; margin: 0; padding: 0; }
     #body { overflow:hidden; }
