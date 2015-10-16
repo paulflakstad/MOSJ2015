@@ -43,8 +43,8 @@ if (!loggedInUser && cms.getRequest().isSecure()) {
     CmsRequestUtil.redirectPermanently(cms, redirAbsPath);
 }
 
-Locale loc                  = cms.getRequestContext().getLocale();
-String locale               = loc.toString();
+Locale locale               = cms.getRequestContext().getLocale();
+String loc                  = locale.toString();
 String description          = CmsStringUtil.escapeHtml(CmsHtmlExtractor.extractText(cms.property("Description", requestFileUri, ""), "utf-8"));
 String title                = cms.property("Title", requestFileUri, "");
 String titleAddOn           = cms.property("Title.addon", "search", "");
@@ -111,8 +111,8 @@ if (canonical == null && CmsRequestUtil.getRequestLink(requestFileUri).endsWith(
 }
 
 if (request.getParameter("__locale") != null) {
-    loc = new Locale(request.getParameter("__locale"));
-    cms.getRequestContext().setLocale(loc);
+    locale = new Locale(request.getParameter("__locale"));
+    cms.getRequestContext().setLocale(locale);
 }
 if (request.getParameter("includeFilePrefix") != null) {
     includeFilePrefix = request.getParameter("includeFilePrefix");
@@ -204,8 +204,14 @@ final String LANGUAGE_SWITCH    = "/system/modules/no.npolar.common.lang/element
 //final String FOOTERLINKS        = "/system/modules/no.npolar.site.npweb/elements/footerlinks.jsp";
 //final String SEARCHBOX          = "/system/modules/no.npolar.site.npweb/elements/search.jsp";
 //final String LINKLIST           = "../../no.npolar.common.linklist/elements/linklist.jsp";
-final String HOME_URI           = cms.link("/" + locale + "/");
-final String SERP_URI		= cms.link("/" + locale + "/" + (locale.equalsIgnoreCase("no") ? "sok" : "search") + ".html");
+final String HOME_URI           = cms.link("/" + loc + "/");
+final String SERP_URI		= cms.link("/" + loc + "/" + (loc.equalsIgnoreCase("no") ? "sok" : "search") + ".html");
+final String LABEL_CHART_ERROR = loc.equalsIgnoreCase("no") ? 
+                                    ("Kan ikke vise grafen.</p><p class=\"placeholder-element-text-extra\">Prøv å laste inn siden på nytt."
+                                        + " Du kan også <a href=\"/om/kontakt.html\">sende oss en feilmelding</a> hvis denne feilen vedvarer.") 
+                                    : 
+                                    ("Unable to display chart.</p><p class=\"placeholder-element-text-extra\">Try reloading the page."
+                                        + " Please <a href=\"/about/contact.html\">report this error</a> should the problem persist.");
 final boolean EDITABLE_MENU     = true;
 
 String menuTemplate = null;
@@ -218,7 +224,7 @@ HashMap params = null;
 cms.editable(false);
 
 %><cms:template element="head"><!DOCTYPE html>
-<html lang="<%= loc.getLanguage() %>">
+<html lang="<%= locale.getLanguage() %>">
 <head>
 <title><%= title %></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -299,77 +305,6 @@ out.println(cms.getHeaderElement(CmsAgent.PROPERTY_HEAD_SNIPPET, requestFileUri)
 <link rel="stylesheet" type="text/css" href="<%= cms.link("/system/modules/no.npolar.mosj/resources/style/ie8.css") %>" />
 <![endif]-->
 <!--<script type="text/javascript" src="<%= cms.link("/system/modules/no.npolar.common.jquery/resources/jquery.hoverintent-1-8-0.min.js") %>"></script>-->
-<% if (requestFileTypeId == OpenCms.getResourceManager().getResourceType("mosj_indicator").getTypeId()) { %>
-<script type="text/javascript" src="<%= cms.link("/system/modules/no.npolar.mosj/resources/js/hc/js/highcharts.js") %>"></script>
-<script type="text/javascript" src="<%= cms.link("/system/modules/no.npolar.mosj/resources/js/hc/js/highcharts-more.js") %>"></script>
-<script type="text/javascript" src="<%= cms.link("/system/modules/no.npolar.mosj/resources/js/hc/js/modules/data.js") %>"></script>
-<script type="text/javascript" src="<%= cms.link("/system/modules/no.npolar.mosj/resources/js/hc/js/modules/exporting.js") %>"></script>
-<script type="text/javascript">
-    Highcharts.theme = {
-        colors: [
-            '#0277D5',// bright blue
-            '#E52418',// bright red
-            '#49A801',// bright green
-            '#393331',// asphalt
-            '#8E1FAC',// bright purple
-            '#C74F18',// orange
-            '#7D6F42',// earth
-            '#78753E',// olive
-            '#CD238E',// bright pink
-            '#197d86',// teal
-            '#054477',// deep blue
-            '#4E0C13' // plum
-        ],
-        chart: {
-            backgroundColor: {
-                linearGradient: [0, 0, 500, 500],
-                stops: [
-                    [0, 'rgb(255, 255, 255)']
-                ]
-            },
-        },
-        title: {
-            style: {
-                color: '#000',
-                font: '1.5em "Open sans", "Trebuchet MS", Verdana, sans-serif'
-            }
-        },
-        tooltip: {
-            backgroundColor: '#fff',
-            borderColor: '#666',
-            borderRadius: 5,
-            borderWidth: 2
-        },
-        legend: {
-            itemStyle: {
-                font: '1em "Open sans", Trebuchet MS, Verdana, sans-serif',
-                color: '#000'
-            },
-            itemHiddenStyle:{
-                color: '#aaa'
-            } ,
-            itemHoverStyle:{
-                color: '#000',
-                font: 'bold'
-            }   
-        },
-        lang: {
-            decimalPoint: '<%= locale.equalsIgnoreCase("no") ? "," : "." %>',
-            downloadJPEG: '<%= locale.equalsIgnoreCase("no") ? "Last ned som JPG" : "Download as JPG" %>',
-            downloadPNG: '<%= locale.equalsIgnoreCase("no") ? "Last ned som PNG" : "Download as PNG" %>',
-            downloadPDF: '<%= locale.equalsIgnoreCase("no") ? "Last ned som PDF" : "Download as PDF" %>',
-            downloadSVG: '<%= locale.equalsIgnoreCase("no") ? "Last ned som SVG" : "Download as SVG" %>',
-            drillUpText: '<%= locale.equalsIgnoreCase("no") ? "Tilbake til {series.name}" : "Back to {series.name}" %>',
-            loading: '<%= locale.equalsIgnoreCase("no") ? "Laster..." : "Loading..." %>',
-            printChart: '<%= locale.equalsIgnoreCase("no") ? "Skriv ut figur" : "Print chart" %>',
-            resetZoom: '<%= locale.equalsIgnoreCase("no") ? "Nullstill zoom" : "Reset zoom" %>',
-            resetZoomTitle: '<%= locale.equalsIgnoreCase("no") ? "Sett zoomnivået til 1:1" : "Reset zoom level to 1:1" %>',
-            thousandsSep: '<%= locale.equalsIgnoreCase("no") ? " " : "," %>'
-        }
-    };
-    Highcharts.setOptions(Highcharts.theme);
-</script>
-<% } %>
 <style type="text/css">
     html, body { height: 100%; width: 100%; margin: 0; padding: 0; }
     #body { overflow:hidden; }
@@ -606,7 +541,52 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 ga('create', 'UA-770196-6', 'auto');
 ga('send', 'pageview');
 </script>
-<% } %>
+<% 
+}
+// Make the Highcharts charts, if necessary, by
+// 1. loading HighCharts scripts asynchronyously
+// 2. printing out all the javascript for charts on this page
+Map<String, String> hcConfs = null;
+try { hcConfs = (Map<String, String>)sess.getAttribute("hcConfs"); } catch (Exception e) {}
+
+if (hcConfs != null && !hcConfs.isEmpty()) {
+%>
+<script type="text/javascript">
+$(document).ready(function(){
+    $(function () {
+        $.getScript('<%= cms.link("/system/modules/no.npolar.mosj/resources/js/hc/js/highcharts.js") %>', function() {
+            $.getScript('<%= cms.link("/system/modules/no.npolar.mosj/resources/js/hc/js/highcharts-more.js") %>', function() {
+                $.getScript('<%= cms.link("/system/modules/no.npolar.mosj/resources/js/hc/js/modules/data.js") %>', function() {
+                    $.getScript('<%= cms.link("/system/modules/no.npolar.mosj/resources/js/hc/js/modules/exporting.js") %>', function() {
+                        Highcharts.theme = getHighchartsTheme('<%= loc %>');
+                        Highcharts.setOptions(Highcharts.theme);
+                        <%
+                        Iterator<String> iHcConfs = hcConfs.keySet().iterator();
+                        while (iHcConfs.hasNext()) {
+                            String chartWrapper = iHcConfs.next();
+                            String chartConfig = hcConfs.get(chartWrapper);
+                            
+                        %>
+                        try {
+                            $('#<%= chartWrapper %>').highcharts(<%= chartConfig %>);
+                        } catch (err) {
+                            $('#<%= chartWrapper %> > .placeholder-element').addClass('placeholder-element-error').find('.placeholder-element-text').html('<p><%= LABEL_CHART_ERROR %></p>');
+                        }
+                        <%
+                        
+                        }
+                        %>
+                    });
+                });
+            });
+        });
+    });
+});
+</script>
+<%
+sess.removeAttribute("hcConfs");
+}
+%>
 </body>
 </html>
 <%

@@ -7,10 +7,38 @@
  * Highslide should also be loaded before this script.
  */
 
-/**
- * Global variable used to detect changes in the viewport width.
- */
+/** Global variable used to detect changes in the viewport width. */
 var lastDetectedWidth = $(window).width();
+
+/** Global variable that holds localized Highcharts strings / labels. */
+var HC_LABELS = {
+    no: {
+        decimalPoint: ',',
+        downloadJPEG: 'Last ned som JPG',
+        downloadPNG: 'Last ned som PNG',
+        downloadPDF: 'Last ned som PDF',
+        downloadSVG: 'Last ned som SVG',
+        drillUpText: 'Tilbake til {series.name}',
+        loading: 'Laster...',
+        printChart: 'Skriv ut figur',
+        resetZoom: 'Nullstill zoom',
+        resetZoomTitle: 'Sett zoomnivået til 1:1',
+        thousandsSep: ' '
+    },
+    en: {
+        decimalPoint: '.',
+        downloadJPEG: 'Download as JPG',
+        downloadPNG: 'Download as PNG',
+        downloadPDF: 'Download as PDF',
+        downloadSVG: 'Download as SVG',
+        drillUpText: 'Back to {series.name}',
+        loading: 'Loading...',
+        printChart: 'Print chart',
+        resetZoom: 'Reset zoom',
+        resetZoomTitle: 'Reset zoom level to 1:1',
+        thousandsSep: ','
+    }
+};
 
 /*
  * jQuery hover delay plugin. 
@@ -405,13 +433,13 @@ function makeTabs() {
         $('.tabbed').each(function(e) {
             // calculate a more correct top offset for the tab content boxes
             var tabContentTopOffset =   $(this).children('.tabbed-heading').first().outerHeight() +              $(this).find('.tab-link').first().outerHeight();
-            console.log('heading: ' +   $(this).children('.tabbed-heading').first().outerHeight() + ', tab: ' +  $(this).find('.tab-link').first().outerHeight());
+            //console.log('heading: ' +   $(this).children('.tabbed-heading').first().outerHeight() + ', tab: ' +  $(this).find('.tab-link').first().outerHeight());
             
             // iterate all the tab content boxes
             $(this).find('.tab-content').each(function(e) {
                 // find the tallest one
                 var thisTabHeight = $(this).children().first().outerHeight();
-                console.log('tab content height is ' + thisTabHeight + '. new max? ' + (thisTabHeight > height));
+                //console.log('tab content height is ' + thisTabHeight + '. new max? ' + (thisTabHeight > height));
                 if (thisTabHeight > height) {
                     height = thisTabHeight;
                 }
@@ -867,6 +895,73 @@ try {
     };
 } catch (err) {
     // Highslide probably undefined
+}
+/**
+ * Gets Highcharts labels localized according to the given language.
+ * 
+ * @param {type} lang The desired language, e.g. 'en' or 'no'.
+ * @returns {Object} Highcharts localized according to the given language or, if that language isn't configured, in the default language.
+ * @see HC_LABELS
+ */
+function getHighchartsLables(/*String*/lang) {
+    if (!(lang === 'en' || lang === 'no')) {
+        // Non-supported language, fallback to default
+        lang = 'en';
+    }
+    return HC_LABELS[lang];
+}
+
+function getHighchartsTheme(/*String*/lang) {
+    return {
+        colors: [
+            '#0277D5',// bright blue
+            '#E52418',// bright red
+            '#49A801',// bright green
+            '#393331',// asphalt
+            '#8E1FAC',// bright purple
+            '#C74F18',// orange
+            '#7D6F42',// earth
+            '#78753E',// olive
+            '#CD238E',// bright pink
+            '#197d86',// teal
+            '#054477',// deep blue
+            '#4E0C13' // plum
+        ],
+        chart: {
+            backgroundColor: {
+                linearGradient: [0, 0, 500, 500],
+                stops: [
+                    [0, 'rgb(255, 255, 255)']
+                ]
+            },
+        },
+        title: {
+            style: {
+                color: '#000',
+                font: '1.5em "Open sans", "Trebuchet MS", Verdana, sans-serif'
+            }
+        },
+        tooltip: {
+            backgroundColor: '#fff',
+            borderColor: '#666',
+            borderRadius: 5,
+            borderWidth: 2
+        },
+        legend: {
+            itemStyle: {
+                font: '1em "Open sans", Trebuchet MS, Verdana, sans-serif',
+                color: '#000'
+            },
+            itemHiddenStyle:{
+                color: '#aaa'
+            } ,
+            itemHoverStyle:{
+                color: '#000',
+                font: 'bold'
+            }   
+        },
+        lang: getHighchartsLables(lang)
+    };
 }
 
 /**
