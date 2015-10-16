@@ -304,7 +304,7 @@ out.println(cms.getHeaderElement(CmsAgent.PROPERTY_HEAD_SNIPPET, requestFileUri)
 <link rel="stylesheet" type="text/css" href="<%= cms.link("/system/modules/no.npolar.mosj/resources/style/non-responsive-dynamic.css") %>" />
 <link rel="stylesheet" type="text/css" href="<%= cms.link("/system/modules/no.npolar.mosj/resources/style/ie8.css") %>" />
 <![endif]-->
-<!--<script type="text/javascript" src="<%= cms.link("/system/modules/no.npolar.common.jquery/resources/jquery.hoverintent-1-8-0.min.js") %>"></script>-->
+<!--<script type="text/javascript" src="<%= cms.link("/system/modules/no.npolar.common.jquery/resources/jquery.hoverintent-1-8-0.min.js") %>"></script>--> 
 <style type="text/css">
     html, body { height: 100%; width: 100%; margin: 0; padding: 0; }
     #body { overflow:hidden; }
