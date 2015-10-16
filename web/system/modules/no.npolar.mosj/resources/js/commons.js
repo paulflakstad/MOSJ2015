@@ -40,6 +40,57 @@ var HC_LABELS = {
     }
 };
 
+var HS_LABELS = {
+    no : {
+        loadingText :     'Laster...',
+        loadingTitle :    'Klikk for å avbryte',
+        focusTitle :      'Klikk for å flytte fram',
+        fullExpandText :  'Full størrelse',
+        fullExpandTitle : 'Utvid til full størrelse',
+        creditsText :     'Drevet av <i>Highslide JS</i>',
+        creditsTitle :    'Gå til hjemmesiden til Highslide JS',
+        previousText :    'Forrige',
+        previousTitle :   'Forrige (pil venstre)',
+        nextText :        'Neste',
+        nextTitle :       'Neste (pil høyre)',
+        moveText :        'Flytt',
+        moveTitle :       'Flytt',
+        closeText :       'Lukk',
+        closeTitle :      'Lukk (esc)',
+        resizeTitle :     'Endre størrelse',
+        playText :        'Spill av',
+        playTitle :       'Vis bildeserie (mellomrom)',
+        pauseText :       'Pause',
+        pauseTitle :      'Pause (mellomrom)',
+        number :          'Bilde %1 av %2',
+        restoreTitle :    'Klikk for å lukke bildet, klikk og dra for å flytte. Bruk piltastene for forrige og neste.'
+    },
+    en : {
+        loadingText :     'Loading...',
+        loadingTitle :    'Click to cancel',
+        focusTitle :      'Click to move forwrard',
+        fullExpandText :  'Fullsize',
+        fullExpandTitle : 'Expand to full size',
+        creditsText :     'Powered by <i>Highslide JS</i>',
+        creditsTitle :    'Go to the Highslide JS website',
+        previousText :    'Previous',
+        previousTitle :   'Previous (left arrow)',
+        nextText :        'Next',
+        nextTitle :       'Next (right arrow)',
+        moveText :        'Move',
+        moveTitle :       'Move',
+        closeText :       'Close',
+        closeTitle :      'Close (esc)',
+        resizeTitle :     'Change size',
+        playText :        'Play',
+        playTitle :       'View slideshow (space)',
+        pauseText :       'Pause',
+        pauseTitle :      'Pause (space)',
+        number :          'Image %1 of %2',
+        restoreTitle :    'Click to close, click and drag to move. Use arrow keys for next / previous.'
+    }
+};
+
 /*
  * jQuery hover delay plugin. 
  * http://ronency.github.io/hoverDelay/
@@ -562,13 +613,26 @@ function makeScrollToSmooth() {
  * Makes ready Highslide, by injecting the necessary css/js in the HTML head.
  * @param {String} cssUri The URI to the Highslide css.
  * @param {String} jsUri The URI to the Highslide javascript.
+ * @param {String} lang The desired language.
  * @returns {Boolean} True if no error is thrown, false if not.
  */
-function readyHighslide(cssUri, jsUri) {
+function readyHighslide(cssUri, jsUri, lang) {
     try {
-        if ($(".highslide")[0]){
+        if ($(".highslide")[0]) {
             $('head').append('<link rel="stylesheet" type="text/css" href="' + cssUri + '" />');
-            $('head').append('<script type="text/javascript" src="' + jsUri +'" async />');
+            $.getScript(jsUri, function() {
+                //hs.align = 'center';
+                //hs.marginBottom = 10;
+                //hs.marginTop = 10;
+                hs.marginBottom = 50; // Make room for the "Share" widget
+                hs.marginTop = 50; // Make room for the thumbstrip
+                hs.marginLeft = 50;
+                hs.marginRight = 50; 
+                //hs.maxHeight = 600;
+                //hs.outlineType = 'rounded-white';
+                hs.outlineType = 'drop-shadow';
+                hs.lang = getHighslideLables(lang);
+            });
         }
     } catch (err) {
         return false;
@@ -857,19 +921,20 @@ function toggleHighChartsGrouping(/*jQuery*/chart) {
 /**
  * Highslide settings
  */
-try {
-    //hs.align = 'center';
-    //hs.marginBottom = 10;
-    //hs.marginTop = 10;
-    hs.marginBottom = 50; // Make room for the "Share" widget
-    hs.marginTop = 50; // Make room for the thumbstrip
-    hs.marginLeft = 50;
-    hs.marginRight = 50; 
-    //hs.maxHeight = 600;
-    //hs.outlineType = 'rounded-white';
-    hs.outlineType = 'drop-shadow';
+function getHighslideSettings() {
+    try {
+        //hs.align = 'center';
+        //hs.marginBottom = 10;
+        //hs.marginTop = 10;
+        hs.marginBottom = 50; // Make room for the "Share" widget
+        hs.marginTop = 50; // Make room for the thumbstrip
+        hs.marginLeft = 50;
+        hs.marginRight = 50; 
+        //hs.maxHeight = 600;
+        //hs.outlineType = 'rounded-white';
+        hs.outlineType = 'drop-shadow';
 
-    hs.lang = {
+        hs.lang = {
             loadingText :     'Laster...',
             loadingTitle :    'Klikk for å avbryte',
             focusTitle :      'Klikk for å flytte fram',
@@ -892,15 +957,17 @@ try {
             pauseTitle :      'Pause (mellomrom)',
             number :          'Bilde %1 av %2',
             restoreTitle :    'Klikk for å lukke bildet, klikk og dra for å flytte. Bruk piltastene for forrige og neste.'
-    };
-} catch (err) {
-    // Highslide probably undefined
+        };
+    } catch (err) {
+        // Highslide probably undefined
+    }
 }
+
 /**
  * Gets Highcharts labels localized according to the given language.
  * 
  * @param {type} lang The desired language, e.g. 'en' or 'no'.
- * @returns {Object} Highcharts localized according to the given language or, if that language isn't configured, in the default language.
+ * @returns {Object} Highcharts labels localized according to the given language or, if that language isn't configured, in the default language.
  * @see HC_LABELS
  */
 function getHighchartsLables(/*String*/lang) {
@@ -909,6 +976,21 @@ function getHighchartsLables(/*String*/lang) {
         lang = 'en';
     }
     return HC_LABELS[lang];
+}
+
+/**
+ * Gets Highslide labels localized according to the given language.
+ * 
+ * @param {type} lang The desired language, e.g. 'en' or 'no'.
+ * @returns {Object} Highslide labels localized according to the given language or, if that language isn't configured, in the default language.
+ * @see HC_LABELS
+ */
+function getHighslideLables(/*String*/lang) {
+    if (!(lang === 'en' || lang === 'no')) {
+        // Non-supported language, fallback to default
+        lang = 'en';
+    }
+    return HS_LABELS[lang];
 }
 
 function getHighchartsTheme(/*String*/lang) {
