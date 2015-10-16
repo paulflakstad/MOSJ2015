@@ -159,6 +159,7 @@ String requestFileUri       = cms.getRequestContext().getUri();
 String requestFolderUri     = cms.getRequestContext().getFolderUri();
 Integer requestFileTypeId   = cmso.readResource(requestFileUri).getTypeId();
 boolean loggedInUser        = OpenCms.getRoleManager().hasRole(cms.getCmsObject(), CmsRole.WORKPLACE_USER);
+HttpSession sess            = cms.getRequest().getSession();
 
 Locale locale               = cms.getRequestContext().getLocale();
 String loc                  = locale.toString();
@@ -290,6 +291,9 @@ while (structuredContent.hasMoreResources()) {
         // See also the backing classes in the no.npolar.data.api library.
         //
         I_CmsXmlContentContainer mosjParameters = cms.contentloop(mosjMonitoringData, "Parameter");
+        
+        // Session storage for Highcharts configuration strings (javascript)
+        sess.setAttribute("hcConfs", new HashMap<String, String>());
             
         int loopCount = 0; // Parameter counter
         while (mosjParameters.hasMoreResources()) {
@@ -432,7 +436,6 @@ while (structuredContent.hasMoreResources()) {
                     %>
                     
                 </figure>
-                <!-- -->
                 <div class="toggleable collapsed parameter-data-table-wrapper">
                     <a href="javascript:void(0)" class="toggletrigger"><i class="icon-grid"></i> <%= LABEL_TABLE_FORMAT %></a>
                     <div class="toggletarget">
@@ -450,22 +453,18 @@ while (structuredContent.hasMoreResources()) {
                         %>
                     </div>
                 </div>
-                <!-- -->
-                <script type="text/javascript">
-                $(function () {
-                    try {
-                        $('#<%= chartWrapper %>').highcharts(<%= mp.getChart(customization).getChartConfigurationString() %>);
-                    } catch (err) {
-                        $('#<%= chartWrapper %> > .placeholder-element').addClass('placeholder-element-error').find('.placeholder-element-text').html('<p><%= LABEL_CHART_ERROR %></p>');
-                    }
-                });
-                </script>
                 <%
+                
+                // The javascript that creates the actual charts are printed by
+                // the master template (to get the code as close to the document 
+                // end as possible).                        
+                String chartConfig = mp.getChart(customization).getChartConfigurationString();
+                ((Map<String, String>)sess.getAttribute("hcConfs")).put(chartWrapper, chartConfig);
 
                 //pl("Collected " + tss.size() + " related timeseries.");
             } catch (Exception e) {            
                 out.println("</div>");
-                out.println("<!-- \nERROR rendering indicator: " + e.getMessage() + "\n-->");
+                out.println("<!-- \nERROR creating MOSJ parameter (or its chart settings): " + e.getMessage() + "\n-->");
             }
         }
 
