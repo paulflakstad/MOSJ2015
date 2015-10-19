@@ -159,7 +159,6 @@ String requestFileUri       = cms.getRequestContext().getUri();
 String requestFolderUri     = cms.getRequestContext().getFolderUri();
 Integer requestFileTypeId   = cmso.readResource(requestFileUri).getTypeId();
 boolean loggedInUser        = OpenCms.getRoleManager().hasRole(cms.getCmsObject(), CmsRole.WORKPLACE_USER);
-HttpSession sess            = cms.getRequest().getSession();
 
 Locale locale               = cms.getRequestContext().getLocale();
 String loc                  = locale.toString();
@@ -210,9 +209,13 @@ final String LABEL_CHART_ERROR = loc.equalsIgnoreCase("no") ?
                                     : 
                                     "Unable to display chart.</p><p class=\"placeholder-element-text-extra\">Try reloading the page. Please <a href=\"/about/contact.html\">report this error</a> should the problem persist.";
 
+// Session storage for HighCharts configuration strings (javascript)
+cms.getRequest().setAttribute("hcConfs", new HashMap<String, String>());
+
 // Set the html document's title
 String htmlDocTitle = cms.property("Title", requestFileUri, "");
-request.setAttribute("title", htmlDocTitle);
+cms.getRequest().setAttribute("title", htmlDocTitle);
+
 cms.include(cms.getTemplate(), "head");
 
 I_CmsXmlContentContainer structuredContent = cms.contentload("singleFile", requestFileUri, false);
@@ -291,9 +294,6 @@ while (structuredContent.hasMoreResources()) {
         // See also the backing classes in the no.npolar.data.api library.
         //
         I_CmsXmlContentContainer mosjParameters = cms.contentloop(mosjMonitoringData, "Parameter");
-        
-        // Session storage for Highcharts configuration strings (javascript)
-        sess.setAttribute("hcConfs", new HashMap<String, String>());
             
         int loopCount = 0; // Parameter counter
         while (mosjParameters.hasMoreResources()) {
@@ -390,7 +390,7 @@ while (structuredContent.hasMoreResources()) {
             
 
             try {
-                MOSJParameter mp = service.getMOSJParameter(pid).setDisplayLocale(locale);
+                MOSJParameter mp = service.getMOSJParameter(pid);
                 
                 if (loopCount == 1) { // => Do this only on first iteration
                     String displayTitle = CmsAgent.elementExists(titleOverride) ? titleOverride : mp.getTitle(locale);
@@ -454,12 +454,12 @@ while (structuredContent.hasMoreResources()) {
                     </div>
                 </div>
                 <%
-                
+		
                 // The javascript that creates the actual charts are printed by
                 // the master template (to get the code as close to the document 
                 // end as possible).                        
                 String chartConfig = mp.getChart(customization).getChartConfigurationString();
-                ((Map<String, String>)sess.getAttribute("hcConfs")).put(chartWrapper, chartConfig);
+                ((Map<String, String>)cms.getRequest().getAttribute("hcConfs")).put(chartWrapper, chartConfig);
 
                 //pl("Collected " + tss.size() + " related timeseries.");
             } catch (Exception e) {            
@@ -582,8 +582,8 @@ while (structuredContent.hasMoreResources()) {
         pTitle = cms.contentshow(dedicatedParagraph, "Title");
         if (!CmsAgent.elementExists(pTitle))
             pTitle = LABEL_STATUS_TRENDS;
-        request.setAttribute("paragraphTitle", pTitle);
-        request.setAttribute("paragraphElementName", "StatusAndTrend");
+        cms.getRequest().setAttribute("paragraphTitle", pTitle);
+        cms.getRequest().setAttribute("paragraphElementName", "StatusAndTrend");
         cms.include(PARAGRAPH_HANDLER);
     }
     
@@ -592,8 +592,8 @@ while (structuredContent.hasMoreResources()) {
         pTitle = cms.contentshow(dedicatedParagraph, "Title");
         if (!CmsAgent.elementExists(pTitle))
             pTitle = LABEL_CAUSAL_FACTORS;
-        request.setAttribute("paragraphTitle", pTitle);
-        request.setAttribute("paragraphElementName", "CausalFactors");
+        cms.getRequest().setAttribute("paragraphTitle", pTitle);
+        cms.getRequest().setAttribute("paragraphElementName", "CausalFactors");
         cms.include(PARAGRAPH_HANDLER);
     }
     
@@ -602,8 +602,8 @@ while (structuredContent.hasMoreResources()) {
         pTitle = cms.contentshow(dedicatedParagraph, "Title");
         if (!CmsAgent.elementExists(pTitle))
             pTitle = LABEL_CONSEQUENCES;
-        request.setAttribute("paragraphTitle", pTitle);
-        request.setAttribute("paragraphElementName", "Consequences");
+        cms.getRequest().setAttribute("paragraphTitle", pTitle);
+        cms.getRequest().setAttribute("paragraphElementName", "Consequences");
         cms.include(PARAGRAPH_HANDLER);
     }
 
@@ -612,13 +612,13 @@ while (structuredContent.hasMoreResources()) {
         pTitle = cms.contentshow(dedicatedParagraph, "Title");
         if (!CmsAgent.elementExists(pTitle))
             pTitle = LABEL_ABOUT;
-        request.setAttribute("paragraphTitle", pTitle);
-        request.setAttribute("paragraphElementName", "About");
+        cms.getRequest().setAttribute("paragraphTitle", pTitle);
+        cms.getRequest().setAttribute("paragraphElementName", "About");
         cms.include(PARAGRAPH_HANDLER);
     }
     
-    request.removeAttribute("paragraphTitle");
-    request.removeAttribute("paragraphElementName");
+    cms.getRequest().removeAttribute("paragraphTitle");
+    cms.getRequest().removeAttribute("paragraphElementName");
     
     //
     // Details 
@@ -752,18 +752,7 @@ while (structuredContent.hasMoreResources()) {
         
         // Reference list
         cms.include("/system/modules/no.npolar.common.pageelements/elements/cn-reflist.jsp");
-        
-        %>
-    <%
-    
-    
 }
-
-
-
-
-
-
 
 cms.include(cms.getTemplate(), "foot");
 %>

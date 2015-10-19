@@ -547,7 +547,7 @@ ga('send', 'pageview');
 // 1. loading HighCharts scripts asynchronyously
 // 2. printing out all the javascript for charts on this page
 Map<String, String> hcConfs = null;
-try { hcConfs = (Map<String, String>)sess.getAttribute("hcConfs"); } catch (Exception e) {}
+try { hcConfs = (Map<String, String>)cms.getRequest().getAttribute("hcConfs"); } catch (Exception e) {}
 
 if (hcConfs != null && !hcConfs.isEmpty()) {
 %>
@@ -584,7 +584,10 @@ $(document).ready(function(){
 });
 </script>
 <%
-sess.removeAttribute("hcConfs");
+cms.getRequest().removeAttribute("hcConfs");
+}
+else {
+    out.println("<!-- no chart configurations found (" + (hcConfs == null ? "null" : (hcConfs.isEmpty() ? "empty" : "???")) + ") -->");
 }
 %>
 </body>
