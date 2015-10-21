@@ -340,12 +340,36 @@ function isBigScreen() {
  * Initializes .toggleable accordians.
  */
 function initToggleables() {
+    /*
     $('.toggleable.collapsed > .toggletarget').slideUp(1); // Hide normally-closed ("collapsed") accordion content		
     $('.toggleable.collapsed > .toggletrigger').prepend('<em class="icon-down-open-big"></em> '); // Append arrow icon to "show accordion content" triggers
     $('.toggleable.open > .toggletrigger').prepend('<em class="icon-up-open-big"></em> '); // Append arrow icon to "hide accordion content" triggers
     $('.toggleable > .toggletrigger').click( function() {
         $(this).next('.toggletarget').slideToggle(500); // Slide up/down the next toggle target ...
         $(this).children('em').first().toggleClass('icon-up-open-big icon-down-open-big'); // ... and toggle the icon class, so the arrows change corresponding to the slide up/down
+    });
+    */
+    
+    if (!Modernizr.csstransitions) {
+        $('.toggleable.collapsed > .toggletarget').slideUp(1); // Hide normally-closed ("collapsed") accordion content
+    }
+    
+    var triggerForCollapsed = $('.toggleable.collapsed > .toggletrigger');
+    var triggerForOpen = $('.toggleable.open > .toggletrigger');
+    var trigger = $('.toggleable > .toggletrigger');
+    
+    triggerForCollapsed.prepend('<em class="icon-down-open-big"></em> '); // Append arrow icon to "show accordion content" triggers
+    triggerForOpen.prepend('<em class="icon-up-open-big"></em> '); // Append arrow icon to "hide accordion content" triggers
+    triggerForCollapsed.next('.toggletarget').addClass('toggletarget--closed');
+    triggerForOpen.next('.toggletarget').addClass('toggletarget--open');
+    
+    trigger.click( function(e) {
+        e.preventDefault();
+        $(this).next('.toggletarget').toggleClass('toggletarget--open toggletarget--closed');
+        $(this).children('em').first().toggleClass('icon-up-open-big icon-down-open-big'); // ... and toggle the icon class, so the arrows change corresponding to the slide up/down
+        if (!Modernizr.csstransitions) {
+            $(this).next('.toggletarget').slideToggle(500); // Slide up/down the next toggle target ...
+        }
     });
 }
 /*

@@ -46,3 +46,7 @@ body {
 #search-global .query-input:focus {
     color:#000;
 }
+.toggletarget {
+    max-height:none;
+    visibility:visible;
+}

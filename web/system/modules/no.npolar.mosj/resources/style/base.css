@@ -659,8 +659,8 @@ ul.line-items li {
     transition:all .5s;
     position:relative;
 }
-.toggletrigger:hover {
-    background:#eee;
+.toggletrigger:hover { 
+   background:#eee;
     /*box-shadow:0 0 10em rgba(0,0,0,0.25) inset;*/
 }
 .toggletarget {
@@ -682,6 +682,34 @@ ul.line-items li {
 .toggletrigger:hover .icon-up-open-big,
 .toggletrigger:hover .icon-down-open-big {
     background-color:#fff;
+}
+
+.toggletrigger, .toggletarget {
+    margin-bottom:0; /* essential for the anti-margin transition to look good */
+}
+.toggletarget {
+    max-height:0;
+    opacity:0.8;
+    visibility:hidden;
+    overflow:hidden;
+    padding:0 1em;
+    -webkit-transition: padding 0.25s ease, max-height 0.4s ease-out, opacity 0.4s ease, visibility 0.4s ease;
+    -moz-transition: padding 0.25s ease, max-height 0.4s ease-out, opacity 0.4s ease, visibility 0.4s ease;
+    -o-transition: padding 0.25s ease, max-height 0.4s ease-out, opacity 0.4s ease, visibility 0.4s ease;
+    transition: padding 0.25s ease, max-height 0.4s ease-out, opacity 0.4s ease, visibility 0.4s ease; /* transition open->closed */
+}
+.toggletarget:target,
+.toggletarget.toggletarget--open {
+    max-height:9999px;
+    opacity:1;
+    visibility:visible;
+    overflow:auto;
+    padding:1em;
+    margin-bottom:0.2rem;
+    -webkit-transition: padding 0.5s ease, max-height 1s ease-in, opacity 0.5s ease, visibility 0.5s ease;
+    -moz-transition: padding 0.5s ease, max-height 1s ease-in, opacity 0.5s ease, visibility 0.5s ease;
+    -o-transition: padding 0.5s ease, max-height 1s ease-in, opacity 0.5s ease, visibility 0.5s ease;
+    transition: padding 0.5s ease, max-height 1s ease-in, opacity 0.5s ease, visibility 0.5s ease; /* transition closed->open */
 }
 
 /* Accordion inside "parameter" wrapper (MOSJ-specific) */
@@ -768,7 +796,7 @@ ul.line-items li {
     width:100%;
     overflow:auto;
     background-color:#fff;
-    padding-top:3em;
+    /*padding-top:3em;*/
 }
 
 .parameter-wrapper table {
