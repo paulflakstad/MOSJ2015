@@ -316,8 +316,8 @@ while (structuredContent.hasMoreResources()) {
                     imageHtml = ImageUtil.getImage(cms, imageUri);
                 }
                 %>
-                <h3 class="toggletrigger"><a href="javascript:void(0)"><%= titleOverride %></a></h3>
-                <div class="toggletarget"><!-- this div prevents layout from breaking down -->
+                <h3 class="toggletrigger"><a href="#p-<%= pid %>"><%= titleOverride %></a></h3>
+                <div class="toggletarget" id="p-<%= pid %>"><!-- this div prevents layout from breaking down -->
                     <figure class="media">
                         <div class="hc-chart"><%= imageHtml %></div>
                         <% if (CmsAgent.elementExists(parameterChartCaption)) { %>
@@ -329,7 +329,7 @@ while (structuredContent.hasMoreResources()) {
             
             if (!pid.matches("[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}")) {
                 %>
-                <div class="toggletarget"><!-- this div prevents layout from breaking down -->
+                <div class="toggletarget" id="p-<%= pid %>"><!-- this div prevents layout from breaking down -->
                     <figure class="media">
                         <div class="hc-chart">
                             <div class="placeholder-element placeholder-element-chart">
@@ -395,8 +395,8 @@ while (structuredContent.hasMoreResources()) {
                 if (loopCount == 1) { // => Do this only on first iteration
                     String displayTitle = CmsAgent.elementExists(titleOverride) ? titleOverride : mp.getTitle(locale);
                     %>
-                    <h3 class="toggletrigger"><a href="javascript:void(0)"><%= displayTitle %></a></h3>
-                    <div class="toggletarget">
+                    <h3 class="toggletrigger"><a href="#p-<%= pid %>"><%= displayTitle %></a></h3>
+                    <div class="toggletarget" id="p-<%= pid %>">
                     <%
                 }
                 
@@ -437,8 +437,8 @@ while (structuredContent.hasMoreResources()) {
                     
                 </figure>
                 <div class="toggleable collapsed parameter-data-table-wrapper">
-                    <a href="javascript:void(0)" class="toggletrigger"><i class="icon-grid"></i> <%= LABEL_TABLE_FORMAT %></a>
-                    <div class="toggletarget">
+                    <a href="#p-data-<%= pid %>" class="toggletrigger"><i class="icon-grid"></i> <%= LABEL_TABLE_FORMAT %></a>
+                    <div class="toggletarget" id="p-data-<%= pid %>">
                         <p>
                             <a class="cta" href="<%= cms.link("/data-export?id=" + mp.getId() + "&amp;locale=" + loc) %>" data-tooltip="<%= LABEL_CSV_LINK_DESCR %>">
                                 <i class="icon-download-alt"></i> <%= LABEL_CSV_LINK %>
@@ -545,13 +545,12 @@ while (structuredContent.hasMoreResources()) {
             if (!detailsHtml.isEmpty()) {
                 %>
                 <div class="toggleable collapsed parameter-details-wrapper">
-                    <a href="javascript:void(0)" class="toggletrigger"><i class="icon-info-circled-1"></i> <%= LABEL_DETAILS %></a>
-                    <div class="toggletarget tone-down">
+                    <a href="#details-<%= loopCount %>" class="toggletrigger"><i class="icon-info-circled-1"></i> <%= LABEL_DETAILS %></a>
+                    <div class="toggletarget tone-down" id="details-<%= loopCount %>">
                         <%= detailsHtml %>
                     </div>
                 </div>
                 <%
-
             }
         }
         
