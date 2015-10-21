@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Common javascript funtions, used throughout the site.
  * Dependencies (must/should be loaded before this script):
@@ -6,6 +7,8 @@
  *  
  * Highslide should also be loaded before this script.
  */
+
+//var $, Modernizr, hs, stackBlurCanvasRGBA;
 
 /** Global variable used to detect changes in the viewport width. */
 var lastDetectedWidth = $(window).width();
@@ -122,8 +125,8 @@ $.fn.hoverDelay = function(options) {
     var defaultOptions = {
         delayIn: 300,
         delayOut: 300,
-        handlerIn: function($element){},
-        handlerOut: function($element){}
+        handlerIn: function($element){ $element.addClass('intentional-hover'); },
+        handlerOut: function($element){ $element.removeClass('intentional-hover'); }
     };
     options = $.extend(defaultOptions, options);
     return this.each(function() {
@@ -199,11 +202,11 @@ function highlightReference() {
                     $(".highlightable").css("background-color", "transparent");
                     $("#" + hash + ".highlightable").css("background-color", "#feff9f");
                     //alert (hash);
-                } catch (jsErr) {}
+                } catch (ignore) {}
             }
-            else {
+            //else {
                 //alert("No hash");
-            }
+            //}
         },
         100
     );
@@ -245,7 +248,7 @@ navigator.sayswho = (function() {
     var N = navigator.appName, ua = navigator.userAgent, tem;
     var M = ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
     tem = ua.match(/version\/([\.\d]+)/i);
-    if (M && tem !== null) M[2] = tem[1];
+    if (M && tem !== null) { M[2] = tem[1]; }
     M = M ? [M[1], M[2]] : [N, navigator.appVersion, '-?'];
 
     return M;
@@ -274,10 +277,12 @@ function nonResIE() {
         var version = navigator.sayswho[1];
         version = version.substring(0, version.indexOf('.'));
         //console.log('Version is: "' + version + '"');
-        if (version.length > 1)
+        if (version.length > 1) {
             return false;
-        else if (version < '9')
+        } 
+        if (version < '9') {
             return true;
+        }
     }
     return false;
 }
@@ -294,8 +299,9 @@ function emptyOrNonExistingElement(id) {
         if (html !== null) {
             html = html.replace(/(\r\n|\n|\r)/gm, ''); // Remove any and all linebreaks
             html = html.replace(/^\s+|\s+$/g, ''); // Remove empty spaces at front and end
-            if (html === '')
+            if (html === '') {
                 return true; // The element didn't contain anything (except maybe whitespace and linebreaks)
+            }
             return false; // The element contained something
         }
     }
@@ -331,7 +337,7 @@ function isBigScreen() {
     var big = true;
     try {
         big = window.matchMedia('(min-width: ' + getSmallScreenBreakpoint() + 'px)').matches; // Update value for browsers supporting matchMedia
-    } catch (err) {
+    } catch (ignore) {
         // No browser support (= likely IE8 or older) - retain default
     }
     return big;
@@ -414,7 +420,7 @@ function loadAddThis() {
  */
 function makeBlurryHeroBackground(jsUriStackBlur) {
     var iPadClient = false; 
-    try { iPadClient = navigator.userAgent.match(/iPad/i) !== null; } catch(err) {}
+    try { iPadClient = navigator.userAgent.match(/iPad/i) !== null; } catch (ignore) {}
 
     try {
         //console.log('starting blurry hero background ...');
@@ -479,11 +485,42 @@ function makeBlurryHeroBackground(jsUriStackBlur) {
  * @returns {Boolean} True if no error is thrown, false if not.
  */
 function makeResponsiveTables() {
+    
+    function splitTable(original) {
+        original.wrap("<div class='table-wrapper' />");
+        var copy = original.clone();
+        copy.find("td:not(:first-child), th:not(:first-child)").css("display","none");
+        copy.removeClass("responsive");
+        original.closest(".table-wrapper").append(copy);
+        copy.wrap("<div class='pinned' />");
+        original.wrap("<div class='scrollable' />");
+    }
+    
+    function unsplitTable(original) {
+        original.closest(".table-wrapper").find(".pinned").remove();
+        original.unwrap();
+        original.unwrap();
+    }
+    
     try {
-	var switched=false;var updateTables=function(){if(($(window).width()<767)&&!switched){switched=true;$("table.responsive").each(function(i,element){splitTable($(element));});return true;}
-	else if(switched&&($(window).width()>767)){switched=false;$("table.responsive").each(function(i,element){unsplitTable($(element));});}};$(window).load(updateTables);$(window).bind("resize",updateTables);function splitTable(original)
-	{original.wrap("<div class='table-wrapper' />");var copy=original.clone();copy.find("td:not(:first-child), th:not(:first-child)").css("display","none");copy.removeClass("responsive");original.closest(".table-wrapper").append(copy);copy.wrap("<div class='pinned' />");original.wrap("<div class='scrollable' />");}
-	function unsplitTable(original){original.closest(".table-wrapper").find(".pinned").remove();original.unwrap();original.unwrap();}
+	var switched=false;
+        var updateTables = function() {
+            if(($(window).width()<767) && !switched) {
+                switched=true;
+                $("table.responsive").each(function(i,element) {
+                    splitTable($(element));
+                });
+                return true;
+            } 
+            if (switched && ($(window).width()>767)) {
+                switched=false;
+                $("table.responsive").each(function(i,element) {
+                    unsplitTable($(element));
+                });
+            }
+        };
+        $(window).load(updateTables);
+        $(window).bind("resize", updateTables);
     } catch (err) {
         return false;
     }
@@ -499,8 +536,9 @@ function makeTabs() {
         // Set the default active tab (make it the first one)
         var firstTab = $('.tabbed .tab').first();
         var hash = window.location.hash.substring(1);
-        if (!(hash === 'refs' || hash === 'links'))
+        if (!(hash === 'refs' || hash === 'links')) {
             firstTab.addClass('active-tab');
+        }
         // set the height
         var height = firstTab.outerHeight();
         
@@ -671,7 +709,7 @@ function readyHighslide(cssUri, jsUri, lang) {
 function keyFriendly() {
     try { 
         document.getElementById("__adaptive-styles").innerHTML = "a:focus, input:focus, button:focus, select:focus { outline:thick solid #f44; outline-offset:4px; }";
-    } catch (err) {}
+    } catch (ignore) {}
 }
 
 /**
@@ -681,7 +719,7 @@ function keyFriendly() {
 function mouseFriendly() {
     try { 
         document.getElementById("__adaptive-styles").innerHTML = "a, a:focus, input:focus, select:focus { outline:none !important; }";
-    } catch (err) {}
+    } catch (ignore) {}
 }
 
 /**
@@ -982,7 +1020,7 @@ function getHighslideSettings() {
             number :          'Bilde %1 av %2',
             restoreTitle :    'Klikk for å lukke bildet, klikk og dra for å flytte. Bruk piltastene for forrige og neste.'
         };
-    } catch (err) {
+    } catch (ignore) {
         // Highslide probably undefined
     }
 }
@@ -1039,7 +1077,7 @@ function getHighchartsTheme(/*String*/lang) {
                 stops: [
                     [0, 'rgb(255, 255, 255)']
                 ]
-            },
+            }
         },
         title: {
             style: {
@@ -1074,8 +1112,33 @@ function getHighchartsTheme(/*String*/lang) {
  * Toggle class name on link when it receives focus.
  */
 document.getElementsByTagName('a').onfocus = function(e) {
-    this.toggleClass('has-focus');
+    toggleClass(e.target, 'has-focus');
 };
+
+
+// Class toggler (non-jQuery)
+function toggleClass(/*Element*/element, /*String*/theClass) {
+    var classesStr = element.getAttribute('class');
+    if ( classesStr === null || typeof classesStr === 'undefined' ) {
+        element.setAttribute('class', theClass);
+    } else {
+        var classes = classesStr.split(' ');
+        var removedClass = false;
+        classesStr = '';
+        for (var i = 0; i < classes.length; i++) {
+            var existingClassName = classes[i].trim();
+            if (existingClassName !== theClass) {
+                classesStr += existingClassName + ' ';
+            } else {
+                removedClass = true;
+            }
+        }
+        if (!removedClass) {
+            classesStr += theClass;
+        }
+        element.setAttribute('class', classesStr);
+    }
+}
 /*
 function mouseinMenuItem(menuItem) {
     $(this).addClass('infocus');
