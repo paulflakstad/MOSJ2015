@@ -1,4 +1,3 @@
-"use strict";
 /**
  * Common javascript funtions, used throughout the site.
  * Dependencies (must/should be loaded before this script):
@@ -122,6 +121,7 @@ var HS_LABELS = {
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 $.fn.hoverDelay = function(options) {
+    'use strict';
     var defaultOptions = {
         delayIn: 300,
         delayOut: 300,
@@ -195,6 +195,7 @@ $.fn.hoverDelay = function(options) {
  * Handle hash (fragment) change
  */
 function highlightReference() {
+    'use strict';
     setTimeout(function() {
             if(document.location.hash) {
                 var hash = document.location.hash.substring(1); // Get fragment (without the leading # character)
@@ -214,6 +215,7 @@ function highlightReference() {
 
 /*
 function highlightReference() {
+    'use strict';
 	if(document.location.hash) {
 		var hash = document.location.hash.substring(1); // Get fragment (without the leading # character)
 		try {
@@ -245,6 +247,7 @@ else { // event not supported:
  * Helper function for browser sniffing
  */
 navigator.sayswho = (function() {
+    'use strict';
     var N = navigator.appName, ua = navigator.userAgent, tem;
     var M = ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
     tem = ua.match(/version\/([\.\d]+)/i);
@@ -273,6 +276,7 @@ navigator.sayswho = (function() {
  * Returns true if the browser is IE8 (or an older IE version)
  */
 function nonResIE() {
+    'use strict';
     if (navigator.sayswho[0].match('MSIE')) { 
         var version = navigator.sayswho[1];
         version = version.substring(0, version.indexOf('.'));
@@ -293,6 +297,7 @@ function nonResIE() {
  * @return True if the element is non-existing or the element doesn't contain any real content, false if not
  */
 function emptyOrNonExistingElement(id) {
+    'use strict';
     var el = document.getElementById(id); // Get the element
     if (!(el === null || el === undefined)) { // Check for non-exising element first
         var html = el.innerHTML; // Get the content inside the element
@@ -318,6 +323,7 @@ function getVisibleWidth() {
  * @returns {Number} The small-screen breakpoint
  */
 function getSmallScreenBreakpoint() {
+    'use strict';
     return 800;
 }
 /**
@@ -325,6 +331,7 @@ function getSmallScreenBreakpoint() {
  * @returns {Boolean} True if the viewport width is < getSmallScreenBreakpoint()
  */
 function isSmallScreen() {
+    'use strict';
     return !isBigScreen();
     //return getVisibleWidth() <= getSmallScreenBreakpoint();
 }
@@ -334,6 +341,7 @@ function isSmallScreen() {
  * @returns {Boolean|MediaQueryList.matches} True if the viewport width is >= getSmallScreenBreakpoint(), false if not
  */
 function isBigScreen() {
+    'use strict';
     var big = true;
     try {
         big = window.matchMedia('(min-width: ' + getSmallScreenBreakpoint() + 'px)').matches; // Update value for browsers supporting matchMedia
@@ -346,6 +354,7 @@ function isBigScreen() {
  * Initializes .toggleable accordians.
  */
 function initToggleables() {
+    'use strict';
     /*
     $('.toggleable.collapsed > .toggletarget').slideUp(1); // Hide normally-closed ("collapsed") accordion content		
     $('.toggleable.collapsed > .toggletrigger').prepend('<em class="icon-down-open-big"></em> '); // Append arrow icon to "show accordion content" triggers
@@ -380,6 +389,7 @@ function initToggleables() {
 }
 /*
 function showOutlines() {
+    'use strict';
     try { 
         document.getElementById("_outlines").innerHTML="a:focus, input:focus, button:focus, select:focus { outline:thin dotted; outline:2px solid orange; }"; 
     } catch (err) { 
@@ -388,6 +398,7 @@ function showOutlines() {
     return true;
 }
 function hideOutlines() {
+    'use strict';
     try { 
         document.getElementById("_outlines").innerHTML="a, a:focus, input:focus, select:focus { outline:none !important; } "; 
     } catch (err) { 
@@ -401,6 +412,7 @@ function hideOutlines() {
  */
 /*
 function loadAddThis() {
+    'use strict';
     //var addthisScript = document.createElement('script');
     //addthisScript.setAttribute('src', 'http://s7.addthis.com/js/300/addthis_widget.js#domready=1');
     //addthisScript.setAttribute('type', 'text/javascript');
@@ -419,6 +431,7 @@ function loadAddThis() {
  * @returns {Boolean} True if no error is thrown, false if not.
  */
 function makeBlurryHeroBackground(jsUriStackBlur) {
+    'use strict';
     var iPadClient = false; 
     try { iPadClient = navigator.userAgent.match(/iPad/i) !== null; } catch (ignore) {}
 
@@ -485,6 +498,7 @@ function makeBlurryHeroBackground(jsUriStackBlur) {
  * @returns {Boolean} True if no error is thrown, false if not.
  */
 function makeResponsiveTables() {
+    'use strict';
     
     function splitTable(original) {
         original.wrap("<div class='table-wrapper' />");
@@ -532,6 +546,7 @@ function makeResponsiveTables() {
  * @returns {Boolean} True if no error is thrown, false if not.
  */
 function makeTabs() {
+    'use strict';
     try {
         // Set the default active tab (make it the first one)
         var firstTab = $('.tabbed .tab').first();
@@ -591,6 +606,7 @@ function makeTabs() {
  * @returns {Boolean} True if no error is thrown, false if not.
  */
 function makeTooltips(cssUri, jsUri) {
+    'use strict';
     try {
         if ($('[data-tooltip]')[0] || $('[data-hoverbox]')[0]) {
             $('head').append('<link rel="stylesheet" href="' + cssUri + '" type="text/css" />');
@@ -650,6 +666,7 @@ function makeTooltips(cssUri, jsUri) {
  * @returns {Boolean} True if no error is thrown, false if not.
  */
 function makeScrollToSmooth() {
+    'use strict';
     try {
         //$('a[href*=#]:not([href=#])').click(function() { // Apply to all on-page links
         $('.reflink,.scrollto').click(function() {
@@ -679,6 +696,7 @@ function makeScrollToSmooth() {
  * @returns {Boolean} True if no error is thrown, false if not.
  */
 function readyHighslide(cssUri, jsUri, lang) {
+    'use strict';
     try {
         if ($(".highslide")[0]) {
             $('head').append('<link rel="stylesheet" type="text/css" href="' + cssUri + '" />');
@@ -707,6 +725,7 @@ function readyHighslide(cssUri, jsUri, lang) {
  * ID "__adaptive-styles".
  */
 function keyFriendly() {
+    'use strict';
     try { 
         document.getElementById("__adaptive-styles").innerHTML = "a:focus, input:focus, button:focus, select:focus { outline:thick solid #f44; outline-offset:4px; }";
     } catch (ignore) {}
@@ -717,6 +736,7 @@ function keyFriendly() {
  * ID "__adaptive-styles".
  */
 function mouseFriendly() {
+    'use strict';
     try { 
         document.getElementById("__adaptive-styles").innerHTML = "a, a:focus, input:focus, select:focus { outline:none !important; }";
     } catch (ignore) {}
@@ -727,6 +747,7 @@ function mouseFriendly() {
  * @returns {Boolean} True if the small screen menu is visible, false if not.
  */
 function smallScreenMenuIsVisible() {
+    'use strict';
     return $('html').hasClass('navigating');
 }
 
@@ -735,6 +756,7 @@ function smallScreenMenuIsVisible() {
  * viewport width.
  */
 function layItOut() {
+    'use strict';
     var menu = $('#nav');
     
     if (isBigScreen()) {
@@ -753,6 +775,7 @@ function layItOut() {
  * accessible. (Prevents tabbing users from entering a closed menu.)
  */
 function toggleMenuVisibility() {
+    'use strict';
     var menu = $('#nav');
     var html = $('html');
     
@@ -773,6 +796,7 @@ function toggleMenuVisibility() {
  * optimization, language switch, etc.
  */
 function initUserControls() {
+    'use strict';
     var menu = $('#nav');
     var html = $('html');
     
@@ -887,6 +911,7 @@ function initUserControls() {
  * Things to do when the document is ready
  */
 $(document).ready( function() {
+    'use strict';
     // responsive tables
     makeResponsiveTables();
     // tabbed content (enhancement - works with pure css but not optimal)
@@ -940,6 +965,7 @@ $(document).ready( function() {
  * @see http://jsfiddle.net/srLtL5qd/
  */
 function toggleHighChartsGrouping(/*jQuery*/chart) {
+    'use strict';
     try {
         var newLabels = [];
         var newCatagories = [];
@@ -984,6 +1010,7 @@ function toggleHighChartsGrouping(/*jQuery*/chart) {
  * Highslide settings
  */
 function getHighslideSettings() {
+    'use strict';
     try {
         //hs.align = 'center';
         //hs.marginBottom = 10;
@@ -1033,6 +1060,7 @@ function getHighslideSettings() {
  * @see HC_LABELS
  */
 function getHighchartsLables(/*String*/lang) {
+    'use strict';
     if (!(lang === 'en' || lang === 'no')) {
         // Non-supported language, fallback to default
         lang = 'en';
@@ -1048,6 +1076,7 @@ function getHighchartsLables(/*String*/lang) {
  * @see HC_LABELS
  */
 function getHighslideLables(/*String*/lang) {
+    'use strict';
     if (!(lang === 'en' || lang === 'no')) {
         // Non-supported language, fallback to default
         lang = 'en';
@@ -1056,6 +1085,7 @@ function getHighslideLables(/*String*/lang) {
 }
 
 function getHighchartsTheme(/*String*/lang) {
+    'use strict';
     return {
         colors: [
             '#0277D5',// bright blue
@@ -1112,12 +1142,14 @@ function getHighchartsTheme(/*String*/lang) {
  * Toggle class name on link when it receives focus.
  */
 document.getElementsByTagName('a').onfocus = function(e) {
+    'use strict';
     toggleClass(e.target, 'has-focus');
 };
 
 
 // Class toggler (non-jQuery)
 function toggleClass(/*Element*/element, /*String*/theClass) {
+    'use strict';
     var classesStr = element.getAttribute('class');
     if ( classesStr === null || typeof classesStr === 'undefined' ) {
         element.setAttribute('class', theClass);
@@ -1141,9 +1173,11 @@ function toggleClass(/*Element*/element, /*String*/theClass) {
 }
 /*
 function mouseinMenuItem(menuItem) {
+    'use strict';
     $(this).addClass('infocus');
 }
 function mouseoutMenuItem(menuItem) {
+    'use strict';
     $(this).removeClass('infocus');
 }
 */
