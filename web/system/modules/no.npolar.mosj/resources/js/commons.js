@@ -385,6 +385,11 @@ function initToggleables() {
         if (!Modernizr.csstransitions) {
             $(this).next('.toggletarget').slideToggle(500); // Slide up/down the next toggle target ...
         }
+        // Track this UI interaction by sending an event to GA
+        var triggerDidClose = $(this).next('.toggletarget').hasClass('toggletarget--closed');
+        try {
+            ga('send', 'event', 'UI interactions', ((triggerDidClose ? 'collapsed' : 'expanded')+' accordion'), window.location.href + $(this).attr('href'), {nonInteraction: false});
+        } catch (ignore) {}
     });
 }
 /*
