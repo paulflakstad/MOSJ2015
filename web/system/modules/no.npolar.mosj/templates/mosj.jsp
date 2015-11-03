@@ -526,12 +526,23 @@ $(document).ready(function() {
     // qTip tooltips
     makeTooltips('<%= cms.link("/system/modules/no.npolar.common.jquery/resources/qtip2/2.1.1/jquery.qtip.min.css") %>',
                     '<%= cms.link("/system/modules/no.npolar.common.jquery/resources/jquery.qtip.min.js") %>');
+                    
+    // Track clicks
+    $('#identity').click(function() {
+        try { ga('send', 'event', 'UI interactions', 'clicked site navigation', 'identity area'); } catch(ignore) {}
+    });
+    $('#nav_topmenu > li:first-child').click(function() {
+        try { ga('send', 'event', 'UI interactions', 'clicked site navigation', 'home link in menu'); } catch(ignore) {}
+    });
+    $('#toggle-nav').click(function() {
+        try { ga('send', 'event', 'UI interactions', 'clicked menu toggler', (smallScreenMenuIsVisible() ? 'opened menu' : 'closed menu')); } catch(ignore) {}
+    });
 });
 </script>
 <% 
 // Enable Analytics 
 // (... but not if the "visitor" is actually a logged-in user)
-if (!loggedInUser) { 
+if (!loggedInUser) {
 %>
 <script type="text/javascript">
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -540,6 +551,55 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 ga('create', 'UA-770196-6', 'auto');
 ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+/*
+Script: Autogaq 2.1.6 (http://redperformance.no/autogaq/)
+Last update: 6 May 2015
+Description: Finds external links and track clicks as Events that gets sent to Google Analytics
+Compatibility: Google Universal Analytics
+*/
+!function(){function a(a){var c=a.target||a.srcElement,f=!0,i="undefined"!=typeof c.href?c.href:"",j=i.match(document.domain.split(".").reverse()[1]+"."+document.domain.split(".").reverse()[0]);if(!i.match(/^javascript:/i)){var k=[];if(k.value=0,k.non_i=!1,i.match(/^mailto\:/i))k.category="contact",k.action="email",k.label=i.replace(/^mailto\:/i,""),k.loc=i;else if(i.match(d)){var l=/[.]/.exec(i)?/[^.]+$/.exec(i):void 0;k.category="download",k.action=l[0],k.label=i.replace(/ /g,"-"),k.loc=e+i}else i.match(/^https?\:/i)&&!j?(k.category="outbound traffic",k.action="click",k.label=i.replace(/^https?\:\/\//i,""),k.non_i=!0,k.loc=i):i.match(/^tel\:/i)?(k.category="contact",k.action="telephone",k.label=i.replace(/^tel\:/i,""),k.loc=i):f=!1;f&&(a.preventDefault(),g=k.loc,h=a.target.target,ga("send","event",k.category.toLowerCase(),k.action.toLowerCase(),k.label.toLowerCase(),k.value,{nonInteraction:k.non_i}),b())}}function b(){"_blank"==h?window.open(g,"_blank"):window.location.href=g}function c(a,b,c){a.addEventListener?a.addEventListener(b,c,!1):a.attachEvent("on"+b,function(){return c.call(a,window.event)})}var d=/\.(zip|exe|dmg|pdf|doc.*|xls.*|ppt.*|mp3|txt|rar|wma|mov|avi|wmv|flv|wav)$/i,e="",f=document.getElementsByTagName("base");f.length>0&&"undefined"!=typeof f[0].href&&(e=f[0].href);for(var g="",h="",i=document.getElementsByTagName("a"),j=0;j<i.length;j++)c(i[j],"click",a)}();
+</script>
+<script type="text/javascript">
+/*
+Script: Still here beacon (Based on http://redperformance.no/google-analytics/time-on-site-manipulasjon/)
+Last update: 3 Nov 2015
+Description: Sends an event to Google Analytics every N seconds after the page has loaded, to improve time-on-site metrics.
+    Works like a beacon, regularly signaling that the visitor is "still here".
+    By changing nonInteraction to false, beacon beeps are treated as interactions. The most notable effect 
+    of this will be that any visit that produces at least one beacon beep will not be considered a bounce.
+Compatibility: Google Universal Analytics
+*/
+var secondsOnPage = 0; // How many (active) seconds the user has spent on this page
+var pageVisible = true; // Flag that indicates whether or not the page is visible, see http://www.samdutton.com/pageVisibility/
+var beaconInterval = 10; // Frequency at which to send the beacon signal (in seconds)
+function handleVisibilityChange() {
+    try {
+        if (document['hidden']) {
+            pageVisible = false;
+        } else {
+            pageVisible = true;
+        }
+    } catch (err) {
+        pageVisible = true;
+    }
+}
+// Set initial page visibility flag
+handleVisibilityChange();
+// Set the visibility change handler
+document.addEventListener('visibilitychange', handleVisibilityChange, false);
+// Initialize counter and beacon signal
+window.setInterval(
+    function() {
+        try {
+            if (pageVisible) {
+                if (++secondsOnPage % beaconInterval === 0) {
+                    ga('send', 'event', 'seconds on page', 'log', secondsOnPage, {nonInteraction: true});
+                }
+            }
+        } catch (ignore) { }
+    }, 1000);
 </script>
 <% 
 }
