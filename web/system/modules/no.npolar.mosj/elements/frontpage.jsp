@@ -100,6 +100,14 @@ function onIndicatorSuggestionSelected(event, suggestItem) {
         document.activeElement.blur();
         $('#search-indicator-name').blur();		
         $('body').append('<div class="hang-on" style="position:fixed; left:0; right:0; top:0; bottom:0; width:100%; height:100%; background-color:rgba(0,0,0,0.8); z-index:9999;"><div class="loader" style="margin:20% auto;"></div></div>');
+        try {
+            ga('send', {
+                hitType: 'event',
+                eventCategory: 'suggestion',
+                eventAction: 'select indicator',
+                eventLabel: suggestItem['item']['uri']
+            });
+        } catch(ignore) {}
         $('#frontpage-search-form').submit();
     } catch (err) {
         console.log('ERROR: Select handler failed miserably ' + err);
@@ -127,14 +135,11 @@ $(document).ready(function() {
     if (!nonResIE()) {
         $('head').append('<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.min.css" type="text/css" />');
         $.getScript('//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js', function() {
-            // underscore.js is not needed here (no complex selectors in the configuration)
-            //$.getScript('<%= cms.link("/system/modules/no.npolar.opencms.widgets/resources/js/underscore.min.js") %>', function() {
-                $.getScript('<%= cms.link("/system/modules/no.npolar.opencms.widgets/resources/js/string-suggest-widget-helpers.js") %>', function() {
-                    $.getScript('<%= cms.link("/system/modules/no.npolar.opencms.widgets/resources/js/string-suggest-widget.js") %>', function() {
-                        setupSuggest(JSON.stringify(myConf), document.getElementById('search-indicator-name'), '');
-                    });
+            $.getScript('<%= cms.link("/system/modules/no.npolar.opencms.widgets/resources/js/string-suggest-widget-helpers.js") %>', function() {
+                $.getScript('<%= cms.link("/system/modules/no.npolar.opencms.widgets/resources/js/string-suggest-widget.js") %>', function() {
+                    setupSuggest(JSON.stringify(myConf), document.getElementById('search-indicator-name'), '');
                 });
-            //});
+            });
         });
     }
     var phi = 0;
