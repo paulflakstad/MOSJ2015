@@ -996,11 +996,14 @@ function toggleHighChartsGrouping(/*jQuery*/chart) {
             chart.series[0].remove(true);
         }
         chart.xAxis[0].setCategories(newCatagories, false);
+        var i = 0;
         $.each(newData, function (key, newSeries) {
             chart.addSeries({
                 name: newLabels[key],
-                data: newSeries
+                data: newSeries,
+                color: getHighchartsTheme().colors[i]
             }, false);
+            i++;
         });
         chart.redraw();
     } catch (err) {
@@ -1008,6 +1011,55 @@ function toggleHighChartsGrouping(/*jQuery*/chart) {
         return false;
     }
     return true;
+}
+
+function fillEmptyData(/*Object*/chart) {
+    'use strict';
+    //console.log('Processing chart "' + chart.title + '" (' + chart.series.length + ' series) ...');
+    for (var i = 0; i < chart.series.length; i++) {
+        var singleSeries = chart.series[i];
+        //console.log('series #' + i + ' has data length ' + singleSeries.data.length);
+        if (singleSeries.data.length === 0) {
+            //console.log('Requesting async data for series #' + i + " @ " + singleSeries.options.url + ' ...');
+            loadTimeSeriesData(singleSeries);
+            /*$.ajax({
+                url: '/tsdata.jsp',
+                data: { id : singleSeries.options.id },
+                dataType: 'jsonp',
+                timeout: 10000,
+                success: function(data) {
+                    console.log('Successfully received time series data, updating chart ...');
+                    singleSeries.setData(data, false);
+                    modifiedSomething = true;
+                },
+                error: function(data) {
+                    console.log('Error loading time series data!');
+                    //console.log('Error receiving data: ' + JSON.stringify(data));
+                }
+            });*/
+        }
+    }
+}
+
+function loadTimeSeriesData(/*Object*/series) {
+    'use strict';
+    //console.log('loadTimeSeriesData called on series ' + series.options.id);
+    $.ajax({
+        url:'/tsdata.jsp',
+        data: {
+            id: series.options.id
+        }, 
+        dataType: 'jsonp',
+        beforeSend: function() {
+            //console.log('Getting data for ' + series.options.id);
+        },
+        success: function(data) {
+            series.setData(data, true);
+        },
+        error: function() {
+            console.log('Error loading time series data!');
+        }
+    });
 }
 
 
