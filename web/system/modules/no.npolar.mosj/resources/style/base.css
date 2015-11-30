@@ -693,6 +693,10 @@ ul.line-items li {
     visibility:hidden;
     overflow:hidden;
     padding:0 1em;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
     -webkit-transition: padding 0.25s ease, max-height 0.4s ease-out, opacity 0.4s ease, visibility 0.4s ease;
     -moz-transition: padding 0.25s ease, max-height 0.4s ease-out, opacity 0.4s ease, visibility 0.4s ease;
     -o-transition: padding 0.25s ease, max-height 0.4s ease-out, opacity 0.4s ease, visibility 0.4s ease;
@@ -735,6 +739,7 @@ ul.line-items li {
 .parameter-wrapper > .toggletrigger a {
     color: #fff;
     text-decoration:none;
+    display:block;
 }
 .parameter-wrapper > .toggletrigger:hover {
     background-color:#680101;
@@ -1069,6 +1074,15 @@ h1 .scientific-name {
 }
 .paragraph li.parameter-meta-data p {
     margin-bottom:0;
+}
+
+/* Metadata list found under "details on these data" */
+.parameter-standard-meta {
+    margin-bottom: 2em;
+}
+.parameter-standard-meta dd {
+    margin-left: 3em;
+    padding-bottom: 0.5em;
 }
 
 /* Embedded text box (typically "fact box") */
@@ -2824,6 +2838,18 @@ section h3.section-heading {
     display:block;
     font-family:"Fontello";
     font-size:4em;
+}
+.msg--error {
+    background-color: #fee;
+    display: block;
+    font-weight: lighter;
+    font-size: 1.8em;
+    padding: 2em;
+    text-align: center;
+}
+.msg--error,
+.msg--error h2 {
+    color: #900;
 }
 
 

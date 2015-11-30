@@ -486,7 +486,11 @@ h5 {
     z-index:1;
     /*top:-35%;*/
     top:-20%;
-    max-height:120%;
+    max-height:120%;    
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
     filter:blur(50px) brightness(95%);
     -ms-filter:blur(30px) brightness(100%);
     -moz-filter:blur(30px) brightness(100%);
