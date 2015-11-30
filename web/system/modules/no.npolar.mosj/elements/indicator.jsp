@@ -10,6 +10,9 @@
             org.opencms.json.*,
             org.opencms.util.CmsRequestUtil,
             org.opencms.util.CmsStringUtil,
+            java.io.PrintWriter,
+            java.net.HttpURLConnection,
+            java.net.URL,
             java.util.*,
             org.opencms.security.*,
             no.npolar.util.*,
@@ -152,6 +155,25 @@ public String createLinkList(I_CmsXmlContentContainer linksContainer, String ele
     
     return "";
 }
+
+public void printParameterDetailsAsComments(MOSJParameter mp, MOSJService service, CmsJspActionElement cms) {
+    try {
+        PrintWriter out = cms.getResponse().getWriter();
+        // Print parameter details as html comments
+        if (true) {
+            List<TimeSeries> tss = mp.getTimeSeries();
+            if (tss != null && !tss.isEmpty()) {
+                out.println("\n<!-- \nChart for parameter " + mp.getURL(service) + "\nTime series in this chart:");
+                Iterator<TimeSeries> i = tss.iterator(); 
+                while (i.hasNext()) {
+                    TimeSeries ts = i.next();
+                    out.println("\n\t\t" + ts.getTitle() + " " + ts.getURL(service) + " - " + service.getServiceBaseURL() + "timeseries/" + ts.getId());
+                }
+                out.println("\n-->");
+            }
+        }
+    } catch (Exception ignore) {}
+}
 %><%
 CmsAgent cms                = new CmsAgent(pageContext, request, response);
 CmsObject cmso              = cms.getCmsObject();
@@ -258,19 +280,44 @@ while (structuredContent.hasMoreResources()) {
     </section>
 	
     <%
+    ResourceBundle labels = ResourceBundle.getBundle(no.npolar.data.api.Labels.getBundleName(), locale);
+    // Create and test service
+    MOSJService service = new MOSJService(locale, cms.getRequest().isSecure());
+    int responseCode = -1;
+    boolean validResponseCode = false;
+    final int TIMEOUT = 10000; // milliseconds
+
+    try {
+        URL url = new URL(service.getServiceBaseURL().concat("?q="));
+        HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setReadTimeout(TIMEOUT);
+        connection.connect();
+        responseCode = connection.getResponseCode();
+    } catch (Exception e) {
+    } finally {
+        validResponseCode = responseCode == 200;
+    }
+    
+    
     I_CmsXmlContentContainer mosjMonitoringData = cms.contentloop(structuredContent, "MonitoringData");
     int monitoringDataLoopCount = 0;
     while (mosjMonitoringData.hasMoreResources()) {
+        monitoringDataLoopCount++;
+        String parameterDetailsSectionId = "p-details-" + (monitoringDataLoopCount);
+        
         String titleOverride = cms.contentshow(mosjMonitoringData, "Title");
         
-        if (monitoringDataLoopCount++ < 1) {
+        if (monitoringDataLoopCount == 1) {
         %>
         <section class="paragraph clearfix">
         <h2 id="parametere"><%= LABEL_MONITORED_TITLE %></h2>
         <%
-        }
+        }   
+        // ToDo: "parameter-wrapper" is misleading, since multiple 
+        //      parameters could be contained inside.
         %>
-        <div class="toggleable open parameter-wrapper">
+        <section class="toggleable open parameter-wrapper">
         <%
         
         // 
@@ -279,196 +326,226 @@ while (structuredContent.hasMoreResources()) {
         //
         // The HTML output will be like this:
         //
-        //  <parameter> <!-- wrapper
-        //      <title> <-- normally the parameter title (auto-fetched), but should be overridden if there are multiple charts in one wrapper
-        //      <chart> <-- could be one or more charts
+        //  <parameter-group> <-- parameter group (outer wrapper for 1-n parameters)
+        //      <group title> <-- often the first parameter's title (auto-fetched), but should always be overridden if there are multiple charts in one wrapper
+        //      <figure(s)> <-- one or more figures - typically dynamic chart(s), but can be image(s)
+        //          <figcaption> <-- the caption for the figure
+        //          <data> <-- section containing the "raw" data (table + files)
         //      <details> <-- adding details will trigger the parameter wrapper to close
-        //  </parameter> <-- wrapper closer - triggered either by existing details OR by the loop ending 
+        //  </parameter-group> <-- parameter group end - triggered either by existing details OR by the loop ending 
         //
         // Each parameter hooks into the API via an ID. The ID is used to fetch the 
         // time series data from the API, and this data is used to generate a chart.
         // 
-        // It is possibly to apply custom settings to the chart, either for the 
-        // entire thing or by time series.
+        // It is possible to apply custom settings to the chart, either 
+        // "globally" (to the entire chart), or targeting individual time series.
         //
         // See also the backing classes in the no.npolar.data.api library.
         //
         I_CmsXmlContentContainer mosjParameters = cms.contentloop(mosjMonitoringData, "Parameter");
             
-        int loopCount = 0; // Parameter counter
+        int parametersLoopCount = 0; // Parameter counter
+            
         while (mosjParameters.hasMoreResources()) {
-            loopCount++;
+            parametersLoopCount++;
+            MOSJParameter mp = null;
             
             // Parameter ID
             String pid = cms.contentshow(mosjParameters, "ID");
+            boolean validParameterId = pid.matches("[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}");
+            
+            // Chart alt text and caption
             String parameterChartAltText = cms.contentshow(mosjParameters, "ChartAltText");
             String parameterChartCaption = cms.contentshow(mosjParameters, "ChartCaption");
             
             // Image present?
-            String imageUri = cms.contentshow(mosjParameters, "Image");
+            String parameterImageUri = cms.contentshow(mosjParameters, "Image");
             
+            // IDs for the outer wrapper, figures and sections
+            String parameterGroupSectionId = "p-" + pid; // ID for "group of parameters" section
+            String parameterFigureContainerId = "p-figure-" + pid;// ID for "single parameter's figure container"
+            String parameterDataSectionId = "p-data-" + pid; // ID for "single parameter's data section"
+            
+            String parameterFigureBody = null;
                     
-            if (CmsAgent.elementExists(imageUri)) {
+            // Use image instead of dynamic chart? 
+            // This is a rarely-used backup solution, for cases where a dynamic 
+            // chart is not (yet) possible.
+            // REQUIRES the title override.
+            if (CmsAgent.elementExists(parameterImageUri)) {
                 String imageHtml = null;
                 if (CmsAgent.elementExists(parameterChartAltText)) {
-                    imageHtml = ImageUtil.getImage(cms, imageUri, parameterChartAltText);
+                    imageHtml = ImageUtil.getImage(cms, parameterImageUri, parameterChartAltText);
                 } else {
-                    imageHtml = ImageUtil.getImage(cms, imageUri);
+                    imageHtml = ImageUtil.getImage(cms, parameterImageUri);
                 }
-                %>
-                <h3 class="toggletrigger"><a href="#p-<%= pid %>"><%= titleOverride %></a></h3>
-                <div class="toggletarget" id="p-<%= pid %>"><!-- this div prevents layout from breaking down -->
-                    <figure class="media">
-                        <div class="hc-chart"><%= imageHtml %></div>
-                        <% if (CmsAgent.elementExists(parameterChartCaption)) { %>
-                        <figcaption class="caption"><%= parameterChartCaption %></figcaption>
-                        <% } %>
-                    </figure>
-                <%
-            } else {
-            
-            if (!pid.matches("[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}")) {
-                %>
-                <div class="toggletarget" id="p-<%= pid %>"><!-- this div prevents layout from breaking down -->
-                    <figure class="media">
-                        <div class="hc-chart">
-                            <div class="placeholder-element placeholder-element-chart">
-                                <div class="placeholder-element-text">
-                                    <p><%= LABEL_CHART_ERROR %></p>
-                                </div>  
-                            </div>
-                        </div>
-                    </figure>
-                <%
-                if (loggedInUser) {
-                    %>
-                    <script>
-                        alert("CRITICAL ERROR: Parameter ID '<%= pid %>' is invalid.");
-                    </script>
-                    <%
-                }
-                
-                continue;
+                parameterFigureBody = imageHtml;
+                parameterFigureContainerId = null;
             }
             
-            // Chart customization
-            JSONObject customization = null;
-            try {
-                customization = new JSONObject("{}");
-
-                I_CmsXmlContentContainer mosjChartCustomization = cms.contentloop(mosjParameters, "ChartCustomization");
-                if (mosjChartCustomization.hasMoreResources()) {
-                    
-                    // Chart-wide customization
-                    I_CmsXmlContentContainer customSettingsContainer = cms.contentloop(mosjChartCustomization, "ParameterCustomization");
-                    while (customSettingsContainer.hasMoreResources()) {
-                        customization.put(cms.contentshow(customSettingsContainer, "Name"), cms.contentshow(customSettingsContainer, "Value"));
-                    }
-
-                    // Individual time series customization
-                    I_CmsXmlContentContainer mosjTimeSeriesCustomizations = cms.contentloop(mosjChartCustomization, "TimeSeriesCustomization");
-                    while (mosjTimeSeriesCustomizations.hasMoreResources()) {
-                        JSONObject seriesCustomization = new JSONObject("{ \"id\": \"" + cms.contentshow(mosjTimeSeriesCustomizations, "TimeSeriesID") + "\" }");
-
-                        customSettingsContainer = cms.contentloop(mosjTimeSeriesCustomizations, "Setting");
-                        while (customSettingsContainer.hasMoreResources()) {
-                            seriesCustomization.put(cms.contentshow(customSettingsContainer, "Name"), cms.contentshow(customSettingsContainer, "Value"));
-                        }
-                        customization.append("series", seriesCustomization);
-                    }
-                    
-                    out.println("<!-- Customization json created:\n" + customization.toString() + "\n-->");
-                }
-            } catch (Exception e) {
-                out.println("<!-- ERROR creating customization json: " + e.getMessage());
-            }
-
-
-            ResourceBundle labels = ResourceBundle.getBundle(no.npolar.data.api.Labels.getBundleName(), locale);
+            // Regular dynamic chart (no image)
+            else {
             
-            MOSJService service = new MOSJService(locale, cms.getRequest().isSecure());
-            
-
-            try {
-                MOSJParameter mp = service.getMOSJParameter(pid);
-                
-                if (loopCount == 1) { // => Do this only on first iteration
-                    String displayTitle = CmsAgent.elementExists(titleOverride) ? titleOverride : mp.getTitle(locale);
-                    %>
-                    <h3 class="toggletrigger"><a href="#p-<%= pid %>"><%= displayTitle %></a></h3>
-                    <div class="toggletarget" id="p-<%= pid %>">
-                    <%
-                }
-                
-                List<TimeSeries> tss = mp.getTimeSeries();
-                if (tss != null && !tss.isEmpty()) {
-                    out.println("\n<!-- \nChart for parameter " + mp.getURL(service) + "\nTime series in this chart:");
-                    Iterator<TimeSeries> i = tss.iterator(); 
-                    while (i.hasNext()) {
-                        TimeSeries ts = i.next();
-                        out.println("\n\t\t" + ts.getTitle(locale) + " " + ts.getURL(service) + " - " + service.getServiceBaseURL() + "timeseries/" + ts.getId());
-                    }
-                    out.println("\n-->");
-                }
-                String chartWrapper = "param-" + pid;// + loopCount;
-                %>
-                <figure class="media">
-                    <div id="<%= chartWrapper %>" class="hc-chart">
-                        <div class="placeholder-element placeholder-element-chart">
-                            <div class="placeholder-element-text">
-                                <%= LABEL_CHART_LOAD %>
-                            </div>  
-                        </div>
-                    </div>
-                    <%
-                    if (CmsAgent.elementExists(parameterChartAltText)) {
-                    %>
-                    <div class="element-alt-text"><%= parameterChartAltText %></div>
-                    <%
-                    }
-                    if (CmsAgent.elementExists(parameterChartCaption)) {
-                    %>
-                    <figcaption class="caption">
-                        <%= parameterChartCaption %>
-                    </figcaption>
-                    <%
-                    }
-                    %>
+                // ID validity check
+                if (!validParameterId || !validResponseCode) {                    
+                    parameterFigureBody = "<p>" + LABEL_CHART_ERROR + "</p>";
+                    parameterFigureContainerId = null;
                     
-                </figure>
-                <div class="toggleable collapsed parameter-data-table-wrapper">
-                    <a href="#p-data-<%= pid %>" class="toggletrigger"><i class="icon-grid"></i> <%= LABEL_TABLE_FORMAT %></a>
-                    <div class="toggletarget" id="p-data-<%= pid %>">
-                        <p>
-                            <a class="cta" href="<%= cms.link("/data-export?id=" + mp.getId() + "&amp;locale=" + loc) %>" data-tooltip="<%= LABEL_CSV_LINK_DESCR %>">
-                                <i class="icon-download-alt"></i> <%= LABEL_CSV_LINK %>
-                            </a> 
-                            <a class="cta" href="<%= mp.getURL(service) %>" data-tooltip="<%= LABEL_JSON_LINK_DESCR %>">
-                                <i class="icon-database"></i> <%= LABEL_JSON_LINK %>
-                            </a>
-                        </p>
-                        <%
-                        out.println(mp.getAsTable("responsive")); 
-                        //out.println(mp.getAsTable().replace("parameter-data-table", "parameter-data-table responsive")); 
+                    // Issue a warning to the editor if the parameter ID is bad
+                    if (loggedInUser && !validParameterId) {
                         %>
+                        <script type="text/javascript">
+                            alert("CRITICAL ERROR: Parameter ID '<%= pid %>' is invalid.");
+                        </script>
+                        <%
+                    }
+                } else {
+
+                    // Chart customization
+                    JSONObject customization = null;
+                    try {
+                        customization = new JSONObject("{}");
+
+                        I_CmsXmlContentContainer mosjChartCustomization = cms.contentloop(mosjParameters, "ChartCustomization");
+                        if (mosjChartCustomization.hasMoreResources()) {
+
+                            // Chart-wide customization
+                            I_CmsXmlContentContainer customSettingsContainer = cms.contentloop(mosjChartCustomization, "ParameterCustomization");
+                            while (customSettingsContainer.hasMoreResources()) {
+                                customization.put(cms.contentshow(customSettingsContainer, "Name"), cms.contentshow(customSettingsContainer, "Value"));
+                            }
+
+                            // Individual time series customization
+                            I_CmsXmlContentContainer mosjTimeSeriesCustomizations = cms.contentloop(mosjChartCustomization, "TimeSeriesCustomization");
+                            while (mosjTimeSeriesCustomizations.hasMoreResources()) {
+                                JSONObject seriesCustomization = new JSONObject("{ \"id\": \"" + cms.contentshow(mosjTimeSeriesCustomizations, "TimeSeriesID") + "\" }");
+
+                                customSettingsContainer = cms.contentloop(mosjTimeSeriesCustomizations, "Setting");
+                                while (customSettingsContainer.hasMoreResources()) {
+                                    seriesCustomization.put(cms.contentshow(customSettingsContainer, "Name"), cms.contentshow(customSettingsContainer, "Value"));
+                                }
+                                customization.append("series", seriesCustomization);
+                            }
+                            
+                            out.println("<!-- Customization json created:\n" + customization.toString() + "\n-->");
+                        }
+                    } catch (Exception e) {
+                        out.println("<!-- ERROR creating customization json: " + e.getMessage());
+                    }
+
+                    try {
+                        if (!validResponseCode) {
+                            throw new Exception("Unable to access web service @ " + service.getServiceBaseURL());
+                        }
+                        // Read from the API
+                        mp = service.getMOSJParameter(pid);
+                        parameterFigureBody = LABEL_CHART_LOAD;
+                        printParameterDetailsAsComments(mp, service, cms);
+                       
+                        // Store the javascript that actually creates the chart.
+                        // This script is printed out by the master template (to 
+                        // get the code nearer the document end).
+                        String chartConfig = mp.getChart(customization).getChartConfigurationString();
+                        ((Map<String, String>)cms.getRequest().getAttribute("hcConfs")).put(parameterFigureContainerId, chartConfig);
+                    } catch (Exception e) {
+                        out.println("<!-- \nERROR creating parameter / chart settings: " + e.getMessage() + "\n-->");
+                    }
+                    
+                } // if (parameter ID was valid AND we had no trouble reading the API)
+            } // if (dynamic chart)
+            
+            
+            
+            
+            
+            
+            
+            
+            // ------------------------------
+            // Output html for this parameter
+            //
+            
+            if (parametersLoopCount == 1) { // => Do this only on first iteration
+                
+                // Construct the parameter group heading
+                String displayTitle = null;
+                try {
+                    displayTitle = CmsAgent.elementExists(titleOverride) ? titleOverride : (mp == null ? "[Parameter]" : mp.getTitle());
+                } catch (Exception ignore) {}
+                
+                // Print the heading and the parameter-group div, which wraps 1-n parameters/charts
+                %>
+                <h3 class="toggletrigger parameter-group-heading" aria-controls="<%= parameterGroupSectionId %>"><a href="#<%= parameterGroupSectionId %>"><%= displayTitle %></a></h3>
+                <div class="toggletarget parameter-group-content" id="<%= parameterGroupSectionId %>">
+                <%
+            }
+            
+            boolean imageFigure = parameterFigureBody.startsWith("<img ");
+            %>
+            <figure class="media">
+    
+                <div class="hc-chart"<%= (parameterFigureContainerId != null && !parameterFigureContainerId.isEmpty() ? " id=\"" +parameterFigureContainerId+"\"" : "") %>>
+                <%
+                if (!imageFigure) {
+                %>
+                    <div class="placeholder-element placeholder-element-chart">
+                        <div class="placeholder-element-text">
+                <% } %>
+                <%= parameterFigureBody %>
+                <%
+                if (!imageFigure) {
+                %>
+                        </div>
                     </div>
+                <% } %>
+
                 </div>
                 <%
-		
-                // The javascript that creates the actual charts are printed by
-                // the master template (to get the code as close to the document 
-                // end as possible).                        
-                String chartConfig = mp.getChart(customization).getChartConfigurationString();
-                ((Map<String, String>)cms.getRequest().getAttribute("hcConfs")).put(chartWrapper, chartConfig);
-
-                //pl("Collected " + tss.size() + " related timeseries.");
-            } catch (Exception e) {            
-                out.println("</div>");
-                out.println("<!-- \nERROR creating MOSJ parameter (or its chart settings): " + e.getMessage() + "\n-->");
-            }
-        }
-
+                if (CmsAgent.elementExists(parameterChartAltText)) {
+                %>
+                <div class="element-alt-text">
+                    <%= parameterChartAltText %>
+                </div>
+                <% 
+                } 
+                if (CmsAgent.elementExists(parameterChartCaption)) {
+                %>
+                <figcaption class="caption">
+                    <%= parameterChartCaption %>
+                </figcaption>
+                <% } %>
+            </figure>
+            <%
             
+            // Print data section for dynamic charts only
+            if (mp != null) {
+                try {
+                    %>
+                    <div class="toggleable collapsed parameter-data-table-wrapper">
+                        <a href="#<%= parameterDataSectionId %>" class="toggletrigger" aria-controls="<%= parameterDataSectionId %>"><i class="icon-grid"></i> <%= LABEL_TABLE_FORMAT %></a>
+                        <div class="toggletarget" id="<%= parameterDataSectionId %>">
+                            <p>
+                                <a class="cta" href="<%= cms.link("/data-export?id=" + mp.getId() + "&amp;locale=" + loc) %>" data-tooltip="<%= LABEL_CSV_LINK_DESCR %>">
+                                    <i class="icon-download-alt"></i> <%= LABEL_CSV_LINK %>
+                                </a> 
+                                <a class="cta" href="<%= mp.getURL(service) %>" data-tooltip="<%= LABEL_JSON_LINK_DESCR %>">
+                                    <i class="icon-database"></i> <%= LABEL_JSON_LINK %>
+                                </a>
+                            </p>
+                            <%
+                            if (mp.getTimeSeriesCollection().getTimeMarkersCount() < 500) {
+                                out.println(mp.getAsTable("responsive"));
+                            }
+                            %>
+                        </div><!-- .toggletarget -->
+                    </div><!-- .toggleable.parameter-data-table-wrapper -->
+                    <%
+                } catch (Exception e) {
+                    out.println("<!-- \nERROR creating parameter data section: " + e.getMessage() + "\n-->");
+                }
+            }
+            
+
         } // while (parameters)
         
         
@@ -545,23 +622,22 @@ while (structuredContent.hasMoreResources()) {
             if (!detailsHtml.isEmpty()) {
                 %>
                 <div class="toggleable collapsed parameter-details-wrapper">
-                    <a href="#details-<%= loopCount %>" class="toggletrigger"><i class="icon-info-circled-1"></i> <%= LABEL_DETAILS %></a>
-                    <div class="toggletarget tone-down" id="details-<%= loopCount %>">
+                    <a href="#<%= parameterDetailsSectionId %>" class="toggletrigger"><i class="icon-info-circled-1"></i> <%= LABEL_DETAILS %></a>
+                    <div class="toggletarget tone-down" id="<%= parameterDetailsSectionId %>">
                         <%= detailsHtml %>
                     </div>
-                </div>
+                </div><!-- .parameter-details-wrapper -->
                 <%
             }
-        }
+        } // if (details)
         
-        // Close the outer wrappers
         %>
-        </div>
-        </div>
+        </div><!-- .toggletarget.parameter-group-content -->
+        </section><!-- .toggleable.open.parameter-wrapper -->
         <%
     } // while (monitoring data)
     %>
-	</section>
+    </section>
 	
 	
     
