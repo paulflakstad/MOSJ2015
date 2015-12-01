@@ -313,11 +313,11 @@ while (structuredContent.hasMoreResources()) {
         <section class="paragraph clearfix">
         <h2 id="parametere"><%= LABEL_MONITORED_TITLE %></h2>
         <%
-        }   
+        }
         // ToDo: "parameter-wrapper" is misleading, since multiple 
         //      parameters could be contained inside.
         %>
-        <section class="toggleable open parameter-wrapper">
+        <section class="toggleable open parameter-wrapper parameter-group">
         <%
         
         // 
@@ -440,7 +440,7 @@ while (structuredContent.hasMoreResources()) {
                         // Read from the API
                         mp = service.getMOSJParameter(pid);
                         parameterFigureBody = LABEL_CHART_LOAD;
-                        printParameterDetailsAsComments(mp, service, cms);
+                        //printParameterDetailsAsComments(mp, service, cms);
                        
                         // Store the javascript that actually creates the chart.
                         // This script is printed out by the master template (to 
@@ -633,7 +633,7 @@ while (structuredContent.hasMoreResources()) {
         
         %>
         </div><!-- .toggletarget.parameter-group-content -->
-        </section><!-- .toggleable.open.parameter-wrapper -->
+        </section><!-- .toggleable.open.parameter-wrapper.parameter-group -->
         <%
     } // while (monitoring data)
     %>
