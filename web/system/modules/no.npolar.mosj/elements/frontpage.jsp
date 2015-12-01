@@ -56,11 +56,13 @@ String summary = "<p>"
         + (loc.equalsIgnoreCase("no") 
             ? 
             ("Presentasjoner og tolkninger av overvåkingsdata fra Svalbard og Jan Mayen.</p>"
-            + "<p><a class=\"cta more\" style=\"float:none; font-size:1rem; margin-top:2em;\" href=\"/no/om/\">Mer om MOSJ</a>")
+            + "<p><a class=\"cta more\" style=\"float:none; font-size:1rem; margin-top:2em;\" href=\"/no/om/\">Mer om MOSJ</a></p>"
+            + "<p style=\"font-size:1rem;\">eller <a href=\"" + cms.link("/no/dokumenter/") + "\">les evalueringer av status i miljøet</a>")
             //cms.labelUnicode("label.mosj.global.sitename") + " (MOSJ) presenterer og tolker overvåkingsdata og gir råd til forvaltningen. <a href=\"/no/om/\">Mer om MOSJ&hellip;</a>"
             : 
             ("Presentations and interpretations of monitoring data from Svalbard and Jan Mayen.</p>"
-            + "<p><a class=\"cta more\" style=\"float:none; font-size:1rem; margin-top:2em;\" href=\"/en/about/\">More about MOSJ</a>")
+            + "<p><a class=\"cta more\" style=\"float:none; font-size:1rem; margin-top:2em;\" href=\"/en/about/\">More about MOSJ</a></p>"
+            + "<p style=\"font-size:1rem;\">or <a href=\"" + cms.link("/en/documents/") + "\">read evaluations of state of environment</a>")
            //cms.labelUnicode("label.mosj.global.sitename") + " (MOSJ) provides presentations and interpretation of monitoring data, and acts as adviser to the authorities. <a href=\"/en/about/\">More about MOSJ&hellip;</a>"
         ) + "</p>";
     
