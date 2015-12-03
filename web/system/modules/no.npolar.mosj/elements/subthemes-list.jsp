@@ -1,5 +1,7 @@
 <%-- 
     Document   : subthemes-list
+    Description: Outputs available themes under the "current" folder.
+                    The folder may also be set explicitly via a "folderUri" parameter.
     Created on : Jul 1, 2015, 2:54:53 PM
     Author     : Paul-Inge Flakstad, Norwegian Polar Institute <flakstad at npolar.no>
 --%><%@page contentType="text/html" pageEncoding="UTF-8"

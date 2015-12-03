@@ -1,5 +1,7 @@
 <%-- 
     Document   : indicators-list
+    Description: Outputs a JSON describing all MOSJ indicator pages. 
+                    A "locale" parameter is required.
     Created on : Apr 21, 2015, 2:54:53 PM
     Author     : Paul-Inge Flakstad, Norwegian Polar Institute <flakstad at npolar.no>
 --%><%@page contentType="text/html" pageEncoding="UTF-8"

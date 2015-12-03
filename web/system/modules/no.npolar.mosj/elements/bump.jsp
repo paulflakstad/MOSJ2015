@@ -1,5 +1,6 @@
 <%-- 
-    Document   : bump - Helper for search box with suggestions. Issues a 301 redirect, if the given URI exists.
+    Document   : bump
+    Description: Helper for search box with suggestions. Issues a 301 redirect, if the given URI exists.
     Created on : May 5, 2015, 3:59:46 PM
     Author     : Paul-Inge Flakstad, Norwegian Polar Institute <flakstad at npolar.no>
 --%><%@ page import="org.opencms.jsp.CmsJspActionElement, org.opencms.util.CmsRequestUtil" 

@@ -1,5 +1,6 @@
 <%-- 
     Document   : indicator
+    Description: Template for OpenCms files of type "mosj_indicator" (MOSJ indicator).
     Created on : Dec 10, 2014, 1:30:18 PM
     Author     : Paul-Inge Flakstad, Norwegian Polar Institute
 --%><%@page import="org.apache.commons.lang.StringEscapeUtils,

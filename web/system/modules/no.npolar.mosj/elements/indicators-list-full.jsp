@@ -1,5 +1,8 @@
 <%-- 
     Document   : indicators-list
+    Description: Lists all MOSJ indicator pages in a folder, given by the 
+                    "folderUri" parameter. A "subtree" parameter (true/false) 
+                    controls how to collect pages from the folder.
     Created on : Apr 21, 2015, 2:54:53 PM
     Author     : Paul-Inge Flakstad, Norwegian Polar Institute <flakstad at npolar.no>
 --%><%@page contentType="text/html" pageEncoding="UTF-8"

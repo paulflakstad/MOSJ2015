@@ -1,5 +1,6 @@
 <%-- 
-    Document   : MOSJ master template
+    Document   : mosj
+    Description: MOSJ master template.
     Created on : Dec 10, 2014, 1:28:30 PM
     Author     : Paul-Inge Flakstad, Norwegian Polar Institute
 --%><%@page import="org.opencms.jsp.*,
@@ -625,11 +626,11 @@ $(document).ready(function(){
                         while (iHcConfs.hasNext()) {
                             String chartWrapper = iHcConfs.next();
                             String chartConfig = hcConfs.get(chartWrapper);
-                            
                         %>
                         try {
                             $('#<%= chartWrapper %>').highcharts(<%= chartConfig %>);
                         } catch (err) {
+                            //console.log('Something went wrong: ' + err);
                             $('#<%= chartWrapper %> > .placeholder-element').addClass('placeholder-element-error').find('.placeholder-element-text').html('<p><%= LABEL_CHART_ERROR %></p>');
                         }
                         <%

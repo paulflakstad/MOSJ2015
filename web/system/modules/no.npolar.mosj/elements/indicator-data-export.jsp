@@ -1,5 +1,7 @@
 <%-- 
     Document   : indicator-data-export
+    Description: Exports data for a MOSJ parameter identified by an "id" parameter to a CSV file.
+                    The locale is set via a "locale" parameter (defaults to English).
     Created on : May 27, 2015
     Author     : Paul-Inge Flakstad, Norwegian Polar Institute
 --%><%@page import="org.opencms.jsp.*,

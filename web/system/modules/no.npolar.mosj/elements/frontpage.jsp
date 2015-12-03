@@ -1,5 +1,6 @@
 <%-- 
     Document   : frontpage
+    Description: The MOSJ website homepage.
     Created on : May 5, 2015, 11:01:23 AM
     Author     : Paul-Inge Flakstad, Norwegian Polar Institute <flakstad at npolar.no>
 --%><%@page import="org.opencms.jsp.*,

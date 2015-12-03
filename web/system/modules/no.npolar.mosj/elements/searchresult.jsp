@@ -1,5 +1,8 @@
 <%-- 
-    Document   : searchresult.jsp
+    Document   : searchresult
+    Description: List site search results, OR, if a "uri" parameter is present, 
+                    issues a 301 redirect to that URI.
+                    Also outputs SERP navigation if necessary.
     Created on : May 5, 2015, 10:26:13 AM
     Author     : Paul-Inge Flakstad, Norwegian Polar Institute <flakstad at npolar.no>
 --%><%@ page buffer="none" 

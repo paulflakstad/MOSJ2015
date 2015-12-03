@@ -1,5 +1,8 @@
 <%-- 
     Document   : indicators-feed
+    Description: Outputs a JSON file describing MOSJ indicator pages matching a
+                    search query, given by the "q" parameter. Uses JSONP if a 
+                    "callback" parameter is present.
     Created on : May 5, 2015, 1:59:57 PM
     Author     : Paul-Inge Flakstad, Norwegian Polar Institute <flakstad at npolar.no>
 --%><%@page import="org.opencms.main.*, 

@@ -1,5 +1,11 @@
 <%-- 
-    Document   : tsdata
+    Document   : tsdata (= "time series data")
+    Description: Outputs the data for a MOSJ time series identified by an "id" parameter.
+                    The data is output as "[[<millis>,<value>],[<millis>,<value>],...]".
+                    Multi-value series is not supported.
+                    This JSP works as a proxy between a Highcharts chart and the NPIDC API.
+                    Used by Highcharts charts when a series is very long. It is vital that 
+                    long series use this approach, to avoid huge impact on page load time.                    
     Created on : Nov 25, 2015, 4:26:33 PM
     Author     : Paul-Inge Flakstad, Norwegian Polar Institute <flakstad at npolar.no>
 --%><%@page pageEncoding="UTF-8"

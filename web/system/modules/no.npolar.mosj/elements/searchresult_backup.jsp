@@ -1,5 +1,5 @@
 <%-- 
-    Document   : searchresult.jsp
+    Document   : searchresult.jsp - DEPRECATED / OLD / TEST
     Created on : May 5, 2015, 10:26:13 AM
     Author     : Paul-Inge Flakstad, Norwegian Polar Institute <flakstad at npolar.no>
 --%><%@ page buffer="none" 

@@ -1,5 +1,6 @@
 <%-- 
     Document   : non-responsive.css
+    Description: See below.
     Created on : Jul 6, 2015, 2:43:33 PM
     Author     : Paul-Inge Flakstad, Norwegian Polar Institute <flakstad at npolar.no>
 --%><%@page import="java.io.BufferedReader,
