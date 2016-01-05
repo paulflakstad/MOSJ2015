@@ -214,6 +214,11 @@ final String LABEL_CHART_ERROR = loc.equalsIgnoreCase("no") ?
                                     ("Unable to display chart.</p><p class=\"placeholder-element-text-extra\">Try reloading the page."
                                         + " Please <a href=\"/about/contact.html\">report this error</a> should the problem persist.");
 final boolean EDITABLE_MENU     = true;
+final String NEWSLETTER_URI     = loc.equalsIgnoreCase("no") ? "/en/about/newsletter.html" : "/no/om/nyhetsbrev.html";
+final String CTA_NEWSLETTER     = "<a class=\"cta\" id=\"signup-nl\" href=\"" + cms.link(loc.equalsIgnoreCase("no") ? "/no/om/nyhetsbrev.html" : "/en/about/newsletter.html") + "\">"
+                                    + "<i class=\"icon-megaphone\"></i> "
+                                    + (loc.equalsIgnoreCase("no") ? "Nyhetsbrev" : "Newsletter")
+                                    + "</a>";
 
 String menuTemplate = null;
 HashMap params = null;
@@ -433,6 +438,9 @@ out.println(cms.getHeaderElement(CmsAgent.PROPERTY_HEAD_SNIPPET, requestFileUri)
         <div id="footer-content">
             <div class="clearfix double layout-group">
                 <div class="clearfix boxes">
+                    <% if (loc.equalsIgnoreCase("no")) { %>
+                    <p><%= CTA_NEWSLETTER %></p>
+                    <% } %>
                     <p><%= cms.labelUnicode("label.mosj.global.foot") %></p>
                 </div>
             </div>
@@ -538,6 +546,115 @@ $(document).ready(function() {
     $('#toggle-nav').click(function() {
         try { ga('send', 'event', 'UI interactions', 'clicked menu toggler', (smallScreenMenuIsVisible() ? 'opened menu' : 'closed menu')); } catch(ignore) {}
     });
+    // Newsletter link in footer
+    $('#signup-nl').click(function(e) {
+        try { ga('send', 'event', 'CTAs', 'clicked newsletter link', 'footer'); } catch(ignore) {}
+    });
+    // Newsletter signup "submit" button
+    $('#mc-embedded-subscribe').click(function() {
+        try { ga('send', 'event', 'CTAs', 'clicked to subscribe to newsletter', ''); } catch(ignore) {}
+    });
+    /*
+    $('#mc_embed_signup form').submit(function() {
+        try {
+            // Indicate progress by fading out form fields
+            $("#mc_embed_signup .mc-field-group").fadeTo(500, 0.3);
+            $("#mc_embed_signup .mc-field-group input").attr("disabled", "disabled");
+
+            // Clear any existing response field(s)
+            $("#mce-responses .response").each(function() {
+                $(this).css({"display":"none"});
+                $(this).html("");
+            });
+
+            // Fire event when a response from the newsletter service is received
+            setInterval( function () {
+                try {
+                    $("#mce-responses .response").each(function() {
+                        if ( $(this).html().length ) {
+                            $(this).trigger("responseReceived");
+                        }
+                    });
+               } catch (ignore) {}
+            }, 100);
+
+            // Listen for response
+            $("#mce-responses .response").bind("responseReceived", function() {
+                $("#mc_embed_signup .mc-field-group").fadeTo(100, 1);
+                $("#mc_embed_signup .mc-field-group input").removeAttr("disabled");
+            });
+            console.log("Hooked into MC form events.");
+        } catch(ignore) {
+            console.log("error hooking into MC form events: " + ignore);
+        }
+    });
+    */
+    /*
+    // Newsletter signup + modal dialog
+    $('#signup-nl').click(function(e) {
+        e.preventDefault();
+        try { ga('send', 'event', 'UI interactions', 'clicked newsletter signup', 'footer'); } catch(ignore) {}
+        $('head link').first().before('<link rel="stylesheet" type="text/css" href="//cdn-images.mailchimp.com/embedcode/classic-081711.css" />');
+        $('body').append('<div class="overlay overlay--completely" id="signup-nl-bg"><div class="dialog--modal" id="signup-nl-dialog"></div></div>');
+        
+        
+        $('#signup-nl-dialog').load('<%= NEWSLETTER_URI %> #mc_embed_signup', function(response, status, xhr) {
+            if (status === 'success') {
+                try { ga('send', 'pageview', '<%= NEWSLETTER_URI %>'); } catch (ignore) {}
+                $.getScript("//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js", function() {
+                    (function($) {
+                        window.fnames = new Array();
+                        window.ftypes = new Array();
+                        fnames[0]='EMAIL';ftypes[0]='email';
+                        fnames[1]='FNAME';ftypes[1]='text';
+                        fnames[2]='LNAME';ftypes[2]='text';
+                        <% if (loc.equalsIgnoreCase("no")) { %>
+                        // Translated default messages for the $ validation plugin.
+                        // Locale: NO (Norwegian)
+                        $.extend($.validator.messages, {
+                               required: "Dette feltet er obligatorisk.",
+                               maxlength: $.validator.format("Maksimalt {0} tegn."),
+                               minlength: $.validator.format("Minimum {0} tegn."),
+                               rangelength: $.validator.format("Angi minimum {0} og maksimum {1} tegn."),
+                               email: "Oppgi en gyldig e-postadresse.",
+                               url: "Angi en gyldig URL.",
+                               date: "Angi en gyldig dato.",
+                               dateISO: "Angi en gyldig dato (&ARING;&ARING;&ARING;&ARING;-MM-DD).",
+                               dateSE: "Angi en gyldig dato.",
+                               number: "Angi et gyldig nummer.",
+                               numberSE: "Angi et gyldig nummer.",
+                               digits: "Skriv kun tall.",
+                               equalTo: "Skriv samme verdi igjen.",
+                               range: $.validator.format("Angi en verdi mellom {0} og {1}."),
+                               max: $.validator.format("Angi en verdi som er mindre eller lik {0}."),
+                               min: $.validator.format("Angi en verdi som er st&oslash;rre eller lik {0}."),
+                               creditcard: "Angi et gyldig kredittkortnummer."
+                        });
+                        <% } %>
+                    }(jQuery));
+                    var $mcj = jQuery.noConflict(true);
+                });
+            } else if (status === 'error') {
+                $('#signup-nl-dialog').html('<p>An error occured</p>');
+            }
+        });
+        //$('#signup-nl-dialog').load('/no/newsletter-signup.html');
+        //$('#signup-nl-dialog').load('<%= NEWSLETTER_URI %> #mc_embed_signup');
+        $('#signup-nl-bg').click(function(e) {
+            // Close the dialog on outside clicks
+            if (!($(e.target).closest('#signup-nl-dialog').length)) {
+                $(this).remove();
+            }
+        });
+        $('body').bind('keyup', function(e) {
+            // Close the dialog on ESC key
+            if (e.keyCode === 27) {
+                try { $('#signup-nl-bg').remove(); } catch (ignore) {}
+            }
+        });
+    });
+    // End newsletter signup + modal dialog
+    //*/
 });
 </script>
 <% 
