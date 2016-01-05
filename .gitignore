@@ -7,6 +7,7 @@
 /src/conf/
 /web/META-INF/
 /web/WEB-INF/
+/web/sites/mosj/trash/
 *~
 # Subversion files
 .svn/
