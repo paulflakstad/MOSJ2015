@@ -13,6 +13,7 @@
                     org.opencms.json.*,
                     java.util.*,
                     no.npolar.data.api.MOSJService,
+                    no.npolar.data.api.TimeSeries,
                     no.npolar.data.api.util.APIUtil,
                     no.npolar.util.CmsAgent"
 %><%!
@@ -72,9 +73,9 @@ if (tsId == null) {
     String serviceBaseUrl = mosj.getTimeSeriesBaseURL();
 
     String params = "q="
-                    + "&fields=data"
+                    + "&fields=" + TimeSeries.API_KEY_DATA_POINTS
                     + "&filter-id=" + tsId
-                    + "&sort=data.date"
+                    + "&sort=" + TimeSeries.API_KEY_DATA_POINTS + "." + TimeSeries.API_KEY_POINT_WHEN
                     + "&format=json"
                     + "&facets=false"
                     + "&variant=array";
@@ -92,8 +93,8 @@ if (tsId == null) {
             if (i > 0)
                 out.print(",");
             JSONObject dataObj = dataArr.getJSONObject(i);
-            String val = dataObj.getString("value");
-            String date = dataObj.getString("date");
+            String val = dataObj.getString(TimeSeries.API_KEY_POINT_VAL);
+            String date = dataObj.getString(TimeSeries.API_KEY_POINT_WHEN);
             long millis = toMillis(date);
             out.print("["+millis+","+val+"]");
             //out.print("["+millis+","+date+","+val+"]");
