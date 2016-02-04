@@ -198,16 +198,10 @@ String socialMediaTitle = title.endsWith((" - ").concat(siteName)) ? title.repla
 //featuredImage = cmso.readPropertyObject(requestFileUri, "image.thumb", false).getValue(null);
 
 final String NAV_MAIN_URI       = "/" + loc + "/menu.html";
-//final String MENU_TOP_URL       = includeFilePrefix + "/header-menu.html";
-//final String QUICKLINKS_MENU_URI= "/menu-quicklinks-isblink.html";
 final String LANGUAGE_SWITCH    = "/system/modules/no.npolar.common.lang/elements/sibling-switch.jsp";
-//final String FONT_SIZE_SWITCH   = "/system/modules/no.npolar.site.npweb/elements/font-size-switch.jsp";
-//final String FOOTERLINKS        = "/system/modules/no.npolar.site.npweb/elements/footerlinks.jsp";
-//final String SEARCHBOX          = "/system/modules/no.npolar.site.npweb/elements/search.jsp";
-//final String LINKLIST           = "../../no.npolar.common.linklist/elements/linklist.jsp";
 final String HOME_URI           = cms.link("/" + loc + "/");
-final String SERP_URI		= cms.link("/" + loc + "/" + (loc.equalsIgnoreCase("no") ? "sok" : "search") + ".html");
-final String LABEL_CHART_ERROR = loc.equalsIgnoreCase("no") ? 
+final String SERP_URI           = cms.link("/" + loc + "/" + (loc.equalsIgnoreCase("no") ? "sok" : "search") + ".html");
+final String LABEL_CHART_ERROR  = loc.equalsIgnoreCase("no") ? 
                                     ("Kan ikke vise grafen.</p><p class=\"placeholder-element-text-extra\">Prøv å laste inn siden på nytt."
                                         + " Du kan også <a href=\"/om/kontakt.html\">sende oss en feilmelding</a> hvis denne feilen vedvarer.") 
                                     : 
@@ -337,7 +331,7 @@ out.println(cms.getHeaderElement(CmsAgent.PROPERTY_HEAD_SNIPPET, requestFileUri)
                     <a id="toggle-nav" class="nav-toggler" tabindex="6" href="#nav"><span><span></span></span></a>
                     <a id="toggle-search" class="smallscr-only" tabindex="3" href="#search-global"><i class="icon-search"></i></a>
                     <%
-                    try { cms.include(LANGUAGE_SWITCH); } catch (Exception e) {}
+                    try { cms.include(LANGUAGE_SWITCH); } catch (Exception e) { out.println("\n<!-- error including language switch: " + e.getMessage() + "\n-->"); }
                     %>
                     <!--
                     <div id="search-global">
@@ -493,7 +487,7 @@ function warnOldBrowsers() {
 }
 
 /*
-// Requires webfont script to load in head
+// !!! FONT LOADING moved to base.css !!!
 WebFont.load({
     google: {
         families: ['Open+Sans:400,300,700,800,300italic,400italic,700italic,800italic:latin']
