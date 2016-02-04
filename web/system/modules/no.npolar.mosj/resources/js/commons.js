@@ -12,36 +12,9 @@
 /** Global variable used to detect changes in the viewport width. */
 var lastDetectedWidth = $(window).width();
 
-/** Global variable that holds localized Highcharts strings / labels. */
-var HC_LABELS = {
-    no: {
-        decimalPoint: ',',
-        downloadJPEG: 'Last ned som JPG',
-        downloadPNG: 'Last ned som PNG',
-        downloadPDF: 'Last ned som PDF',
-        downloadSVG: 'Last ned som SVG',
-        drillUpText: 'Tilbake til {series.name}',
-        loading: 'Laster...',
-        printChart: 'Skriv ut figur',
-        resetZoom: 'Nullstill zoom',
-        resetZoomTitle: 'Sett zoomnivået til 1:1',
-        thousandsSep: ' '
-    },
-    en: {
-        decimalPoint: '.',
-        downloadJPEG: 'Download as JPG',
-        downloadPNG: 'Download as PNG',
-        downloadPDF: 'Download as PDF',
-        downloadSVG: 'Download as SVG',
-        drillUpText: 'Back to {series.name}',
-        loading: 'Loading...',
-        printChart: 'Print chart',
-        resetZoom: 'Reset zoom',
-        resetZoomTitle: 'Reset zoom level to 1:1',
-        thousandsSep: ','
-    }
-};
-
+/**
+ * Global variable that holds localized Highslide strings / labels. 
+ */
 var HS_LABELS = {
     no : {
         loadingText :     'Laster...',
@@ -90,6 +63,38 @@ var HS_LABELS = {
         pauseTitle :      'Pause (space)',
         number :          'Image %1 of %2',
         restoreTitle :    'Click to close, click and drag to move. Use arrow keys for next / previous.'
+    }
+};
+
+/**
+ * Global variable that holds localized Highcharts strings / labels.
+ */
+var HC_LABELS = {
+    no: {
+        decimalPoint: ',',
+        downloadJPEG: 'Last ned som JPG',
+        downloadPNG: 'Last ned som PNG',
+        downloadPDF: 'Last ned som PDF',
+        downloadSVG: 'Last ned som SVG',
+        drillUpText: 'Tilbake til {series.name}',
+        loading: 'Laster...',
+        printChart: 'Skriv ut figur',
+        resetZoom: 'Nullstill zoom',
+        resetZoomTitle: 'Sett zoomnivået til 1:1',
+        thousandsSep: ' '
+    },
+    en: {
+        decimalPoint: '.',
+        downloadJPEG: 'Download as JPG',
+        downloadPNG: 'Download as PNG',
+        downloadPDF: 'Download as PDF',
+        downloadSVG: 'Download as SVG',
+        drillUpText: 'Back to {series.name}',
+        loading: 'Loading...',
+        printChart: 'Print chart',
+        resetZoom: 'Reset zoom',
+        resetZoomTitle: 'Reset zoom level to 1:1',
+        thousandsSep: ','
     }
 };
 
@@ -148,55 +153,14 @@ $.fn.hoverDelay = function(options) {
         );
     });
 };
-  
-/**
- * Function for altering table rows by class insertion.
- */
-/*function makeNiceTables() {
-    // Get all tables on the page
-    var tables = document.getElementsByTagName("table");
-
-    //alert("Found " + tables.length + " tables on this page.");
-
-    var table;
-    // Loop over all tables
-    for (var i = 0; i < tables.length; i++) {
-        table = tables[i]; // Current table
-
-        //alert("Processing table #" + i + "...");
-
-        // Require a specific class name
-        if (table.className === "odd-even-table") {
-            //alert("This table was of required class.");
-            var tableRows = table.getElementsByTagName("tr");
-
-            // Check if the first row contains no th's
-            if (tableRows[0].getElementsByTagName("th").length === 0) { 
-                tableRows[0].className = "even";
-            }
-
-            //alert("Found " + tableRows.length + " table rows in this table.");
-            for (j = 1; j < tableRows.length; j++) { // Start at index 1 (skip first row, which we've processed already)
-                var tableRow = tableRows[j];
-                if ((j+2) % 2 === 0) {
-                    tableRow.className = "even";
-                }
-                else {
-                    tableRow.className = "odd";
-                }
-            }
-        } else {
-            //alert("This table was not of required class.");
-        }
-    }
-}*/
 
 /**
  * Handle hash (fragment) change
  */
 function highlightReference() {
     'use strict';
-    setTimeout(function() {
+    setTimeout(
+        function() {
             if(document.location.hash) {
                 var hash = document.location.hash.substring(1); // Get fragment (without the leading # character)
                 try {
@@ -245,6 +209,8 @@ else { // event not supported:
 
 /**
  * Helper function for browser sniffing
+ * Example result: 'Firefox 31'
+ * See http://stackoverflow.com/questions/5916900/how-can-you-detect-the-version-of-a-browser
  */
 navigator.sayswho = (function() {
     'use strict';
@@ -716,7 +682,7 @@ function readyHighslide(cssUri, jsUri, lang) {
                 //hs.maxHeight = 600;
                 //hs.outlineType = 'rounded-white';
                 hs.outlineType = 'drop-shadow';
-                hs.lang = getHighslideLables(lang);
+                hs.lang = getHighslideLabels(lang);
             });
         }
     } catch (err) {
@@ -843,7 +809,7 @@ function initUserControls() {
     // bugfix - the #wrap div is sometimes able to receive focus (even tho it has no tabindex)
     $('#wrap').attr('tabindex', '-1');
 	
-    // toggle "focus" class on the top-level menus when appropriate
+    // toggle "focus" class on menu items when appropriate
     menu.find('a').focus(function() {
         $(this).parents('li').addClass('infocus');
     });
@@ -1013,6 +979,12 @@ function toggleHighChartsGrouping(/*jQuery*/chart) {
     return true;
 }
 
+/**
+ * Attempts to populate any empty data arrays for series in the given chart.
+ * 
+ * @param {type} chart
+ * @returns {undefined}
+ */
 function fillEmptyData(/*Object*/chart) {
     'use strict';
     //console.log('Processing chart "' + chart.title + '" (' + chart.series.length + ' series) ...');
@@ -1132,7 +1104,7 @@ function getHighchartsLables(/*String*/lang) {
  * @returns {Object} Highslide labels localized according to the given language or, if that language isn't configured, in the default language.
  * @see HC_LABELS
  */
-function getHighslideLables(/*String*/lang) {
+function getHighslideLabels(/*String*/lang) {
     'use strict';
     if (!(lang === 'en' || lang === 'no')) {
         // Non-supported language, fallback to default
