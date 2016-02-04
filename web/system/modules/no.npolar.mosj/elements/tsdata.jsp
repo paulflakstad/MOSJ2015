@@ -2,10 +2,13 @@
     Document   : tsdata (= "time series data")
     Description: Outputs the data for a MOSJ time series identified by an "id" parameter.
                     The data is output as "[[<millis>,<value>],[<millis>,<value>],...]".
-                    Multi-value series is not supported.
-                    This JSP works as a proxy between a Highcharts chart and the NPIDC API.
-                    Used by Highcharts charts when a series is very long. It is vital that 
-                    long series use this approach, to avoid huge impact on page load time.                    
+                    Multi-value series are not supported.
+                    This page is an intermediate between a Highcharts chart and the NPDC 
+                    API, providing API data transformed into a format that's directly 
+                    chewable by Highcharts.
+                    Typically employed only by Highcharts when a series contained in a 
+                    chart is very long, to avoid a (potentially huge) negative impact on 
+                    page load time.
     Created on : Nov 25, 2015, 4:26:33 PM
     Author     : Paul-Inge Flakstad, Norwegian Polar Institute <flakstad at npolar.no>
 --%><%@page pageEncoding="UTF-8"
@@ -66,7 +69,7 @@ controller.getTopResponse().setContentType("application/javascript");
 out.print("" + callback + "(");
 
 if (tsId == null) {
-    out.println("{ 'error' : ' Time series ID is required, but was not provided.' }");
+    out.print("{ 'error' : ' Time series ID is required, but was not provided.' }");
 } else {
 
     MOSJService mosj = new MOSJService(cms.getRequestContext().getLocale(), true);
@@ -106,8 +109,9 @@ if (tsId == null) {
 
     } catch (Exception e) {
         out.print("{ 'error' : '" + e.getMessage() + "' }");
+    } finally {
+        out.print("]");
     }
 }
-out.print("]");
-out.print(");");
+out.println(");");
 %>
