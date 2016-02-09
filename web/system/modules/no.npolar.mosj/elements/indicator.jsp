@@ -531,12 +531,12 @@ while (structuredContent.hasMoreResources()) {
                             <div class="parameter-data-files">
                                 <h4><%= LABEL_DATA_FILES %></h4>
                                 <p>
-                                    <a class="cta" href="<%= cms.link("/data-export?id=" + mp.getId() + "&amp;locale=" + loc) %>" data-tooltip="<%= LABEL_CSV_LINK_DESCR %>">
-                                        <i class="icon-download-alt"></i> <%= LABEL_CSV_LINK %>
-                                    </a>
                                     <a class="cta" href="<%= cms.link("/data-export?id=" + mp.getId() + "&amp;locale=" + loc) + "&amp;type=xls" %>" data-tooltip="<%= LABEL_XLS_LINK_DESCR %>">
                                         <i class="icon-download-alt"></i> <%= LABEL_XLS_LINK %>
                                     </a> 
+                                    <a class="cta" href="<%= cms.link("/data-export?id=" + mp.getId() + "&amp;locale=" + loc) %>" data-tooltip="<%= LABEL_CSV_LINK_DESCR %>">
+                                        <i class="icon-download-alt"></i> <%= LABEL_CSV_LINK %>
+                                    </a>
                                     <a class="cta" href="<%= mp.getURL(service) %>" data-tooltip="<%= LABEL_JSON_LINK_DESCR %>">
                                         <i class="icon-database"></i> <%= LABEL_JSON_LINK %>
                                     </a>
