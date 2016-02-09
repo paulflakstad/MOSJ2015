@@ -205,10 +205,13 @@ final String LABEL_RELATED_MONITORING_NONE = cms.labelUnicode("label.mosj.indica
 
 final String LABEL_MONITORED_TITLE = cms.labelUnicode("label.mosj.indicator.monitored-title");// loc.equalsIgnoreCase("no") ? "Hva overvåkes?" : "What is being monitored?";
 final String LABEL_TABLE_FORMAT = cms.labelUnicode("label.mosj.indicator.data-table");//loc.equalsIgnoreCase("no") ? "Data" : "Data";
+final String LABEL_DATA_FILES = cms.labelUnicode("label.mosj.indicator.data-files");
 final String LABEL_JSON_LINK = cms.labelUnicode("label.mosj.indicator.data-json");// loc.equalsIgnoreCase("no") ? "Maskinlesbart format (JSON)" : "Machine-readable format (JSON)";
 final String LABEL_JSON_LINK_DESCR = cms.labelUnicode("label.mosj.indicator.data-json-descr");
-final String LABEL_CSV_LINK = cms.labelUnicode("label.mosj.indicator.data-csv");// loc.equalsIgnoreCase("no") ? "Maskinlesbart format (JSON)" : "Machine-readable format (JSON)";
+final String LABEL_CSV_LINK = cms.labelUnicode("label.mosj.indicator.data-csv");// loc.equalsIgnoreCase("no") ? ".csv (kommaseparert)" : ".csv (comma-separated)";
 final String LABEL_CSV_LINK_DESCR = cms.labelUnicode("label.mosj.indicator.data-csv-descr");
+final String LABEL_XLS_LINK = cms.labelUnicode("label.mosj.indicator.data-xls");// loc.equalsIgnoreCase("no") ? ".xls (Excel)" : ".xls (Excel)";
+final String LABEL_XLS_LINK_DESCR = cms.labelUnicode("label.mosj.indicator.data-xls-descr");
 final String LABEL_DETAILS = cms.labelUnicode("label.mosj.indicator.data-details");// loc.equalsIgnoreCase("no") ? "Detaljer om disse dataene" : "Details on this data";
 
 final String LABEL_METHOD = cms.labelUnicode("label.mosj.indicator.data-method");// loc.equalsIgnoreCase("no") ? "Metode" : "Method";
@@ -525,14 +528,20 @@ while (structuredContent.hasMoreResources()) {
                     <div class="toggleable collapsed parameter-data-table-wrapper">
                         <a href="#<%= parameterDataSectionId %>" class="toggletrigger" aria-controls="<%= parameterDataSectionId %>"><i class="icon-grid"></i> <%= LABEL_TABLE_FORMAT %></a>
                         <div class="toggletarget" id="<%= parameterDataSectionId %>">
-                            <p>
-                                <a class="cta" href="<%= cms.link("/data-export?id=" + mp.getId() + "&amp;locale=" + loc) %>" data-tooltip="<%= LABEL_CSV_LINK_DESCR %>">
-                                    <i class="icon-download-alt"></i> <%= LABEL_CSV_LINK %>
-                                </a> 
-                                <a class="cta" href="<%= mp.getURL(service) %>" data-tooltip="<%= LABEL_JSON_LINK_DESCR %>">
-                                    <i class="icon-database"></i> <%= LABEL_JSON_LINK %>
-                                </a>
-                            </p>
+                            <div class="parameter-data-files">
+                                <h4><%= LABEL_DATA_FILES %></h4>
+                                <p>
+                                    <a class="cta" href="<%= cms.link("/data-export?id=" + mp.getId() + "&amp;locale=" + loc) %>" data-tooltip="<%= LABEL_CSV_LINK_DESCR %>">
+                                        <i class="icon-download-alt"></i> <%= LABEL_CSV_LINK %>
+                                    </a>
+                                    <a class="cta" href="<%= cms.link("/data-export?id=" + mp.getId() + "&amp;locale=" + loc) + "&amp;type=xls" %>" data-tooltip="<%= LABEL_XLS_LINK_DESCR %>">
+                                        <i class="icon-download-alt"></i> <%= LABEL_XLS_LINK %>
+                                    </a> 
+                                    <a class="cta" href="<%= mp.getURL(service) %>" data-tooltip="<%= LABEL_JSON_LINK_DESCR %>">
+                                        <i class="icon-database"></i> <%= LABEL_JSON_LINK %>
+                                    </a>
+                                </p>
+                            </div>
                             <%
                             if (mp.getTimeSeriesCollection().getTimeMarkersCount() < 500) {
                                 out.println(mp.getAsTable("responsive"));

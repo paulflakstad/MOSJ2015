@@ -818,6 +818,23 @@ ul.line-items li {
     background-color:#eee;
 }
 
+.parameter-wrapper table caption,
+.parameter-data-files h4 {
+    border-bottom: 1px solid #ccc;
+    color: #666;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+
+.parameter-data-files {
+    background-color:#f5f5f5;
+    margin-left:-1em;
+    margin-top:-1em;
+    padding:1em;
+    width:calc(100% + 2em + 2px);
+}
+
 
 .ui-helper-hidden-accessible,
 .inaccessible {
