@@ -177,8 +177,8 @@ dd,
 li,
 h1,h2,h3,h4,h5,h6,
 .cta-huge,
-span.media,
-span.textbox {
+.media,
+.textbox {
     display:block;
     padding:0;
     margin:0;
@@ -1143,7 +1143,7 @@ h1 .scientific-name {
     /*width:98.5%;*/
     background-color:#f5f5f5;
     border:none;
-    padding:0.75%;
+    padding:0.75em;
     font-size:0.85em;
     color:#444;
     margin:0 0 1em 0; /* Maybe some side margin would be good? (e.g. 5%) */
