@@ -3,6 +3,7 @@
 	elementFormDefault="qualified">
 
     <xsd:include schemaLocation="opencms://opencms-xmlcontent.xsd" />
+    <xsd:include schemaLocation="opencms://system/modules/no.npolar.mosj/schemas/possible-link.xsd"/>
     <xsd:include schemaLocation="opencms://system/modules/no.npolar.common.pageelements/schemas/linklist.xsd"/>
 
     <xsd:element name="MOSJMonitoringDataDetails" type="OpenCmsMOSJMonitoringDataDetails" />
@@ -22,9 +23,9 @@
             <xsd:element name="Quality" type="OpenCmsHtml" minOccurs="0" maxOccurs="1" />
             <xsd:element name="OtherMetadata" type="OpenCmsHtml" minOccurs="0" maxOccurs="1" />
             <xsd:element name="ReferenceLevel" type="OpenCmsHtml" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="AuthorativeInstitutions" type="OpenCmsLinkList" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="ExecutiveInstitutions" type="OpenCmsLinkList" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="ContactPersons" type="OpenCmsLinkList" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="AuthorativeInstitutions" type="OpenCmsMOSJPossibleLink" minOccurs="0" maxOccurs="20" />
+            <xsd:element name="ExecutiveInstitutions" type="OpenCmsMOSJPossibleLink" minOccurs="0" maxOccurs="20" />
+            <xsd:element name="ContactPersons" type="OpenCmsMOSJPossibleLink" minOccurs="0" maxOccurs="20" />
         </xsd:sequence>
         <xsd:attribute name="language" type="OpenCmsLocale" use="optional" />
     </xsd:complexType>
