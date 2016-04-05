@@ -17,6 +17,7 @@
 
     <xsd:complexType name="OpenCmsMOSJMonitoringDataDetail">
         <xsd:sequence>
+            <xsd:element name="LastUpdate" type="OpenCmsDate" minOccurs="0" maxOccurs="1" />
             <xsd:element name="UpdateInterval" type="OpenCmsString" minOccurs="0" maxOccurs="1" />
             <xsd:element name="NextUpdate" type="OpenCmsString" minOccurs="0" maxOccurs="1" />
             <xsd:element name="Method" type="OpenCmsHtml" minOccurs="0" maxOccurs="1" />
@@ -46,9 +47,10 @@
                     </bundle>
                 </xmlbundle>
             </resourcebundles>
-            <!--<mappings>
-                <mapping element="ID" mapto="property:parameter.id" />
-            </mappings>-->
+            <mappings>
+                <mapping element="LastUpdate" mapto="attribute:datereleased" />
+                <!--<mapping element="ID" mapto="property:parameter.id" />-->
+            </mappings>
             <layouts>
                 <layout element="Method" widget="HtmlWidget" configuration="link,source" />
                 <layout element="Quality" widget="HtmlWidget" configuration="link,source" />
