@@ -499,6 +499,7 @@ h5 {
     filter:blur(30px) brightness(100%);
     filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='30');
 }
+
 .article-hero > canvas/*,
 #hero-canvas-overlay*/ {
     display: block;

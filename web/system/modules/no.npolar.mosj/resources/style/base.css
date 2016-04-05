@@ -1052,6 +1052,24 @@ h1 .scientific-name {
 .descr + .paragraph > h2 {
     margin-top:0;
 }
+
+.metadata {
+}
+.metadata--page-data,
+.descr > .metadata--page-data {
+    display: block;
+    font-size: small;
+    color: #6e6e6e;
+    text-align: right;
+    margin-top: -2.95em;
+}
+.metadata__timestamp:before {
+    display: inline-block;
+    margin-right: 0.2em;
+    font-family: "Fontello";
+    content: "\e85f"; /* clock icon */
+}
+
 /* Page sections (i.e. <section class="paragraph"> ... </section>) */
 .paragraph {
     overflow:auto;

@@ -14,6 +14,7 @@
             java.io.PrintWriter,
             java.net.HttpURLConnection,
             java.net.URL,
+            java.text.SimpleDateFormat,
             java.util.*,
             org.opencms.security.*,
             no.npolar.util.*,
@@ -186,6 +187,17 @@ boolean loggedInUser        = OpenCms.getRoleManager().hasRole(cms.getCmsObject(
 Locale locale               = cms.getRequestContext().getLocale();
 String loc                  = locale.toString();
 
+String lastReleased         = null;
+SimpleDateFormat dateFormat = new SimpleDateFormat(cms.label("label.mosj.global.dateformat.dmy"), locale);
+long lastReleasedRawValue   = cmso.readResource(requestFileUri).getDateReleased();
+
+try {
+    if (lastReleasedRawValue > 0) {
+        lastReleased = dateFormat.format(new Date(Long.valueOf(lastReleasedRawValue)));
+        lastReleased = cms.label("label.mosj.indicator.data-last-updated") + " " + lastReleased;
+    }
+} catch (Exception e) {}
+
 final String PARAGRAPH_HANDLER      = "../../no.npolar.common.pageelements/elements/paragraphhandler.jsp";
 
 // Localized labels
@@ -220,6 +232,7 @@ final String LABEL_OTHER_METADATA = cms.labelUnicode("label.mosj.indicator.data-
 final String LABEL_REFERENCE_LEVEL = cms.labelUnicode("label.mosj.indicator.data-reference-level");// loc.equalsIgnoreCase("no") ? "Referansenivå og tiltaksgrense" : "Reference level and inititive threshold";
 
 final String LABEL_UPDATE_INTERVAL = cms.labelUnicode("label.mosj.indicator.data-update-interval");// loc.equalsIgnoreCase("no") ? "Oppdateringsintervall" : "Update interval";
+final String LABEL_LAST_UPDATED = cms.labelUnicode("label.mosj.indicator.data-last-updated");// loc.equalsIgnoreCase("no") ? "Sist oppdatert" : "Last updated";
 final String LABEL_NEXT_UPDATE = cms.labelUnicode("label.mosj.indicator.data-next-update");// loc.equalsIgnoreCase("no") ? "Neste oppdatering" : "Next update";
 final String LABEL_AUTHORATIVE_INSTITUTION = cms.labelUnicode("label.mosj.indicator.data-autorative-institution");// loc.equalsIgnoreCase("no") ? "Oppdragsgivende institusjon" : "Authorative institution";
 final String LABEL_EXECUTIVE_INSTITUTION = cms.labelUnicode("label.mosj.indicator.data-executive-institution");// loc.equalsIgnoreCase("no") ? "Utførende institusjon" : "Executive institution";
@@ -280,6 +293,9 @@ while (structuredContent.hasMoreResources()) {
     }
     %>
     <section class="descr">
+        <% if (lastReleased != null) { %>
+        <div class="metadata metadata--page-data"><span class="metadata__timestamp"><%= lastReleased %></span></div> 
+        <% } %>
         <%= summary %>
     </section>
 	
@@ -567,6 +583,7 @@ while (structuredContent.hasMoreResources()) {
             StringBuilder detailsHtmlBuilder = new StringBuilder(512);
             String detailsHtml = "";
 
+            String parameterLastUpdated = cms.contentshow(mosjMonitoringDataDetails, "LastUpdate");
             String parameterUpdateInterval = cms.contentshow(mosjMonitoringDataDetails, "UpdateInterval");
             String parameterNextUpdate = cms.contentshow(mosjMonitoringDataDetails, "NextUpdate");
             String parameterMethod = cms.contentshow(mosjMonitoringDataDetails, "Method");
@@ -578,6 +595,12 @@ while (structuredContent.hasMoreResources()) {
             I_CmsXmlContentContainer parameterContactPersons = cms.contentloop(mosjMonitoringDataDetails, "ContactPersons");
 
             // List on top of the details
+            if (CmsAgent.elementExists(parameterLastUpdated)) {
+                try {
+                    parameterLastUpdated = dateFormat.format(new Date(Long.valueOf(parameterLastUpdated)));
+                    detailsHtmlBuilder.append(getDefinitionListItem(LABEL_LAST_UPDATED, parameterLastUpdated, false));
+                } catch (Exception e) {}
+            }
             if (CmsAgent.elementExists(parameterUpdateInterval)) {
                 detailsHtmlBuilder.append(getDefinitionListItem(LABEL_UPDATE_INTERVAL, parameterUpdateInterval, false));
             }
