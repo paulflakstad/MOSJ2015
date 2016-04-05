@@ -20,6 +20,7 @@
             <xsd:element name="NextUpdate" type="OpenCmsString" minOccurs="0" maxOccurs="1" />
             <xsd:element name="Method" type="OpenCmsHtml" minOccurs="0" maxOccurs="1" />
             <xsd:element name="Quality" type="OpenCmsHtml" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="OtherMetadata" type="OpenCmsHtml" minOccurs="0" maxOccurs="1" />
             <xsd:element name="ReferenceLevel" type="OpenCmsHtml" minOccurs="0" maxOccurs="1" />
             <xsd:element name="AuthorativeInstitutions" type="OpenCmsLinkList" minOccurs="0" maxOccurs="1" />
             <xsd:element name="ExecutiveInstitutions" type="OpenCmsLinkList" minOccurs="0" maxOccurs="1" />
@@ -50,6 +51,7 @@
             <layouts>
                 <layout element="Method" widget="HtmlWidget" configuration="link,source" />
                 <layout element="Quality" widget="HtmlWidget" configuration="link,source" />
+                <layout element="OtherMetadata" widget="HtmlWidget" configuration="link,source" />
                 <layout element="ReferenceLevel" widget="HtmlWidget" configuration="link,source" />
             </layouts>
             <validationrules />
