@@ -26,6 +26,7 @@
             <xsd:element name="LatinName" type="OpenCmsString" />
             <xsd:element name="Summary" type="OpenCmsHtml" />
             <xsd:element name="Image" type="OpenCmsVfsFile" />
+            <xsd:element name="LastUpdate" type="OpenCmsDateTime" minOccurs="0" maxOccurs="1" />
             <xsd:element name="StatusAndTrend" type="OpenCmsParagraph" minOccurs="0" maxOccurs="1" />
             <xsd:element name="CausalFactors" type="OpenCmsParagraph" minOccurs="0" maxOccurs="1" />
             <xsd:element name="Consequences" type="OpenCmsParagraph" minOccurs="0" maxOccurs="1" />
@@ -66,6 +67,7 @@
                 <mapping element="Title" mapto="property:Title" />
                 <mapping element="Summary" mapto="property:Description" />
                 <mapping element="Image" mapto="property:image.thumb" />
+                <mapping element="LastUpdate" mapto="attribute:datereleased" />
                 <!-- Enables nice url name for detail pages -->
                 <!--<mapping element="Title" mapto="urlName" />-->
             </mappings>

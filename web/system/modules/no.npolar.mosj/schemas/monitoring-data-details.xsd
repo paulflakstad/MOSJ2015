@@ -47,10 +47,9 @@
                     </bundle>
                 </xmlbundle>
             </resourcebundles>
-            <mappings>
-                <mapping element="LastUpdate" mapto="attribute:datereleased" />
-                <!--<mapping element="ID" mapto="property:parameter.id" />-->
-            </mappings>
+            <!--<mappings>
+                <mapping element="ID" mapto="property:parameter.id" />
+            </mappings>-->
             <layouts>
                 <layout element="Method" widget="HtmlWidget" configuration="link,source" />
                 <layout element="Quality" widget="HtmlWidget" configuration="link,source" />
