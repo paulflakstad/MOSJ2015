@@ -932,11 +932,13 @@ $(document).ready( function() {
  * http://jsfiddle.net/dcus5fjs/1/
  * 
  * @param {jQuery} chart jQuery object referencing a HighCharts chart, e.g. $('#hc-container').highcharts();
+ * @param {json} customSettings a JSON object that holds the custom settings, if any
  * @returns {Boolean} True if all went well, false if not.
  * @see http://jsfiddle.net/srLtL5qd/
  */
-function toggleHighChartsGrouping(/*jQuery*/chart) {
+function toggleHighChartsGrouping(/*jQuery*/chart, /*jsonObj*/customSettings) {
     'use strict';
+    
     try {
         var newLabels = [];
         var newCatagories = [];
@@ -963,11 +965,30 @@ function toggleHighChartsGrouping(/*jQuery*/chart) {
         }
         chart.xAxis[0].setCategories(newCatagories, false);
         var i = 0;
-        $.each(newData, function (key, newSeries) {
+        $.each(newData, function (key, newSeriesData) {
+            var newSeriesColor = getHighchartsTheme().colors[i];
+            var newSeriesLabel = newLabels[key];
+            
+            // Change colors etc. if custom settings says so
+            try {
+                $.each(customSettings.series, function(index, customSeriesSettings) {
+                    if (customSeriesSettings.id.trim() === newSeriesLabel.trim()) { // E.g. if "2012" === "2012"
+                        var customColor = customSeriesSettings.color; // Get the color, e.g. "2" or "#f00"
+                        if (customColor.length > 0) {
+                            if (customColor.length < 3) { // Assume the value is an int which refers to one of the standard colors, e.g. "2"
+                                newSeriesColor = getHighchartsTheme().colors[parseInt(customColor)-1]; // Assume the 
+                            } else {
+                                newSeriesColor = customColor; // Assume the value is an actual color, e.g. "#f00"
+                            }
+                        }
+                    }
+                });
+            } catch (ignore) {} // Empty or bad settings
+            
             chart.addSeries({
-                name: newLabels[key],
-                data: newSeries,
-                color: getHighchartsTheme().colors[i]
+                name: newSeriesLabel,
+                data: newSeriesData,
+                color: newSeriesColor
             }, false);
             i++;
         });
