@@ -4,8 +4,9 @@
                     A "locale" parameter is required.
     Created on : Apr 21, 2015, 2:54:53 PM
     Author     : Paul-Inge Flakstad, Norwegian Polar Institute <flakstad at npolar.no>
---%><%@page contentType="text/html" pageEncoding="UTF-8"
-%><%@page import="org.opencms.file.*,
+--%><%@page contentType="text/html" 
+            pageEncoding="UTF-8"
+            import="org.opencms.file.*,
                 no.npolar.util.*,
                 no.npolar.common.menu.*,
                 java.util.*,
@@ -13,18 +14,24 @@
                 org.opencms.main.*,
                 org.opencms.jsp.*,
                 org.opencms.util.*,
-                org.opencms.security.CmsRole"
-                session="true"
+                org.opencms.security.CmsRole" 
+            session="true"
 %><%!
+// Default titles, used when the "Title" property is missing (shouldn't happen, this is just a precaution)
 static final String NO_TITLE = "NO TITLE";
 static final String NO_DESCR = "NO DESCR";
 
+/**
+ * Sorts the resources in the given list by their "Title" property.
+ */
 public List<CmsResource> sortByTitle(List<CmsResource> list, CmsObject cmso) throws CmsException {
     final CmsObject c = cmso;
     Collections.sort(list, new Comparator<CmsResource>() {
         public int compare(CmsResource o1, CmsResource o2) {
             try {
-                return c.readPropertyObject(o1, CmsPropertyDefinition.PROPERTY_TITLE, false).getValue(NO_TITLE).compareTo(c.readPropertyObject(o2, CmsPropertyDefinition.PROPERTY_TITLE, false).getValue(NO_TITLE));
+                return c.readPropertyObject(o1, CmsPropertyDefinition.PROPERTY_TITLE, false).getValue(NO_TITLE).compareTo(
+                            c.readPropertyObject(o2, CmsPropertyDefinition.PROPERTY_TITLE, false).getValue(NO_TITLE)
+                        );
             } catch (Exception e) {
                 return 0;
             }
@@ -35,6 +42,9 @@ public List<CmsResource> sortByTitle(List<CmsResource> list, CmsObject cmso) thr
 %><%
 CmsAgent cms                = new CmsAgent(pageContext, request, response);
 CmsObject cmso              = cms.getCmsObject();
+
+final String RES_TYPE       = "mosj_indicator";
+final boolean LIST_SUBTREE  = true;
 
 // Muy importante!!! (One of "application/json" OR "application/javascript")
 CmsFlexController.getController(request).getTopResponse().setHeader("Content-Type", "application/json; charset=utf-8");
@@ -65,8 +75,7 @@ if (!cmso.existsResource(listFolderUri)) {
 
 out.println("\"indicators\":[");
 
-final boolean LIST_SUBTREE = true;
-CmsResourceFilter filterIndictorFiles = CmsResourceFilter.DEFAULT_FILES.addRequireType(OpenCms.getResourceManager().getResourceType("mosj_indicator").getTypeId());
+CmsResourceFilter filterIndictorFiles = CmsResourceFilter.DEFAULT_FILES.addRequireType(OpenCms.getResourceManager().getResourceType(RES_TYPE).getTypeId());
 List<CmsResource> indicatorFiles = cmso.readResources(listFolderUri, filterIndictorFiles, LIST_SUBTREE);
 indicatorFiles = sortByTitle(indicatorFiles, cmso);
 Iterator<CmsResource> iIndicatorFiles = null;

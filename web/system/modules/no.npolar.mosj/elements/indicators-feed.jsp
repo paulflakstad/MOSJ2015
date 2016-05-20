@@ -17,6 +17,9 @@
     // Create a JSP action element
     CmsJspActionElement cms = new CmsJspActionElement(pageContext, request, response);
     
+    // We expect 1 or 2 parameters: 
+    //  1) the required query string ("q")
+    //  2) the optional name of the callback function ("callback")
     String query = cms.getRequest().getParameter("q");
     String callback = cms.getRequest().getParameter("callback");
     
@@ -25,31 +28,35 @@
     if (callback != null && !callback.isEmpty()) {
         mimeSubType = "javascript";
     }
-    // Muy importante!!! (One of "application/json" OR "application/javascript")
+    // Important: Set this as early as possible! ("application/json" OR "application/javascript")
     CmsFlexController.getController(request).getTopResponse().setHeader("Content-Type", "application/" + mimeSubType + "; charset=utf-8");
     
     // Widen the query
     try {
-    if (!query.endsWith("*"))
-        query = query.concat("*");
+        if (!query.endsWith("*")) {
+            query = query.concat("*");
+        }
     } catch (Exception e) {}
     
-    CmsSearchManager searchManager = OpenCms.getSearchManager();
-    String resourceUri = cms.getRequestContext().getUri();
-    String folderUri = cms.getRequestContext().getFolderUri();
+    //CmsSearchManager searchManager = OpenCms.getSearchManager();
+    //String resourceUri = cms.getRequestContext().getUri();
+    //String folderUri = cms.getRequestContext().getFolderUri();
     Locale locale = cms.getRequestContext().getLocale();
     String loc = locale.toString();
-    final String DEFAULT_INDEX_NAME = "MOSJ_" + loc + "_online"; // E.g. "MOSJ_no_online"
     
+    // Determine the default index name (used if no index name is set on the "search.index" property)
+    final String DEFAULT_INDEX_NAME = "MOSJ_" + loc + "_online"; // = "MOSJ_no_online" OR "MOSJ_en_online"
     
-    
+    //
+    // Generate the output by querying the search index and handling the result
+    //
     try {
         CmsSearch search = new CmsSearch();
-        //search.setField(new String[] { "content", "title", "description", "keywords" });
+        search.init(cms.getCmsObject());
         search.setMatchesPerPage(30);
         search.setDisplayPages(1);
-        search.setQuery(query);
-        search.init(cms.getCmsObject());
+        //search.setQuery(query);
+        //search.init(cms.getCmsObject());
         try {
             search.getIndex(); 
         } catch (NullPointerException npe) {
@@ -60,6 +67,10 @@
         //String fields = search.getFields();
         //String fields = "title content";
         //fields = "*";
+	
+        //search.setField(new String[] { "content", "title", "description", "keywords" });
+        search.setField(new String[] { "title", "description", "keywords", "content" });
+        search.setQuery(query);
 
         List result = null;
         try {
@@ -73,29 +84,37 @@
         if (callback != null && !callback.isEmpty()) {
             out.println(callback + "(");
         }
-        if (result != null) {
-
-            out.print("[");
+        
+        out.print("[");
+        
+        if (result != null && !result.isEmpty()) {
             ListIterator iterator = result.listIterator();
             while (iterator.hasNext()) {
-                CmsSearchResult entry = (CmsSearchResult)iterator.next();
-                String entryPath = cms.link(cms.getRequestContext().removeSiteRoot(entry.getPath()));
                 out.print("{");
-                out.print(" \"title\": \"" + entry.getField(CmsSearchField.FIELD_TITLE) + "\",");
-                out.print(" \"uri\": \"" + entryPath + "\"");
+                try {
+                    CmsSearchResult entry = (CmsSearchResult)iterator.next();
+                    String entryPath = cms.link(cms.getRequestContext().removeSiteRoot(entry.getPath()));
+                    out.print(" \"title\": \"" + entry.getField(CmsSearchField.FIELD_TITLE) + "\",");
+                    out.print(" \"uri\": \"" + entryPath + "\"");
+                } catch (Exception e) {
+                    out.print(" \"error\" : \"" + e.getMessage() + "\"");
+                }
                 out.print("}");
                 if (iterator.hasNext()) {
                     out.print(",");
                 }
             }
-            out.println("]");
         }
         else {
-            out.println("[]");
+            out.print("{ \"message\": \"No results for '" + search.getQuery() + "'\" }");
         }
+        
+        out.println("]");
+        
         if (callback != null && !callback.isEmpty()) {
             out.println(")");
         }
+        
     } catch (Exception e) {
         out.println("{ \"responseCode\": 500, \"message\": \"" + e.getMessage() + "\" }");
         return;
