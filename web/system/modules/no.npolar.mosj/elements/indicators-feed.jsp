@@ -34,7 +34,7 @@
     // Widen the query
     try {
         if (!query.endsWith("*")) {
-            query = query.concat("*");
+            query = "(" + query + ") OR (" + query.concat("*") + ")";
         }
     } catch (Exception e) {}
     
