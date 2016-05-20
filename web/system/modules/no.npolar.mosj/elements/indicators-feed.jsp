@@ -69,7 +69,9 @@
         //fields = "*";
 	
         //search.setField(new String[] { "content", "title", "description", "keywords" });
-        search.setField(new String[] { "title", "description", "keywords", "content" });
+        //search.setField(new String[] { "title", "description", "keywords", "content" });
+        //search.setField(new String[] { CmsSearchField.FIELD_SORT_TITLE, CmsSearchField.FIELD_KEYWORDS, CmsSearchField.FIELD_DESCRIPTION, CmsSearchField.FIELD_CONTENT });
+        search.setField(new String[] { "title", "title-key", "keywords", "content" });
         search.setQuery(query);
 
         List result = null;
@@ -79,6 +81,22 @@
         catch (java.lang.NullPointerException npe) {
             out.println("{ \"responseCode\": 500, \"message\": \"Error\" }");
             return;
+        }
+        
+        // If there were no results, do a fuzzy search
+        if (search.getSearchResultCount() <= 0) {
+            query = cms.getRequest().getParameter("q");
+            if (!query.endsWith("~")) {
+                query = "(" + query + ") OR (" + query.concat("~") + ")";
+            }
+            search.setQuery(query);
+            try {
+                result = search.getSearchResult();
+            }
+            catch (java.lang.NullPointerException npe) {
+                out.println("{ \"responseCode\": 500, \"message\": \"Error\" }");
+                return;
+            }
         }
 
         if (callback != null && !callback.isEmpty()) {
@@ -106,7 +124,7 @@
             }
         }
         else {
-            out.print("{ \"message\": \"No results for '" + search.getQuery() + "'\" }");
+            //out.print("{ \"message\": \"No results for '" + search.getQuery() + "'\" }");
         }
         
         out.println("]");
