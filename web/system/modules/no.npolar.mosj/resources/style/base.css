@@ -2709,7 +2709,7 @@ a:hover .portal-box-heading.bluebar-dark {
     -webkit-box-sizing:border-box;*/
     display:block;
     border:1px solid transparent;
-    transition:all 0.4s ease-in-out 0s;
+    transition:all 0.4s ease-in-out;
     /*line-height:0;*/
 }
 .portal .boxes a > .card .card-heading,
@@ -2844,11 +2844,11 @@ section h3.section-heading {
 .indicators-list .card {
     max-height: 12em;
     overflow: hidden;
-    transition: all 0.5s ease-in-out 0s;
+    transition: all 0.5s ease-in-out;
 }
 .indicators-list a:hover .card {
     max-height: 50em;
-    /*transition: all 0.5s ease-in-out 0s;*/
+    /*transition: all 0.5s ease-in-out;*/
 }
 .indicators-list .card .overlay {
     /*background-color: rgba(0, 0, 0, 0.6);*/
@@ -3054,7 +3054,7 @@ aside h4, .column.small h4, /* Rightside headings */
 /* fade tab content in/out */
 .tabbed .tab .tab-content * {
     opacity: 0;
-    transition: opacity 0.15s ease-in-out 0s;
+    transition: opacity 0.15s ease-in-out;
 }
 .tabbed .tab:target .tab-content *, 
 .tabbed .tab.active-tab .tab-content * {
