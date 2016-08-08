@@ -453,6 +453,7 @@ h6 {
 }
 .article-hero img {
     width:100%;
+    min-height:20em; /* Visible title even if image won't load */
 }
 .article-hero > img,
 .article-hero > canvas,
@@ -2842,6 +2843,7 @@ section h3.section-heading {
 }
 
 .indicators-list .card {
+    min-height: 12em; /* Visible title even if images won't load */
     max-height: 12em;
     overflow: hidden;
     transition: all 0.5s ease-in-out;
