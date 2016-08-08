@@ -2848,7 +2848,8 @@ section h3.section-heading {
     overflow: hidden;
     transition: all 0.5s ease-in-out;
 }
-.indicators-list a:hover .card {
+.indicators-list a:hover .card,
+.indicators-list a:focus .card {
     max-height: 50em;
     /*transition: all 0.5s ease-in-out;*/
 }
