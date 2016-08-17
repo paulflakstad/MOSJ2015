@@ -39,7 +39,9 @@
             <mappings />
             <layouts />
             <validationrules>
-                <rule element="URL" regex="!(^$)|(^\s.*)|(.*\s$)" type="warning" message="Please avoid empty value, trailing space, and leading space here." />
+                <rule element="URL" regex="!(^$)|(^.*\s.*$)|(^(?!((http|https|ftp)://)|/|//).*$)|(^\s.*$)|(.*\s$)" type="warning" message="URLs must start with http(s)://, ftp://, or just /. It should not contain any spaces." />
+                <!--<rule element="URL" regex="!(^$)|(^\s.*)|(.*\s$)|(^(http|https|ftp)://.*)" type="warning" message="URLs should start with http://, https:// or ftp://. Empty value, and trailing/leading space(s) should be avoided." />-->
+                <!--<rule element="URL" regex="!(^$)|(^\s.*)|(.*\s$)" type="warning" message="Please avoid empty value, trailing space, and leading space here." />-->
             </validationrules>
             <relations />
         </xsd:appinfo>
