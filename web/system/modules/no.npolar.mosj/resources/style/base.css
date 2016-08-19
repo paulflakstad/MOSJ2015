@@ -834,7 +834,7 @@ ul.line-items li {
     margin-left:-1em;
     margin-top:-1em;
     padding:1em;
-    width:calc(100% + 2em + 2px);
+    width:calc(100% + 2em);
 }
 .parameter-data-files .cta {
     font-size:small;
