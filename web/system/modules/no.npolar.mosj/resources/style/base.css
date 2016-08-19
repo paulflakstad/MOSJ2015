@@ -808,7 +808,7 @@ ul.line-items li {
 
 .parameter-wrapper table {
     table-layout:fixed;
-    margin-bottom:2em;
+    margin-bottom:1.5em;
     /*border:2px solid red;*/
     /*width:100%;*/
 }
@@ -3080,7 +3080,7 @@ aside h4, .column.small h4, /* Rightside headings */
         /*width:35%;*/
         width:9em; /* fixed width, must match padding on scrolling wrapper */
         overflow:hidden;
-        overflow-x:scroll;
+        /*overflow-x:scroll;*/ /* this just wreaks havoc on the whole thing, better to hide the headings... :( */
         border-right:1px solid #ccc;
         /*border-left:1px solid #ccc;*/
     }
