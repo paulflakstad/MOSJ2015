@@ -453,7 +453,7 @@ h6 {
 }
 .article-hero img {
     width:100%;
-    min-height:20em; /* Visible title even if image won't load */
+    min-height:10em; /* Visible title, even if image won't load */
 }
 .article-hero > img,
 .article-hero > canvas,
