@@ -2359,6 +2359,7 @@ nav .pageNumWrap {
     font-size: 1.2em;
     line-height: 1.2em;
     padding: 0.5em;
+    margin: 0 0.5em 0.5em 0;
     text-align: center;
     text-decoration: none;
     transition: background-color 0.3s ease 0s;
