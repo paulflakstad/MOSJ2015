@@ -244,9 +244,9 @@ final String LABEL_REFERENCES = cms.labelUnicode("label.mosj.indicator.publicati
 
 final String LABEL_CHART_LOAD = cms.labelUnicode("label.mosj.indicator.chart-loading");//loc.equalsIgnoreCase("no") ? "Laster graf&nbsp;&hellip;" : "Loading chart&nbsp;&hellip;";
 final String LABEL_CHART_ERROR = loc.equalsIgnoreCase("no") ? 
-                                    "Kan ikke vise grafen.</p><p class=\"placeholder-element-text-extra\">Prøv å laste inn siden på nytt. Du kan også <a href=\"/om/kontakt.html\">sende oss en feilmelding</a> hvis denne feilen vedvarer." 
+                                    "Kan ikke vise grafen.</p><p class=\"placeholder-element-text-extra\">Prøv å laste inn siden på nytt. Du kan også <a href=\"/no/om/kontakt.html\">sende oss en feilmelding</a> hvis denne feilen vedvarer." 
                                     : 
-                                    "Unable to display chart.</p><p class=\"placeholder-element-text-extra\">Try reloading the page. Please <a href=\"/about/contact.html\">report this error</a> should the problem persist.";
+                                    "Unable to display chart.</p><p class=\"placeholder-element-text-extra\">Try reloading the page. Please <a href=\"/en/about/contact.html\">report this error</a> should the problem persist.";
 
 // Session storage for HighCharts configuration strings (javascript)
 cms.getRequest().setAttribute("hcConfs", new HashMap<String, String>());
