@@ -1,19 +1,23 @@
 /**
- * Common javascript funtions, used throughout the site.
+ * Common javascript functions, used throughout the site.
+ * 
  * Dependencies (must/should be loaded before this script):
  *  - jQuery 
- *  - Modernizr (loose dependecy)
- *  
- * Highslide should also be loaded before this script.
+ *  - Modernizr (loose dependency)
+ *  - StackBlur (loose dependency & does not need to load before this script)
+ *  - Highslide (loose dependency & does not need to load before this script)
  */
 
 //var $, Modernizr, hs, stackBlurCanvasRGBA;
+
+/** Global constant: The "small-screen breakpoint" - viewports narrower than this are considered "small screens". */
+var SMALL_SCREEN_BREAKPOINT = 800;
 
 /** Global variable used to detect changes in the viewport width. */
 var lastDetectedWidth = $(window).width();
 
 /**
- * Global variable that holds localized Highslide strings / labels. 
+ * Global constant: Localized Highslide strings / labels. 
  */
 var HS_LABELS = {
     no : {
@@ -67,7 +71,7 @@ var HS_LABELS = {
 };
 
 /**
- * Global variable that holds localized Highcharts strings / labels.
+ * Global constant: Localized Highcharts strings / labels.
  */
 var HC_LABELS = {
     no: {
@@ -155,7 +159,7 @@ $.fn.hoverDelay = function(options) {
 };
 
 /**
- * Handle hash (fragment) change
+ * Handle hash (fragment) change.
  */
 function highlightReference() {
     'use strict';
@@ -208,9 +212,11 @@ else { // event not supported:
 */
 
 /**
- * Helper function for browser sniffing
+ * Helper function for browser sniffing.
+ * 
  * Example result: 'Firefox 31'
- * See http://stackoverflow.com/questions/5916900/how-can-you-detect-the-version-of-a-browser
+ * 
+ * @see http://stackoverflow.com/questions/5916900/how-can-you-detect-the-version-of-a-browser
  */
 navigator.sayswho = (function() {
     'use strict';
@@ -239,7 +245,9 @@ navigator.sayswho = (function() {
 }*/
 
 /**
- * Returns true if the browser is IE8 (or an older IE version)
+ * Checks if the browser is IE8 or an older IE version.
+ * 
+ * @return {Boolean}  True if the browser is IE version 8 or older, false otherwise.
  */
 function nonResIE() {
     'use strict';
@@ -259,8 +267,9 @@ function nonResIE() {
 
 /**
  * Checks if an element, identified by the given ID, contains any real content.
- * @param id The ID that identifies the element to check
- * @return True if the element is non-existing or the element doesn't contain any real content, false if not
+ * 
+ * @param {String} id  The ID that identifies the element to check
+ * @return {Boolean}  True if the element is non-existing or the element doesn't contain any real content, false if not
  */
 function emptyOrNonExistingElement(id) {
     'use strict';
@@ -278,6 +287,7 @@ function emptyOrNonExistingElement(id) {
     }
     return true; // The element didn't exist
 }
+
 /*
 function getVisibleWidth() {
     return $(window).width() + getScrollbarWidth();
@@ -286,25 +296,31 @@ function getVisibleWidth() {
 /**
  * Gets the small-screen breakpoint. Viewport widths equal to or below the 
  * returned value are considered "small screens".
- * @returns {Number} The small-screen breakpoint
+ * 
+ * @returns {Number}  The small-screen breakpoint
  */
 function getSmallScreenBreakpoint() {
     'use strict';
-    return 800;
+    return SMALL_SCREEN_BREAKPOINT;
 }
+
 /**
  * Evaluates whether or not the current viewport is a "small screen" or not.
- * @returns {Boolean} True if the viewport width is < getSmallScreenBreakpoint()
+ * 
+ * @returns {Boolean}  True if the viewport width is < getSmallScreenBreakpoint()
  */
 function isSmallScreen() {
     'use strict';
     return !isBigScreen();
     //return getVisibleWidth() <= getSmallScreenBreakpoint();
 }
+
 /**
  * Evaluates whether or not the current viewport is a "big screen" or not. 
+ * 
  * Browsers without media query support will always get true in return.
- * @returns {Boolean|MediaQueryList.matches} True if the viewport width is >= getSmallScreenBreakpoint(), false if not
+ * 
+ * @returns {Boolean|MediaQueryList.matches}  True if the viewport width is >= getSmallScreenBreakpoint(), false if not
  */
 function isBigScreen() {
     'use strict';
@@ -316,8 +332,9 @@ function isBigScreen() {
     }
     return big;
 }
+
 /**
- * Initializes .toggleable accordians.
+ * Initializes '.toggleable' accordians.
  */
 function initToggleables() {
     'use strict';
@@ -397,9 +414,17 @@ function loadAddThis() {
 */
 
 /**
- * Creates a blurry background for the hero image, based on the hero image itself.
- * @param {String} jsUriStackBlur The URI to the StackBlur javascript.
- * @returns {Boolean} True if no error is thrown, false if not.
+ * Creates a blurry background for the hero image, based on the hero image 
+ * itself.
+ * 
+ * The hero image is identified as '.article-hero-content > figure > img', and 
+ * the blurry background is appended to its parent, identified as 
+ * '.article-hero'.
+ * 
+ * Loose dependencies: Modernizr and StackBlur
+ * 
+ * @param {String} jsUriStackBlur  The URI to the StackBlur javascript.
+ * @returns {Boolean}  True if no error is thrown, false if not.
  */
 function makeBlurryHeroBackground(jsUriStackBlur) {
     'use strict';
@@ -465,6 +490,7 @@ function makeBlurryHeroBackground(jsUriStackBlur) {
 
 /**
  * Makes tables responsive.
+ * 
  * @see http://zurb.com/playground/projects/responsive-tables
  * @returns {Boolean} True if no error is thrown, false if not.
  */
@@ -514,7 +540,8 @@ function makeResponsiveTables() {
 
 /**
  * Makes tabbed content.
- * @returns {Boolean} True if no error is thrown, false if not.
+ * 
+ * @returns {Boolean}  True if no error is thrown, false if not.
  */
 function makeTabs() {
     'use strict';
@@ -570,11 +597,13 @@ function makeTabs() {
     }
     return true;
 }
+
 /**
  * Makes tooltips on elements with data-tooltip or data-hoverbox attributes.
- * @param {String} cssUri The URI to the qTip css.
- * @param {String} jsUri The URI to the qTip javascript.
- * @returns {Boolean} True if no error is thrown, false if not.
+ * 
+ * @param {String} cssUri  The URI to the qTip css.
+ * @param {String} jsUri  The URI to the qTip javascript.
+ * @returns {Boolean}  True if no error is thrown, false if not.
  */
 function makeTooltips(cssUri, jsUri) {
     'use strict';
@@ -634,7 +663,8 @@ function makeTooltips(cssUri, jsUri) {
 }
 /**
  * Makes an animated scroll-to effect for on-page links.
- * @returns {Boolean} True if no error is thrown, false if not.
+ * 
+ * @returns {Boolean}  True if no error is thrown, false if not.
  */
 function makeScrollToSmooth() {
     'use strict';
@@ -661,10 +691,11 @@ function makeScrollToSmooth() {
 
 /**
  * Makes ready Highslide, by injecting the necessary css/js in the HTML head.
- * @param {String} cssUri The URI to the Highslide css.
- * @param {String} jsUri The URI to the Highslide javascript.
- * @param {String} lang The desired language.
- * @returns {Boolean} True if no error is thrown, false if not.
+ * 
+ * @param {String} cssUri  The URI to the Highslide css.
+ * @param {String} jsUri  The URI to the Highslide javascript.
+ * @param {String} lang  The desired language, e.g. 'no' or 'en'.
+ * @returns {Boolean}  True if no error is thrown, false if not.
  */
 function readyHighslide(cssUri, jsUri, lang) {
     'use strict';
@@ -715,7 +746,8 @@ function mouseFriendly() {
 
 /**
  * Indicates whether or not the small screen global menu is currently visible.
- * @returns {Boolean} True if the small screen menu is visible, false if not.
+ * 
+ * @returns {Boolean}  True if the small screen menu is visible, false if not.
  */
 function smallScreenMenuIsVisible() {
     'use strict';
@@ -743,7 +775,7 @@ function layItOut() {
  * 
  * This method will also manipulate the "tabindex" attribute of all links in
  * the menu, to prevent or enable the menu items from being keyboard (tab) 
- * accessible. (Prevents tabbing users from entering a closed menu.)
+ * accessible. (This is to prevent tabbing users from entering a closed menu.)
  */
 function toggleMenuVisibility() {
     'use strict';
@@ -879,32 +911,32 @@ function initUserControls() {
 }
 
 /**
- * Things to do when the document is ready
+ * Things to do when the document is ready.
  */
 $(document).ready( function() {
     'use strict';
-    // responsive tables
+    // Initialize responsive tables
     makeResponsiveTables();
-    // tabbed content (enhancement - works with pure css but not optimal)
+    // Initialize tabbed content (enhancement - works with pure css but not optimal)
     makeTabs();
 
-    // qTip tooltips
+    // Activate qTip tooltips
     //makeTooltips();
 
     // Animated verical scrolling to on-page locations
     makeScrollToSmooth();
 
-    // Add facebook-necessary attribute to the html element
+    // Facebook requires an XML namespace attribute to the html element
     $("html").attr('xmlns:fb', 'http://ogp.me/ns/fb#"');
 
     // Format tables
     //makeNiceTables();
 
-    // Fragment-based highlighting
+    // Activate fragment-based highlighting
     $("a").click(function() { highlightReference(); }); // On click (it's not sufficient to track only .reflink clicks - that will cause any previous highlighting to stick "forever")
     highlightReference(); // On page load
 
-    // "Read more"-links
+    // Add an icon to "Read more" links
     $(".cta.more").append('<i class="icon-right-open-big"></i>');
 	
     // Initialize accordions of type "toggleable"
@@ -926,14 +958,14 @@ $(document).ready( function() {
 });
 
 /**
- * Swaps the grouping of series name(s) and grouping of a HighCharts chart.
+ * Swaps the grouping of series name(s) and grouping of a Highcharts chart.
  * 
  * Example (try uncommenting the function code in chart.event.load):
  * http://jsfiddle.net/dcus5fjs/1/
  * 
- * @param {jQuery} chart jQuery object referencing a HighCharts chart, e.g. $('#hc-container').highcharts();
- * @param {json} customSettings a JSON object that holds the custom settings, if any
- * @returns {Boolean} True if all went well, false if not.
+ * @param {jQuery} chart  jQuery object referencing a Highcharts chart, e.g. $('#hc-container').highcharts();
+ * @param {json} customSettings  A JSON object that holds the custom settings, if any
+ * @returns {Boolean}  True if all went well, false if not.
  * @see http://jsfiddle.net/srLtL5qd/
  */
 function toggleHighChartsGrouping(/*jQuery*/chart, /*jsonObj*/customSettings) {
@@ -994,17 +1026,22 @@ function toggleHighChartsGrouping(/*jQuery*/chart, /*jsonObj*/customSettings) {
         });
         chart.redraw();
     } catch (err) {
-        console.log('commons.js: Toggle HighCharts grouping failed: ' + err.message);
+        console.log('commons.js: Toggle Highcharts grouping failed: ' + err.message);
         return false;
     }
     return true;
 }
 
 /**
- * Attempts to populate any empty data arrays for series in the given chart.
+ * Processes all series in the given Highcharts chart, looking for empty "data" 
+ * arrays to populate.
  * 
- * @param {type} chart
+ * If a series has an empty "data" array, an attempt is made to populate it with 
+ * data, fetched asynchronously via a service.
+ * 
+ * @param {type} chart  A Highcharts chart object.
  * @returns {undefined}
+ * @see loadTimeSeriesData
  */
 function fillEmptyData(/*Object*/chart) {
     'use strict';
@@ -1034,6 +1071,16 @@ function fillEmptyData(/*Object*/chart) {
     }
 }
 
+/**
+ * Loads data into the given time series object, asynchronously, via an ajax 
+ * call to a local service (which is a custom proxy for the external API).
+ * 
+ * NOTE: Relies on the local service /tsdata.jsp
+ * 
+ * @param {Object} series  A Highcharts series object, 
+ *          e.g. myhighchart_chart.series[0]
+ * @returns {undefined}
+ */
 function loadTimeSeriesData(/*Object*/series) {
     'use strict';
     //console.log('loadTimeSeriesData called on series ' + series.options.id);
@@ -1055,9 +1102,10 @@ function loadTimeSeriesData(/*Object*/series) {
     });
 }
 
-
 /**
- * Highslide settings
+ * Gets the default Highslide settings. 
+ * 
+ * The default settings use English as language.
  */
 function getHighslideSettings() {
     'use strict';
@@ -1073,7 +1121,7 @@ function getHighslideSettings() {
         //hs.outlineType = 'rounded-white';
         hs.outlineType = 'drop-shadow';
 
-        hs.lang = {
+        hs.lang = getHighslideLabels('en');/* {
             loadingText :     'Laster...',
             loadingTitle :    'Klikk for å avbryte',
             focusTitle :      'Klikk for å flytte fram',
@@ -1096,7 +1144,7 @@ function getHighslideSettings() {
             pauseTitle :      'Pause (mellomrom)',
             number :          'Bilde %1 av %2',
             restoreTitle :    'Klikk for å lukke bildet, klikk og dra for å flytte. Bruk piltastene for forrige og neste.'
-        };
+        };*/
     } catch (ignore) {
         // Highslide probably undefined
     }
@@ -1112,7 +1160,7 @@ function getHighslideSettings() {
 function getHighchartsLables(/*String*/lang) {
     'use strict';
     if (!(lang === 'en' || lang === 'no')) {
-        // Non-supported language, fallback to default
+        // Language not supported, fallback to default
         lang = 'en';
     }
     return HC_LABELS[lang];
@@ -1121,19 +1169,28 @@ function getHighchartsLables(/*String*/lang) {
 /**
  * Gets Highslide labels localized according to the given language.
  * 
- * @param {type} lang The desired language, e.g. 'en' or 'no'.
+ * @param {String} lang The desired language, e.g. 'en' or 'no'.
  * @returns {Object} Highslide labels localized according to the given language or, if that language isn't configured, in the default language.
- * @see HC_LABELS
+ * @see HS_LABELS
  */
 function getHighslideLabels(/*String*/lang) {
     'use strict';
     if (!(lang === 'en' || lang === 'no')) {
-        // Non-supported language, fallback to default
+        // Language not supported, fallback to default
         lang = 'en';
     }
     return HS_LABELS[lang];
 }
 
+/**
+ * Gets the Highcharts theme, a complex object holding the default settings for 
+ * the given language. (Will fallback to default language if no localized labels
+ * exists for the given language.)
+ * 
+ * @param {String} lang  The language, e.g. 'no' or 'en'. Labels will be attempted localized to this language.
+ * @returns {Object}  The Highcharts theme.
+ * @see HC_LABELS
+ */
 function getHighchartsTheme(/*String*/lang) {
     'use strict';
     return {
@@ -1197,7 +1254,12 @@ document.getElementsByTagName('a').onfocus = function(e) {
 };
 
 
-// Class toggler (non-jQuery)
+/**
+ * Class toggler (non-jQuery).
+ * 
+ * @param {Element} element  The target element.
+ * @param {String} theClass  The class string.
+ */ 
 function toggleClass(/*Element*/element, /*String*/theClass) {
     'use strict';
     var classesStr = element.getAttribute('class');

@@ -1,5 +1,7 @@
 /**
 * Off-canvas navigation: Triggers, actions and so on.
+* 
+* DEVELOPMENT SCRIPT, NOT USED IN PRODUCTION.
 */
 
 var large = 800;
