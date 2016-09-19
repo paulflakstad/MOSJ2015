@@ -639,6 +639,7 @@ section {
 }
 
 .hidden {
+    position: absolute !important;
     font-size:1px;
     height:1px;
     width:1px;
@@ -1351,9 +1352,7 @@ a.breadcrumb*/ {
 #nav_breadcrumb a:hover {
     text-decoration:none;
 }
-#homepage #nav_breadcrumb_wrap {
-    position:static;
-}
+#homepage #nav_breadcrumb_wrap,
 #homepage #nav_breadcrumb {
     display:none;
 }
