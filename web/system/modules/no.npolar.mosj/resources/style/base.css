@@ -164,6 +164,7 @@ html,
 div,
 header,
 footer,
+main,
 article, 
 section,
 figure,
@@ -226,6 +227,9 @@ body {
     overflow-x:hidden;
     position:relative;
     width:100%;
+}
+#wrapwrap {
+    background-color: #fff; /* for IE */
 }
 #top {
     background-color:#234;
@@ -463,6 +467,7 @@ h6 {
     
     text-align: center;
     padding-top: 4rem;
+    position: relative; /* for IE */
 }
 .main-article > h1,
 .main-article__title {
@@ -1400,6 +1405,25 @@ a.breadcrumb*/ {
     /*margin: 0;*/
 }
 
+/* Old IE / non-flexbox browsers */
+.no-flexbox .main-content #nav_breadcrumb_wrap,
+.no-flexbox .main-content h1 {
+    background: #0e131f;
+    color: #fff;
+    text-align: left;
+}
+.no-flexbox .main-content #nav_breadcrumb_wrap {
+    padding-top: 0;
+}
+.no-flexbox .main-content #nav_breadcrumb li:first-child {
+    margin-left: -1.75em;
+}
+.no-flexbox .main-content #nav_breadcrumb_wrap,
+.no-flexbox .main-content #nav_breadcrumb, 
+.no-flexbox .main-content #nav_breadcrumb a {
+    font-weight: normal;
+    color: #adf;
+}
 
 /* Accessibility tool: "Skip to main content"-link */
 #skipnav {
