@@ -387,13 +387,14 @@ h1,
     margin-top:0;
     margin-bottom:0;
     padding:0 0.5rem 0.5rem 0.5rem;
-    background-color:#000;
-    color:#fff;
+    /*background-color:#000;*/
+    /*color:#fff;*/
     /*padding-bottom:0.5em;
     padding-top:1em;*/
     /*text-shadow:1px 1px 1px #ddd;*/
 	
     /*border-bottom:0.5em solid #3d667b;*/
+    text-align: center;
 }
 
 h2,
@@ -418,6 +419,58 @@ h4,
 h5,
 h6 {
     font-weight:bold;
+}
+
+/**
+ * Flex the main article so we can control the order of elements. 
+ * E.g. h1 is first, but we want to put it after the hero slot.
+ */
+.main-article {
+    display: flex;
+    flex-direction: column;
+    /* hides blurry bg image => must be set to visible in larger widths */
+    overflow-x: hidden;
+}
+/* Place the hero slot at the very top. */
+.main-article > .hero {
+    order:-1;
+}
+/*.main-article > h1 > .textwrap,
+.main-article__title > .textwrap,*/
+.main-article > h1:after {
+    /* Same red as h2's but opacity adjusted */
+    border-bottom: 2px solid rgba(139, 0, 0, 0.2);
+    content: " ";
+    display: block;
+    width: 5em;
+    margin: 1.2rem auto 0;
+}
+.main-article > h1 .scientific-name,
+.main-article__title .scientific-name {
+    display: block;
+}
+/* Shadow from hero will appear behind main heading & descripiton. Hide them */
+.main-article > h1,
+.main-article > .descr,
+.main-article__title,
+.main-article__descr {
+    margin-left: -9999em;
+    margin-right: -9999em;
+    padding-left: 9999em;
+    padding-right: 9999em;
+    z-index: 2;
+    background: #fff;
+    
+    text-align: center;
+    padding-top: 4rem;
+}
+.main-article > h1,
+.main-article__title {
+}
+.main-article > .descr,
+.main-article__descr {
+    padding-bottom: 4rem;
+    padding-top: 1rem;
 }
 
 /* Direct children of the main content, and direct children of page description / summary */
@@ -453,7 +506,7 @@ h6 {
 }
 .article-hero img {
     width:100%;
-    min-height:10em; /* Visible title, even if image won't load */
+    /*min-height:10em;*/ /* Visible title, even if image won't load */
 }
 .article-hero > img,
 .article-hero > canvas,
@@ -463,6 +516,9 @@ h6 {
 .article-hero,
 .article-hero figure {
     position:relative;
+    margin: 0 -9999em;
+    padding: 0 9999em;
+    padding: 0 calc(9999em - 0.25rem); /* needed to bleed the image off the sides */
 }
 /* Hero caption */
 .article-hero figcaption {
@@ -470,13 +526,18 @@ h6 {
     bottom:0;
     right:0;
     font-size:0.7em;
-    background-color:#777;
-    background-color:rgba(0,0,0,0.4);
-    padding:0.2em 0.5em;
+    /*background-color:#777;
+    background-color:rgba(0,0,0,0.4);*/
+    padding:inherit;
 }
 .article-hero figcaption, 
 .article-hero figcaption a {
     color:#eee;
+}
+.article-hero figcaption > * {
+    background-color: #666;
+    background-color: rgba(0,0,0,0.4);
+    padding: 0.2em 0.5em;
 }
 /* Main headings in running text */
 .paragraph > h2 {
@@ -1062,8 +1123,9 @@ h1 .scientific-name {
     display: block;
     font-size: small;
     color: #6e6e6e;
-    text-align: right;
-    margin-top: -2.95em;
+    text-align: center;
+    margin-top: -1rem;
+    margin-bottom: 1rem;
 }
 .metadata__timestamp:before {
     display: inline-block;
@@ -1242,9 +1304,10 @@ h1 .scientific-name {
 
 /* Breadcrumbs */
 #nav_breadcrumb_wrap {
-    background-color:#111;
-    overflow:auto;
-    border:none;
+    background-color: #111;
+    background-color: rgba(0,0,0,0.25);
+    overflow: auto;
+    border: none;
 }
 #nav_breadcrumb {
     /*list-style-image:none;
@@ -1288,6 +1351,53 @@ a.breadcrumb*/ {
 }
 #homepage #nav_breadcrumb {
     display:none;
+}
+.main-content #nav_breadcrumb_wrap {
+    background: #fff;
+    text-align: center;
+    /*margin-bottom: -4rem;*/ /* pull it down towards the main title */
+    /*margin-top: 4rem;*/
+    margin-left: -9999em;
+    margin-right: -9999em;
+    padding-left: 9999em;
+    padding-right: 9999em;
+    padding-top: 2rem;
+    z-index: 2; /* hide stuff behind this element (hero shadow, figcaption bg) */
+}
+.main-content #nav_breadcrumb_wrap + h1 {
+    padding-top: 0;
+}
+.main-content #nav_breadcrumb,
+.main-content #nav_breadcrumb_wrap,
+.main-content #nav_breadcrumb_wrap a {
+    color: #1572E0;
+    text-shadow: none;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+.main-content #nav_breadcrumb_wrap a {
+    text-decoration: none;
+    padding: 0.5em;
+    border-radius: 3px;
+}
+.main-content #nav_breadcrumb_wrap a:hover {
+    color: #bd4422;
+    background-color: rgba(0,0,0,0.05);
+    border-radius: 3px;
+}
+.main-content #nav_breadcrumb li {
+    float: none;
+    display: inline;
+    margin: 0;
+}
+.main-content #nav_breadcrumb li:first-child {
+    /*margin-left: 0.5em;*/ /* needed for perfect centering */
+    /*margin: 0;*/
+}
+.main-content #nav_breadcrumb li:last-child,
+.homepage .main-content #nav_breadcrumb_wrap {
+    display: none;
+    /*margin: 0;*/
 }
 
 
@@ -2826,8 +2936,10 @@ a .overlay {
     text-shadow:1px 1px 1px #000;
     color:#fff;
     line-height: 1.4em;	
-    background:#4C4C4C; /* The resulting color of 0.7-opacity black over white */
+    background: #4C4C4C; /* = 0.7 opacity black over white */
     background:rgba(0,0,0,0.7);
+    background: #737373; /* = 0.55 opacity black over white */
+    background: rgba(0,0,0,0.55);
 }
 .overlay > span {
     padding:1% 2%;
@@ -2844,7 +2956,7 @@ section h3.section-heading {
 }
 
 .indicators-list .card {
-    min-height: 12em; /* Visible title even if images won't load */
+    /*min-height: 12em;*/ /* Visible title even if images won't load (no longer a problem)*/
     max-height: 12em;
     overflow: hidden;
     transition: all 0.5s ease-in-out;
@@ -2864,8 +2976,8 @@ section h3.section-heading {
     padding: 0.2em 1em;
     position: absolute;
     right: auto;
-    text-shadow: 0 0 2px rgba(0, 0, 0, 0.99);
-    top: 1em;
+    text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.99);
+    top: 0;
     /*transform: translate(-50%, 1em);*/
     width: auto;
 }
