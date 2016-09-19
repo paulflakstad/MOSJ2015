@@ -458,7 +458,7 @@ h6 {
     margin-right: -9999em;
     padding-left: 9999em;
     padding-right: 9999em;
-    z-index: 2;
+    z-index: 3;
     background: #fff;
     
     text-align: center;
@@ -1362,7 +1362,7 @@ a.breadcrumb*/ {
     padding-left: 9999em;
     padding-right: 9999em;
     padding-top: 2rem;
-    z-index: 2; /* hide stuff behind this element (hero shadow, figcaption bg) */
+    z-index: 3; /* hide stuff behind this element (hero shadow, figcaption bg) */
 }
 .main-content #nav_breadcrumb_wrap + h1 {
     padding-top: 0;
