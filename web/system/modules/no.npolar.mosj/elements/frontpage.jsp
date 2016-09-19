@@ -68,14 +68,14 @@ String summary = "<p>"
         ) + "</p>";
     
     %>
-    
-    <section class="article-hero">
-        <div class="article-hero-content">
-            <h1 class="hidden"><%= title %></h1>
+    <h1 class="hidden"><%= title %></h1>
+    <div class="article-hero hero hero--top main-article__hero">
+        <div class="article-hero-content hero__content">
+            <!--<h1 class="hidden"><%= title %></h1>-->
             <figure>
                 <%= ImageUtil.getImage(cms, imgUri, null) %>
                 <!--<img src="<%= cms.link(imgUri) %>" alt="" />-->
-                <figcaption><%= cms.property("byline", imgUri, "") %></figcaption>
+                <figcaption><span class="credit"><%= cms.property("byline", imgUri, "") %></span></figcaption>
             </figure>
             
             <div class="frontpage-searchbox-wrap">
@@ -88,9 +88,9 @@ String summary = "<p>"
                 </form>
             </div>
         </div>
-    </section>
+    </div>
         
-    <section class="descr" style="text-align:center;">
+    <section class="descr main-article__descr" style="text-align:center;">
         <%= summary %>
     </section>
     

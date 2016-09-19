@@ -199,30 +199,30 @@ while (container.hasMoreContent()) {
             byline = CmsAgent.obfuscateEmailAddr(byline, false);
     }
     */
-    if (CmsAgent.elementExists(pageTitle)) {
+    %>
+    <h1 class="main-article__title"><span class="textwrap"><%= pageTitle %></span></h1>
+    <%
+    //if (CmsAgent.elementExists(pageTitle)) {
         if (cms.elementExists(imgUri)) {
         %>
 
 
-        <section class="article-hero">
-            <div class="article-hero-content">
-                <h1><%= pageTitle %></h1>
+        <div class="article-hero hero hero--top main-article__hero">
+            <div class="article-hero-content hero__content">
+                <!--<h1><%= pageTitle %></h1>-->
                 <figure>
                     <!--<img src="<%= cms.link(imgUri) %>" alt="" />-->
                     <%= ImageUtil.getImage(cms, imgUri) %>
                     <figcaption><%= cms.property("byline", imgUri, "") %></figcaption>
                 </figure>            
             </div>
-        </section>
-        <%
-        } else {
-        %>
-        <h1><%= pageTitle %></h1>
+        </div>
         <%
         }
-    }
-    if (byline != null)
+    //}
+    if (byline != null) {
         out.println(byline);
+    }
     /*
     if (redListStatus != null) 
         out.println("<div class=\"redlist-status\"><p>" + TITLE_RED_LIST_STATUS + ": " + redListStatus + "</p></div>");
@@ -230,7 +230,7 @@ while (container.hasMoreContent()) {
     if (CmsAgent.elementExists(pageIntro)) {
         try { pageIntro = cnr.resolve(pageIntro); } catch (Exception e) {}
         %>
-        <section class="descr" id="page-summary"><%= pageIntro %></section><!-- .ingress -->
+        <section class="descr main-article__descr" id="page-summary"><%= pageIntro %></section><!-- .ingress -->
         <%
     }
 
