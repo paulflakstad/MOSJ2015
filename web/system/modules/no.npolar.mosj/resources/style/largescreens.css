@@ -62,7 +62,8 @@
     background-position: center 55%;
     /*padding-top: 2em;*/
     padding-top:1.2em;
-    min-height: 16rem;
+    padding-bottom: 1.2em;
+    /*min-height: 16rem;*/
 }
 /*#top:after {
     content:"";
@@ -469,14 +470,14 @@ h5 {
 }
 .main-content {
     overflow:visible;
-    margin-top: -2.5rem; /* = breadcrumb height */
+    margin-top: 0; /* = breadcrumb height */
 }
 .main-content > * {
     /*margin:0 auto;
     max-width:1200px;*/
     /*padding:0 1.2rem;*/
-}	
-.main-content > .article-hero {
+}
+.main-content > .article-hero { /* this rule no longer has a target */
     background-color:#000;
     color:#fff;
     max-width:none;
@@ -497,7 +498,7 @@ h5 {
     position:absolute;
     z-index:1;
     /*top:-35%;*/
-    top:-20%;
+    top:-25%;
     max-height:120%;    
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
@@ -598,7 +599,7 @@ h5 {
     background:transparent;
 }
 #navwrap {
-    margin:1em 0 2em 0;
+    margin:1em 0;
 }
 #nav_breadcrumb_wrap {
     /*background-color:rgba(0,0,0,0.75);*/

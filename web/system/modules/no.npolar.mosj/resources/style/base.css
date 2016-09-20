@@ -438,6 +438,7 @@ h6 {
 /* Place the hero slot at the very top. */
 .main-article > .hero {
     order:-1;
+    background-color: #0e131f;
 }
 /*.main-article > h1 > .textwrap,
 .main-article__title > .textwrap,*/
@@ -476,6 +477,9 @@ h6 {
 .main-article__descr {
     padding-bottom: 4rem;
     padding-top: 1rem;
+}
+#homepage .main-article__descr {
+    padding-top: 2rem;
 }
 
 /* Direct children of the main content, and direct children of page description / summary */
