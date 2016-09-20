@@ -1,0 +1,12 @@
+<ul>
+    <li><a class="partner-logo logo-npi" data-tooltip="Norwegian Polar Institute" href="http://www.npolar.no/en/"><span class="hidden"></span></a></li>
+    <li><a class="partner-logo logo-imr" data-tooltip="Institute of Marine Research" href="http://www.imr.no/en"><span class="hidden">Institute of Marine Research</span></a></li>
+    <li><a class="partner-logo logo-sms" data-tooltip="The Governor of Svalbard" href="http://www.sysselmannen.no/en/"><span class="hidden">The Governor of Svalbard</span></a></li>
+    <li><a class="partner-logo logo-met" data-tooltip="Norwegian Meteorological Institute" href="http://met.no/English/"><span class="hidden">Norwegian Meteorological Institute</span></a></li>
+    <li><a class="partner-logo logo-ra" data-tooltip="Directorate for Cultural Heritage" href="http://www.riksantikvaren.no/en/"><span class="hidden">Directorate for Cultural Heritage</span></a></li>
+    <li><a class="partner-logo logo-md" data-tooltip="Norwegian Environment Agency" href="http://www.miljodirektoratet.no/en/"><span class="hidden">Norwegian Environment Agency</span></a></li>
+    <li><a class="partner-logo logo-nilu" data-tooltip="Norwegian Institute for Air Research" href="http://www.nilu.no/Forsiden/tabid/41/language/en-GB/Default.aspx"><span class="hidden">Norwegian Institute for Air Research</span></a></li>
+    <li><a class="partner-logo logo-nifes" data-tooltip="National Institute of Nutrition and Seafood Research" href="http://nifes.no/en/"><span class="hidden">National Institute of Nutrition and Seafood Research</span></a></li>
+    <li><a class="partner-logo logo-nrpa" data-tooltip="Norwegian Radiation Protection Authority" href="http://www.nrpa.no/en/"><span class="hidden">Norwegian Radiation Protection Authority</span></a></li>
+    <li><a class="partner-logo logo-fdir" data-tooltip="Norwegian Directorate of Fisheries" href="http://www.fiskeridir.no/English"><span class="hidden">Norwegian Directorate of Fisheries</span></a></li>
+</ul>

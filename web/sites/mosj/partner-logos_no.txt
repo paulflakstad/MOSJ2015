@@ -1,0 +1,12 @@
+<ul>
+    <li><a class="partner-logo logo-npi" data-tooltip="Norsk Polarinstitutt" href="http://www.npolar.no/"><span class="hidden">Norsk Polarinstitutt</span></a></li>
+    <li><a class="partner-logo logo-imr" data-tooltip="Havforskningsinstituttet" href="http://www.imr.no/"><span class="hidden">Havforskningsinstituttet</span></a></li>
+    <li><a class="partner-logo logo-sms" data-tooltip="Sysselmannen på Svalbard" href="http://www.sysselmannen.no/"><span class="hidden">Sysselmannen på Svalbard</span></a></li>
+    <li><a class="partner-logo logo-met" data-tooltip="Meteorologisk institutt" href="http://met.no/"><span class="hidden">Meteorologisk institutt</span></a></li>
+    <li><a class="partner-logo logo-ra" data-tooltip="Riksantikvaren" href="http://ra.no/"><span class="hidden">Riksantikvaren</span></a></li>
+    <li><a class="partner-logo logo-md" data-tooltip="Miljødirektoratet" href="http://www.miljodirektoratet.no/"><span class="hidden">Miljødirektoratet</span></a></li>
+    <li><a class="partner-logo logo-nilu" data-tooltip="Norsk institutt for luftforskning (NILU)" href="http://www.nilu.no/"><span class="hidden">Norsk institutt for luftforskning (NILU)</span></a></li>
+    <li><a class="partner-logo logo-nifes" data-tooltip="Nasjonalt institutt for ernærings- og sjømatforskning" href="http://www.nifes.no/"><span class="hidden">Nasjonalt institutt for ernærings- og sjømatforskning</span></a></li>
+    <li><a class="partner-logo logo-nrpa" data-tooltip="Statens strålevern" href="http://www.nrpa.no/"><span class="hidden">Statens strålevern</span></a></li>
+    <li><a class="partner-logo logo-fdir" data-tooltip="Fiskeridirektoratet" href="http://www.fiskeridir.no/"><span class="hidden">Fiskeridirektoratet</span></a></li>
+</ul>
