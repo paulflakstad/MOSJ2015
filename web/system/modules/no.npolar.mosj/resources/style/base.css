@@ -3493,6 +3493,9 @@ aside h4, .column.small h4, /* Rightside headings */
     color:#fff;
     padding:2em 0;
     text-align:center;
+    position: relative;
+    width: calc(100% + 0.5rem);
+    margin-left: calc(1rem - 1.25rem);
 }
 .frontpage-searchbox-wrap .searchbox {
     margin:0 auto;
