@@ -270,29 +270,28 @@ while (structuredContent.hasMoreResources()) {
         if (!latinName.trim().isEmpty())
             title = title + " <span class=\"scientific-name\">(" + latinName + ")</span>";
     }
+    %>
+    <h1 class="main-article__title"><span class="textwrap"><%= title %></span></h1>
+    <%
     
     if (cms.elementExists(imgUri)) {
     %>
     
     
-    <section class="article-hero">
-        <div class="article-hero-content">
-            <h1><%= title %></h1>
+    <div class="article-hero hero hero--top main-article__hero">
+        <div class="article-hero-content hero__content">
+            <!--<h1><%= title %></h1>-->
             <figure>
                 <!--<img src="<%= cms.link(imgUri) %>" alt="" />-->
                 <%= ImageUtil.getImage(cms, imgUri) %>
-                <figcaption><%= cms.property("byline", imgUri, "") %></figcaption>
+                <figcaption><span class="credit"><%= cms.property("byline", imgUri, "") %></span></figcaption>
             </figure>            
         </div>
-    </section>
-    <%
-    } else {
-    %>
-    <h1><%= title %></h1>
+    </div>
     <%
     }
     %>
-    <section class="descr">
+    <section class="descr main-article__descr">
         <% if (lastReleased != null) { %>
         <div class="metadata metadata--page-data"><span class="metadata__timestamp"><%= lastReleased %></span></div> 
         <% } %>

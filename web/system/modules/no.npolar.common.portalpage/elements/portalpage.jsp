@@ -191,24 +191,30 @@ while (container.hasMoreContent()) {
     //out.println("<div class=\"fourcol-equal double left\">");
     //out.println("<div class=\"portal left\">");
     //out.println("<article class=\"main-content portal\">");
-    
-    if (!heroImageHtml.isEmpty()) {
-        out.println("<div class=\"article-hero\">");
-        out.println("<div class=\"article-hero-content\">");
-    }
     // Title and page intro
     if (CmsAgent.elementExists(pageTitle)) {
-        out.println("<h1>" + pageTitle + "</h1>");
+        %>
+        <h1 class="main-article__title"><span class="textwrap"><%= pageTitle %></span></h1>
+        <%
     }
     
     if (!heroImageHtml.isEmpty()) {
-        out.println(heroImageHtml);
-        if (CmsAgent.elementExists(pageIntro) && pageIntroAsOverlay) {
-            try { pageIntro = cnr.resolve(pageIntro); } catch (Exception e) {}
-            out.println("<section class=\"descr overlay\"" + (CmsAgent.elementExists(pageIntroStyle) ? (" style=\""+pageIntroStyle+"\"") : "") + ">" + pageIntro + "</section>");
-        }
-        out.println("</div><!-- .article-hero-content -->");  
-        out.println("</div><!-- .article-hero -->");   
+        %>
+        <div class="article-hero hero hero--top main-article__hero">
+            <div class="article-hero-content hero__content">
+                <%
+                out.println(heroImageHtml);
+                if (CmsAgent.elementExists(pageIntro) && pageIntroAsOverlay) {
+                    try { pageIntro = cnr.resolve(pageIntro); } catch (Exception e) {}
+                    out.println("<section class=\"descr overlay\"" 
+                                + (CmsAgent.elementExists(pageIntroStyle) ? (" style=\""+pageIntroStyle+"\"") : "") + ">" 
+                                    + pageIntro 
+                                + "</section>");
+                }
+                %>
+            </div><!-- .article-hero-content -->
+        </div><!-- .article-hero -->
+        <%
     }
     
     

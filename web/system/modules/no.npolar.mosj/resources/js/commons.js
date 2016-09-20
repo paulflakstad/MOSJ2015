@@ -158,6 +158,13 @@ $.fn.hoverDelay = function(options) {
     });
 };
 
+function prependBreadcrumbToTitle() {
+    'use strict';
+    $('h1').first().before(
+        $('#nav_breadcrumb_wrap')
+    );
+}
+
 /**
  * Handle hash (fragment) change.
  */
@@ -915,6 +922,7 @@ function initUserControls() {
  */
 $(document).ready( function() {
     'use strict';
+    prependBreadcrumbToTitle();
     // Initialize responsive tables
     makeResponsiveTables();
     // Initialize tabbed content (enhancement - works with pure css but not optimal)

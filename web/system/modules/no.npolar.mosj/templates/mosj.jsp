@@ -413,7 +413,8 @@ out.println(cms.getHeaderElement(CmsAgent.PROPERTY_HEAD_SNIPPET, requestFileUri)
             
             
     <a id="contentstart"></a>
-    <article class="main-content<%= (portal ? " portal" : "") %>">
+    <main class="main-content<%= (portal ? " portal" : "") %>">
+        <article class="main-article">
 </cms:template>
             
 <cms:template element="contentbody">
@@ -421,7 +422,8 @@ out.println(cms.getHeaderElement(CmsAgent.PROPERTY_HEAD_SNIPPET, requestFileUri)
 </cms:template>
             
 <cms:template element="foot">
-    </article>
+        </article>
+    </main>
         <!--</div>--><!-- #content -->        
     <!--</div>--><!-- #mainwrap -->
     <!--</div>--><!-- #docwrap -->
