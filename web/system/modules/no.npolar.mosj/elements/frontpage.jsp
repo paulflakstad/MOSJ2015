@@ -83,7 +83,9 @@ String summary = "<p>"
                     <div class="searchbox">
                         <input type="search" id="search-indicator-name" name="query" value="" class="query-input" placeholder="<%= cms.labelUnicode("label.mosj.global.search.placeholder") %>" />
                         <input type="hidden" id="search-indicator-uri" name="uri" value="" />
-                        <input type="button" value="OK" onclick="submit()" class="search-button" />
+                        <button type="submit" value="OK" class="search-button">
+                            <i class="icon-search"></i><span class="hidden"><%= cms.labelUnicode("label.mosj.global.search.submit") %></span>
+                        </button>
                     </div>
                 </form>
             </div>

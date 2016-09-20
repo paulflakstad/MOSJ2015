@@ -348,7 +348,9 @@ out.println(cms.getHeaderElement(CmsAgent.PROPERTY_HEAD_SNIPPET, requestFileUri)
                         <form method="get" action="<%= SERP_URI %>">
                             <label for="query" class="hidden"><%= cms.labelUnicode("label.mosj.global.search") %></label>
                             <input type="search" class="query query-input" name="query" id="query" placeholder="<%= cms.labelUnicode("label.mosj.global.search.placeholder") %>" />
-                            <button class="search-button" title="<%= cms.labelUnicode("label.mosj.global.search.submit") %>" onclick="submit()"><i class="icon-search"></i></button>
+                            <button class="search-button" type="submit">
+                                <i class="icon-search"></i><span class="hidden"><%= cms.labelUnicode("label.mosj.global.search.submit") %></span>
+                            </button>
                         </form>
                     </div>
                     <!-- end new version -->

@@ -3513,6 +3513,17 @@ aside h4, .column.small h4, /* Rightside headings */
 .frontpage-searchbox-wrap .searchbox .query-input:-ms-placeholder {
     color:#8b0000;
 }
+.frontpage-searchbox-wrap .searchbox button,
+.frontpage-searchbox-wrap .searchbox button:hover,
+.frontpage-searchbox-wrap .searchbox button:focus {
+    background-color:#8b0000;
+    background-color:rgba(140, 0, 0, 0.7); /* #8b0000 */
+    color: #fff;
+}
+.frontpage-searchbox-wrap .searchbox button:hover,
+.frontpage-searchbox-wrap .searchbox button:focus {
+    background-color:rgba(140, 0, 0, 0.8);
+}
 
 .ui-widget-content a {
     color: #333;
