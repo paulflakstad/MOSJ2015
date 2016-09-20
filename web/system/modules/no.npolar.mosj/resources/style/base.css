@@ -642,6 +642,7 @@ section {
     overflow:auto;
 }
 
+.a11y-only,
 .hidden {
     position: absolute !important;
     font-size:1px;
