@@ -425,6 +425,8 @@ while (structuredContent.hasMoreResources()) {
                     try {
                         customization = new JSONObject("{}");
 
+                        // ToDo: Add credit line to customization object                        
+
                         I_CmsXmlContentContainer mosjChartCustomization = cms.contentloop(mosjParameters, "ChartCustomization");
                         if (mosjChartCustomization.hasMoreResources()) {
 
@@ -676,54 +678,27 @@ while (structuredContent.hasMoreResources()) {
     <%
     //
     // Dedicated paragraphs
-    // ToDo: Optimize - not exactly DRY code here ...
-    //
-    //HashMap paragraphParams = new HashMap();
-    //I_CmsXmlContentContainer structuredContent = cms.contentload("singleFile", requestFileUri, false);
-    //I_CmsXmlContentContainer copyStructContent = cms.contentload("singleFile", requestFileUri, false);
-    
-    String pTitle = null; // Holds title override
-
-    I_CmsXmlContentContainer dedicatedParagraph = cms.contentloop(structuredContent, "StatusAndTrend"); 
-    if (dedicatedParagraph.hasMoreResources()) {
-        pTitle = cms.contentshow(dedicatedParagraph, "Title");
-        if (!CmsAgent.elementExists(pTitle))
-            pTitle = LABEL_STATUS_TRENDS;
-        cms.getRequest().setAttribute("paragraphTitle", pTitle);
-        cms.getRequest().setAttribute("paragraphElementName", "StatusAndTrend");
-        cms.include(PARAGRAPH_HANDLER);
-    }
-    
-    dedicatedParagraph = cms.contentloop(structuredContent, "CausalFactors");
-    if (dedicatedParagraph.hasMoreResources()) {
-        pTitle = cms.contentshow(dedicatedParagraph, "Title");
-        if (!CmsAgent.elementExists(pTitle))
-            pTitle = LABEL_CAUSAL_FACTORS;
-        cms.getRequest().setAttribute("paragraphTitle", pTitle);
-        cms.getRequest().setAttribute("paragraphElementName", "CausalFactors");
-        cms.include(PARAGRAPH_HANDLER);
-    }
-    
-    dedicatedParagraph = cms.contentloop(structuredContent, "Consequences");
-    if (dedicatedParagraph.hasMoreResources()) {
-        pTitle = cms.contentshow(dedicatedParagraph, "Title");
-        if (!CmsAgent.elementExists(pTitle))
-            pTitle = LABEL_CONSEQUENCES;
-        cms.getRequest().setAttribute("paragraphTitle", pTitle);
-        cms.getRequest().setAttribute("paragraphElementName", "Consequences");
-        cms.include(PARAGRAPH_HANDLER);
-    }
-
-    dedicatedParagraph = cms.contentloop(structuredContent, "About");
-    if (dedicatedParagraph.hasMoreResources()) {
-        pTitle = cms.contentshow(dedicatedParagraph, "Title");
-        if (!CmsAgent.elementExists(pTitle))
-            pTitle = LABEL_ABOUT;
-        cms.getRequest().setAttribute("paragraphTitle", pTitle);
-        cms.getRequest().setAttribute("paragraphElementName", "About");
-        cms.include(PARAGRAPH_HANDLER);
-    }
-    
+    //    
+    String pTitle = null; // Holds any title override
+    I_CmsXmlContentContainer dedicatedParagraph = null;
+    // The section (or content container) names and default titles
+    Map<String, String> sections = new LinkedHashMap<String, String>();
+    sections.put("StatusAndTrend", LABEL_STATUS_TRENDS);
+    sections.put("CausalFactors", LABEL_CAUSAL_FACTORS);
+    sections.put("Consequences", LABEL_CONSEQUENCES);
+    sections.put("About", LABEL_ABOUT);
+    for (String sectionName : sections.keySet()) {
+        dedicatedParagraph = cms.contentloop(structuredContent, sectionName); 
+        if (dedicatedParagraph.hasMoreResources()) {
+            pTitle = cms.contentshow(dedicatedParagraph, "Title");
+            if (!CmsAgent.elementExists(pTitle)) {
+                pTitle = sections.get(sectionName);
+            }
+            cms.getRequest().setAttribute("paragraphTitle", pTitle);
+            cms.getRequest().setAttribute("paragraphElementName", sectionName);
+            cms.include(PARAGRAPH_HANDLER);
+        }
+    }    
     cms.getRequest().removeAttribute("paragraphTitle");
     cms.getRequest().removeAttribute("paragraphElementName");
     
