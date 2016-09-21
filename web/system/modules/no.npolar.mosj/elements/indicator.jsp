@@ -679,20 +679,29 @@ while (structuredContent.hasMoreResources()) {
     //
     // Dedicated paragraphs
     //    
-    String pTitle = null; // Holds any title override
-    I_CmsXmlContentContainer dedicatedParagraph = null;
+    
     // The section (or content container) names and default titles
     Map<String, String> sections = new LinkedHashMap<String, String>();
     sections.put("StatusAndTrend", LABEL_STATUS_TRENDS);
     sections.put("CausalFactors", LABEL_CAUSAL_FACTORS);
     sections.put("Consequences", LABEL_CONSEQUENCES);
     sections.put("About", LABEL_ABOUT);
+    
+    boolean openAboutSection = false;
+    String pTitle = null; // Holds any title override
+    I_CmsXmlContentContainer dedicatedParagraph = null;
+    
     for (String sectionName : sections.keySet()) {
         dedicatedParagraph = cms.contentloop(structuredContent, sectionName); 
         if (dedicatedParagraph.hasMoreResources()) {
             pTitle = cms.contentshow(dedicatedParagraph, "Title");
             if (!CmsAgent.elementExists(pTitle)) {
                 pTitle = sections.get(sectionName);
+            }
+            if (sectionName.equals("About")) {
+                out.println("<section class=\"paragraph clearfix\">");
+                openAboutSection = true;
+                cms.getRequest().setAttribute("useOuterWrapper", "false");
             }
             cms.getRequest().setAttribute("paragraphTitle", pTitle);
             cms.getRequest().setAttribute("paragraphElementName", sectionName);
@@ -704,11 +713,14 @@ while (structuredContent.hasMoreResources()) {
     
     //
     // Details 
-    // (should ideally be printed at the end of the "about" section above, but for now use a separate paragraph)
+    // (This is a part of the "About" section, which may already be open)
     //
+    if (!openAboutSection) {
     %>
     <section class="paragraph clearfix">
+        <h2><%= LABEL_ABOUT %></h2>
     <%
+    }
     //
     // Places: This is printed only if there is content
     //
@@ -728,7 +740,7 @@ while (structuredContent.hasMoreResources()) {
     }
     
     //
-    // Related monitoring - ALWAYS printed, even if there is no content (typically explicitly stating "none")
+    // Related monitoring: ALWAYS included (typically stating "none" if empty)
     //
     String monitoringProgrammesList = "";
     String internationalAgreementsList = "";
@@ -769,71 +781,67 @@ while (structuredContent.hasMoreResources()) {
     </dl>
     </section>
     
-    
-    
-        <%
-        
-        // Links
-        String linksHtml = getLinkListHtml(cms.contentloop(structuredContent, "Links"), cms);
-        
-        
-        // References 
-        String refsHtml = "";
-        I_CmsXmlContentContainer referencesWrapperContainer = cms.contentloop(structuredContent, "References");
-        if (referencesWrapperContainer.hasMoreResources()) {
-            
-            I_CmsXmlContentContainer referencesContainer = cms.contentloop(referencesWrapperContainer, "Reference");
-            while (referencesContainer.hasMoreResources()) {
-                
-                String referenceId = cms.contentshow(referencesContainer, "ID");
-                String referenceText = cms.contentshow(referencesContainer, "Text");
-                
-                if (CmsAgent.elementExists(referenceId)) {
-                    refsHtml += "<li>";
-                    try {
-                        refsHtml += new PublicationService(new Locale("en")).getPublication(referenceId).toString();
-                    } catch (Exception e) {
-                        refsHtml += "<a href=\"//data.npolar.no/publication/" + referenceId + "\">" + referenceId + "</a><!-- Error looking up this: " + e.getMessage() + " -->";
-                    }
-                    refsHtml += "</li>";
+    <%
+    // Links
+    String linksHtml = getLinkListHtml(cms.contentloop(structuredContent, "Links"), cms);
+
+    // References 
+    String refsHtml = "";
+    I_CmsXmlContentContainer referencesWrapperContainer = cms.contentloop(structuredContent, "References");
+    if (referencesWrapperContainer.hasMoreResources()) {
+
+        I_CmsXmlContentContainer referencesContainer = cms.contentloop(referencesWrapperContainer, "Reference");
+        while (referencesContainer.hasMoreResources()) {
+
+            String referenceId = cms.contentshow(referencesContainer, "ID");
+            String referenceText = cms.contentshow(referencesContainer, "Text");
+
+            if (CmsAgent.elementExists(referenceId)) {
+                refsHtml += "<li>";
+                try {
+                    refsHtml += new PublicationService(new Locale("en")).getPublication(referenceId).toString();
+                } catch (Exception e) {
+                    refsHtml += "<a href=\"//data.npolar.no/publication/" + referenceId + "\">" + referenceId + "</a><!-- Error looking up this: " + e.getMessage() + " -->";
                 }
-                if (CmsAgent.elementExists(referenceText) ) {
-                    refsHtml += "<li>" + CmsAgent.stripParagraph(referenceText) + "</li>";
-                }
+                refsHtml += "</li>";
+            }
+            if (CmsAgent.elementExists(referenceText) ) {
+                refsHtml += "<li>" + CmsAgent.stripParagraph(referenceText) + "</li>";
             }
         }
-        
-        if ((linksHtml != null && !linksHtml.isEmpty()) || (refsHtml != null && !refsHtml.isEmpty())) {
+    }
+
+    if ((linksHtml != null && !linksHtml.isEmpty()) || (refsHtml != null && !refsHtml.isEmpty())) {
+        %>
+        <!--<aside class="content-related reference paragraph tabbed">-->
+        <aside class="content-related paragraph tabbed nopad">
+            <h2 class="content-related-heading tabbed-heading"><%= LABEL_FURTHER_READING %></h2>
+            <% if (linksHtml != null && !linksHtml.isEmpty()) { %>
+            <div class="content-related-links tab" id="links">
+                <a class="tab-link" href="#links"><h2 class="tab-name"><%= LABEL_LINKS %></h2></a>
+                <div class="tab-content">
+                    <%= linksHtml %>
+                </div>
+            </div>
+            <% 
+            } 
+            if (refsHtml != null && !refsHtml.isEmpty()) {
             %>
-            <!--<aside class="content-related reference paragraph tabbed">-->
-            <aside class="content-related paragraph tabbed nopad">
-                <h2 class="content-related-heading tabbed-heading"><%= LABEL_FURTHER_READING %></h2>
-                <% if (linksHtml != null && !linksHtml.isEmpty()) { %>
-                <div class="content-related-links tab" id="links">
-                    <a class="tab-link" href="#links"><h2 class="tab-name"><%= LABEL_LINKS %></h2></a>
-                    <div class="tab-content">
-                        <%= linksHtml %>
-                    </div>
+            <div class="content-related-links tab" id="refs">
+                <a class="tab-link" href="#refs"><h2 class="tab-name"><%= LABEL_REFERENCES %></h2></a>
+                <div class="tab-content">
+                    <ol class="reference-list"><%= refsHtml %></ol>
                 </div>
-                <% 
-                } 
-                if (refsHtml != null && !refsHtml.isEmpty()) {
-                %>
-                <div class="content-related-links tab" id="refs">
-                    <a class="tab-link" href="#refs"><h2 class="tab-name"><%= LABEL_REFERENCES %></h2></a>
-                    <div class="tab-content">
-                        <ol class="reference-list"><%= refsHtml %></ol>
-                    </div>
-                </div>
-                <% 
-                }
-                %>
-            </aside>
-            <%
-        }
-        
-        // Reference list
-        cms.include("/system/modules/no.npolar.common.pageelements/elements/cn-reflist.jsp");
+            </div>
+            <% 
+            }
+            %>
+        </aside>
+        <%
+    }
+
+    // Reference list
+    cms.include("/system/modules/no.npolar.common.pageelements/elements/cn-reflist.jsp");
 }
 
 cms.include(cms.getTemplate(), "foot");
