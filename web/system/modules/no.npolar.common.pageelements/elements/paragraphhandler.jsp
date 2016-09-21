@@ -198,6 +198,10 @@ I_CmsXmlContentContainer videoContainer = null;
 String title = null;
 String text = null;
 
+boolean useOuterWrapper = true;
+if (request.getAttribute("useOuterWrapper") != null) {
+    useOuterWrapper = Boolean.valueOf((String)request.getAttribute("useOuterWrapper"));
+}
 // Wrapper class
 String wrapperClass = null;
 boolean accordion = false;
@@ -246,9 +250,11 @@ while (container.hasMoreContent()) {
         try { accordionCollapsed = accordion && wrapperClass.contains("collapsed") ? true : false; } catch (Exception e) {}
         
         //out.println("<div class=\"paragraph\">");
+        if (useOuterWrapper) {
         %>
         <section class="paragraph clearfix">
         <%
+        }
         if (wrapperClass != null) {
             %> 
             <div class="<%= wrapperClass %>">
@@ -681,10 +687,11 @@ while (container.hasMoreContent()) {
             </div><!-- wrapper class --> 
             <%
         }
+        if (useOuterWrapper) {
         %>
         </section><!-- .paragraph -->
         <%
-        
+        }
         //
         // Extension (if NOT WRAPPED inside paragraph)
         //
