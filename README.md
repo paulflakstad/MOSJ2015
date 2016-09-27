@@ -1,4 +1,4 @@
-# MOSJ website framework (2015 relauch)
+# MOSJ website framework (2015 relaunch)
 
 Website framework for [Environmental Monitoring Svalbard and Jan Mayen (MOSJ)](http://www.mosj.no/en/).
 
