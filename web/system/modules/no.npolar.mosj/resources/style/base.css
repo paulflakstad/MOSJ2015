@@ -529,12 +529,14 @@ h6 {
     padding: 0 9999em;
     padding: 0 calc(9999em - 0.25rem); /* needed to bleed the image off the sides */
 }
+.article-hero figure {
+    font-size: 0.7em; /* IE needs this on figure, not figcaption (bug?) */
+}
 /* Hero caption */
 .article-hero figcaption {
     position:absolute;
     bottom:0;
     right:0;
-    font-size:0.7em;
     /*background-color:#777;
     background-color:rgba(0,0,0,0.4);*/
     padding:inherit;

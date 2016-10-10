@@ -575,12 +575,14 @@ h5 {
     padding:0.2em 0.75em;
     background-color:rgba(0,0,0,0.75);
 }
+.article-hero figure {
+    font-size: 0.65em; /* IE needs this on figure, not figcaption (bug?) */
+}
 .article-hero figcaption {
 	top:0;
 	right:0;
 	left:auto;
 	bottom:auto;
-	font-size:0.65em;
         
         top:auto;
         bottom:0;
