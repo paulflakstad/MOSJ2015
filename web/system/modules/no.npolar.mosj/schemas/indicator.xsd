@@ -67,7 +67,7 @@
                 <mapping element="Title" mapto="property:Title" />
                 <mapping element="Summary" mapto="property:Description" />
                 <mapping element="Image" mapto="property:image.thumb" />
-                <mapping element="LastUpdate" mapto="attribute:datereleased" />
+                <mapping element="LastUpdate" mapto="property:updated" />
                 <!--<mapping element="MonitoringData/Details/NextUpdate" mapto="propertyList:next-scheduled-update" />-->
                 <!-- Enables nice url name for detail pages -->
                 <!--<mapping element="Title" mapto="urlName" />-->

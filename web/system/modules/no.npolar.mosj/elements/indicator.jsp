@@ -187,14 +187,14 @@ boolean loggedInUser        = OpenCms.getRoleManager().hasRole(cms.getCmsObject(
 Locale locale               = cms.getRequestContext().getLocale();
 String loc                  = locale.toString();
 
-String lastReleased         = null;
+String lastUpdated         = null;
 SimpleDateFormat dateFormat = new SimpleDateFormat(cms.label("label.mosj.global.dateformat.dmy"), locale);
-long lastReleasedRawValue   = cmso.readResource(requestFileUri).getDateReleased();
+Long lastUpdatedRaw         = Long.valueOf(cmso.readPropertyObject(requestFileUri, "updated", false).getValue("0"));
 
 try {
-    if (lastReleasedRawValue > 0) {
-        lastReleased = dateFormat.format(new Date(Long.valueOf(lastReleasedRawValue)));
-        lastReleased = cms.label("label.mosj.indicator.data-last-updated") + " " + lastReleased;
+    if (lastUpdatedRaw > 0) {
+        lastUpdated = dateFormat.format(new Date(lastUpdatedRaw));
+        lastUpdated = cms.label("label.mosj.indicator.data-last-updated") + " " + lastUpdated;
     }
 } catch (Exception e) {}
 
@@ -292,8 +292,8 @@ while (structuredContent.hasMoreResources()) {
     }
     %>
     <section class="descr main-article__descr">
-        <% if (lastReleased != null) { %>
-        <div class="metadata metadata--page-data"><span class="metadata__timestamp"><%= lastReleased %></span></div> 
+        <% if (lastUpdated != null) { %>
+        <div class="metadata metadata--page-data"><span class="metadata__timestamp"><%= lastUpdated %></span></div> 
         <% } %>
         <%= summary %>
     </section>
