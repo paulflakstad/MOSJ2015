@@ -1,33 +1,34 @@
 <%-- 
     Document   : indicator-data-export
-    Description: Exports data for a MOSJ parameter identified by an "id" parameter to a CSV file.
-                    The locale is set via a "locale" parameter (defaults to English).
+    Description: Exports data for a MOSJ parameter/chart as .csv or .xls format.
     Created on : May 27, 2015
     Author     : Paul-Inge Flakstad, Norwegian Polar Institute
---%><%@page import="org.apache.poi.ss.usermodel.Workbook"
-%><%@page import="org.apache.poi.ss.usermodel.Cell"
-%><%@page import="org.apache.poi.xssf.usermodel.XSSFCell"
-%><%@page import="org.apache.poi.xssf.usermodel.XSSFSheet"
-%><%@page import="org.apache.poi.xssf.usermodel.XSSFWorkbook"
-%><%@page import="org.apache.poi.xssf.usermodel.XSSFRow"
-%><%@page import="org.apache.poi.hssf.usermodel.*"
-%><%@page import="org.opencms.jsp.*,
-            org.opencms.file.*,
-            org.opencms.main.*,
-            org.opencms.xml.*,
-            org.opencms.json.*,
-            java.util.*,
-            java.io.OutputStream,
-            java.io.ByteArrayOutputStream,
-            java.io.BufferedReader,
-            java.io.StringReader,
-            java.nio.charset.Charset,
-            org.opencms.security.*,
-            no.npolar.util.*,
-            no.npolar.data.api.*,
-            no.npolar.data.api.mosj.*,
-            no.npolar.data.api.util.APIUtil" pageEncoding="utf-8" session="true"
-%><%
+--%>
+<%@page import="org.apache.poi.ss.usermodel.Workbook" %>
+<%@page import="org.apache.poi.ss.usermodel.Cell" %>
+<%@page import="org.apache.poi.xssf.usermodel.XSSFCell" %>
+<%@page import="org.apache.poi.xssf.usermodel.XSSFSheet" %>
+<%@page import="org.apache.poi.xssf.usermodel.XSSFWorkbook" %>
+<%@page import="org.apache.poi.xssf.usermodel.XSSFRow" %>
+<%@page import="org.apache.poi.hssf.usermodel.*" %>
+<%@page import="org.opencms.jsp.*" %>
+<%@page import="org.opencms.file.*" %>
+<%@page import="org.opencms.main.*" %>
+<%@page import="org.opencms.xml.*" %>
+<%@page import="org.opencms.json.*" %>
+<%@page import="java.util.*" %>
+<%@page import="java.io.OutputStream" %>
+<%@page import="java.io.ByteArrayOutputStream" %>
+<%@page import="java.io.BufferedReader" %>
+<%@page import="java.io.StringReader" %>
+<%@page import="java.nio.charset.Charset" %>
+<%@page import="org.opencms.security.*" %>
+<%@page import="no.npolar.util.*" %>
+<%@page import="no.npolar.data.api.*" %>
+<%@page import="no.npolar.data.api.mosj.*" %>
+<%@page import="no.npolar.data.api.util.APIUtil" %>
+<%@page trimDirectiveWhitespaces="true" pageEncoding="UTF-8" session="true" %>
+<%
 CmsAgent cms                = new CmsAgent(pageContext, request, response);
 //CmsObject cmso              = cms.getCmsObject();
 //String requestFileUri       = cms.getRequestContext().getUri();
