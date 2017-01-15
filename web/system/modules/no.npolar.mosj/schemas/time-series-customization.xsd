@@ -18,7 +18,7 @@
     <xsd:complexType name="OpenCmsMOSJTimeSeriesCustomization">
         <xsd:sequence>
             <xsd:element name="TimeSeriesID" type="OpenCmsString" />
-            <xsd:element name="Setting" type="OpenCmsMOSJCustomSetting" minOccurs="1" maxOccurs="20" />
+            <xsd:element name="Setting" type="OpenCmsMOSJCustomSetting" minOccurs="0" maxOccurs="20" />
         </xsd:sequence>
         <xsd:attribute name="language" type="OpenCmsLocale" use="optional" />
     </xsd:complexType>
@@ -37,7 +37,9 @@
                     </bundle>
                 </xmlbundle>
             </resourcebundles>
-            <layouts />
+            <layouts>
+                <layout element="TimeSeriesID" widget="StringSuggestWidget" configuration="{conf_uri:'conf/mosj-timeseries-id.conf'}" />
+            </layouts>
             <validationrules />
             <relations />
         </xsd:appinfo>

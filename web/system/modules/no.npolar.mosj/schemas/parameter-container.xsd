@@ -4,6 +4,7 @@
 
     <xsd:include schemaLocation="opencms://opencms-xmlcontent.xsd" />
     <xsd:include schemaLocation="opencms://system/modules/no.npolar.mosj/schemas/chart-customization.xsd"/>
+    <xsd:include schemaLocation="opencms://system/modules/no.npolar.mosj/schemas/time-series-customization.xsd"/>
 
     <xsd:element name="MOSJParameterContainers" type="OpenCmsMOSJParameterContainers" />
 
@@ -17,8 +18,10 @@
     <xsd:complexType name="OpenCmsMOSJParameterContainer">
         <xsd:sequence>
             <!-- Parameter ID: Hooks the parameter to its data set(s) -->
-            <xsd:element name="Image" type="OpenCmsVfsFile" minOccurs="0" maxOccurs="1" />
             <xsd:element name="ID" type="OpenCmsString" />
+            <xsd:element name="Title" type="OpenCmsString" />
+            <xsd:element name="Image" type="OpenCmsVfsFile" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="TimeSeries" type="OpenCmsMOSJTimeSeriesCustomization" minOccurs="0" maxOccurs="100" />
             <xsd:element name="ChartAltText" type="OpenCmsHtml" />
             <xsd:element name="ChartCaption" type="OpenCmsHtml" />
             <xsd:element name="ChartCustomization" type="OpenCmsMOSJChartCustomization" minOccurs="0" maxOccurs="1" />
