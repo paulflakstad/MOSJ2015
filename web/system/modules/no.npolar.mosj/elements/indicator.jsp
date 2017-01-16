@@ -4,6 +4,7 @@
     Created on : Dec 10, 2014, 1:30:18 PM
     Author     : Paul-Inge Flakstad, Norwegian Polar Institute
 --%><%@page import="org.apache.commons.lang.StringEscapeUtils,
+            org.opencms.util.CmsHtmlExtractor,
             org.opencms.jsp.*,
             org.opencms.file.*,
             org.opencms.main.*,
@@ -177,6 +178,35 @@ public void printParameterDetailsAsComments(TimeSeriesCollection tsc, MOSJServic
         }
     } catch (Exception ignore) {}
 }
+
+/**
+ * Gets a cite string for the given time series collection.
+ * <p>
+ * The publish year will be the current year, and the publisher will be MOSJ. A
+ * link to this indicator page will also be included.
+ * 
+ * @param cms A properly initialized CmsAgent, used to produce links, labels, etc.
+ * @param tsc The time series collection to cite.
+ * @return A cite string.
+ */
+public String getCiteString(CmsAgent cms, TimeSeriesCollection tsc) {
+    //String loc = cms.getRequestContext().getLocale().getLanguage();
+    String mosj = cms.labelUnicode("label.mosj.global.sitename").concat(" (MOSJ)");
+    try { mosj = CmsHtmlExtractor.extractText(mosj, "UTF-8"); } catch (Exception e) {}
+
+    String s = tsc.getAuthorsStr()
+            // Time series have no "published year" field yet, so for now we 
+            // just use the current year
+            + " (" + new GregorianCalendar().get(Calendar.YEAR) + "). "
+            + tsc.getTitle() + ". "
+            + mosj + ". URL: "
+            + OpenCms.getLinkManager().getOnlineLink(
+                    cms.getCmsObject(), 
+                    cms.getRequestContext().getUri()
+            );
+
+    return s;
+}
 %><%
 CmsAgent cms                = new CmsAgent(pageContext, request, response);
 CmsObject cmso              = cms.getCmsObject();
@@ -226,6 +256,7 @@ final String LABEL_CSV_LINK_DESCR = cms.labelUnicode("label.mosj.indicator.data-
 final String LABEL_XLS_LINK = cms.labelUnicode("label.mosj.indicator.data-xls");// loc.equalsIgnoreCase("no") ? ".xls (Excel)" : ".xls (Excel)";
 final String LABEL_XLS_LINK_DESCR = cms.labelUnicode("label.mosj.indicator.data-xls-descr");
 final String LABEL_DETAILS = cms.labelUnicode("label.mosj.indicator.data-details");// loc.equalsIgnoreCase("no") ? "Detaljer om disse dataene" : "Details on this data";
+final String LABEL_CITE = cms.labelUnicode("label.mosj.indicator.cite");
 
 final String LABEL_METHOD = cms.labelUnicode("label.mosj.indicator.data-method");// loc.equalsIgnoreCase("no") ? "Metode" : "Method";
 final String LABEL_QUALITY = cms.labelUnicode("label.mosj.indicator.data-quality"); // loc.equalsIgnoreCase("no") ? "Kvalitet" : "Quality";
@@ -391,6 +422,8 @@ while (structuredContent.hasMoreResources()) {
             // List to hold the set of time series in this chart/parameter
             List<String> tsIds = new ArrayList<String>(2);
             
+            String citeString = null;
+            
             HighchartsChart chart = null;
             
             // Chart alt text and caption
@@ -465,7 +498,6 @@ while (structuredContent.hasMoreResources()) {
                             }
                         }
 
-                        // ToDo: Add credit line to customization object                        
 
                         I_CmsXmlContentContainer mosjChartCustomization = cms.contentloop(mosjParameters, "ChartCustomization");
                         if (mosjChartCustomization.hasMoreResources()) {
@@ -480,7 +512,7 @@ while (structuredContent.hasMoreResources()) {
                             I_CmsXmlContentContainer mosjTimeSeriesCustomizations = cms.contentloop(mosjChartCustomization, "TimeSeriesCustomization");
                             while (mosjTimeSeriesCustomizations.hasMoreResources()) {
                                 JSONObject seriesCustomization = new JSONObject("{ \"id\": \"" + cms.contentshow(mosjTimeSeriesCustomizations, "TimeSeriesID") + "\" }");
-
+                                
                                 customSettingsContainer = cms.contentloop(mosjTimeSeriesCustomizations, "Setting");
                                 while (customSettingsContainer.hasMoreResources()) {
                                     seriesCustomization.put(cms.contentshow(customSettingsContainer, "Name"), cms.contentshow(customSettingsContainer, "Value"));
@@ -510,6 +542,20 @@ while (structuredContent.hasMoreResources()) {
                             throw new NullPointerException("Parameter ID is not set (null).");
                         } else {
                             tsc = service.get(pid).getTimeSeriesCollection();
+                        }
+                        try {
+                            citeString = getCiteString(cms, tsc);
+                        } catch (Exception e) {}
+                        if (citeString != null && !citeString.isEmpty()) {
+                            customization.put(
+                                    HighchartsChart.OVERRIDE_KEY_CREDIT_TEXT, 
+                                    "Data: " + tsc.getAuthorsStr()
+                            );
+                            customization.put(
+                                    HighchartsChart.OVERRIDE_KEY_CREDIT_URI, 
+                                    APIUtil.toApiUrl(tsc.getURL())
+                                    //APIUtil.toApiUrl(tsc.getURL()).replaceFirst("api\\.npolar\\.no", "data.npolar.no")
+                            );
                         }
                         
                         parameterFigureBody = LABEL_CHART_LOAD;
@@ -561,6 +607,7 @@ while (structuredContent.hasMoreResources()) {
             }
             
             boolean imageFigure = parameterFigureBody != null && parameterFigureBody.startsWith("<img ");
+            
             %>
             <figure class="media">
     
@@ -627,7 +674,7 @@ while (structuredContent.hasMoreResources()) {
                     <div class="toggleable collapsed parameter-data-table-wrapper">
                         <a href="#<%= parameterDataSectionId %>" class="toggletrigger" aria-controls="<%= parameterDataSectionId %>"><i class="icon-grid"></i> <%= LABEL_TABLE_FORMAT %></a>
                         <div class="toggletarget" id="<%= parameterDataSectionId %>">
-                            <div class="parameter-data-files">
+                            <div class="parameter-data-info">
                                 <h4><%= LABEL_DATA_FILES %></h4>
                                 <p>
                                     <a class="cta" href="<%= xlsUri %>" data-tooltip="<%= LABEL_XLS_LINK_DESCR %>">
@@ -640,6 +687,10 @@ while (structuredContent.hasMoreResources()) {
                                         <i class="icon-database"></i> <%= LABEL_JSON_LINK %>
                                     </a>
                                 </p>
+                            </div>
+                            <div class="parameter-data-info">
+                                <h4><%= LABEL_CITE %></h4>
+                                <span class="cite-string" style="background: #fff; color: #000; padding:0.5em; font-size: smaller; display:block;"><%= citeString %></span>
                             </div>
                             <%
                             if (tsc.getTimeMarkersCount() < 500) {
