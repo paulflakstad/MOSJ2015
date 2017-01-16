@@ -42,15 +42,15 @@ request.setAttribute("title", contentTitle);
 // Include template head
 cms.includeTemplatePart(template, "head", params);
 %>
-<section class="article-hero">
-    <div class="article-hero-content">
-        <h1><%= contentTitle %></h1>
+<h1 class="main-article__title"><%= contentTitle %></h1>
+<div class="article-hero hero hero--top main-article__hero">
+    <div class="article-hero-content hero__content">
         <figure>
             <%= ImageUtil.getImage(cms, imgUri) %>
             <figcaption><%= cms.property("byline", imgUri, "") %></figcaption>
         </figure>
     </div>
-</section>
+</div>
 <%= content %>
 <%
 // Include error details?
