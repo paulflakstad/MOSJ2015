@@ -507,7 +507,8 @@ while (structuredContent.hasMoreResources()) {
                             while (customSettingsContainer.hasMoreResources()) {
                                 customization.put(cms.contentshow(customSettingsContainer, "Name"), cms.contentshow(customSettingsContainer, "Value"));
                             }
-                            /*
+                            //*
+                            // OLD VERSION:
                             // Individual time series customization
                             I_CmsXmlContentContainer mosjTimeSeriesCustomizations = cms.contentloop(mosjChartCustomization, "TimeSeriesCustomization");
                             while (mosjTimeSeriesCustomizations.hasMoreResources()) {
