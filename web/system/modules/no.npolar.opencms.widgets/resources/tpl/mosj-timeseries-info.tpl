@@ -1,1 +1,1 @@
-<p><strong>%(titles:title[lang=__PROP[locale.secondary]])</strong></p>
+<p><strong>%(titles:title[lang=__PROP[locale.secondary]])</strong><br>%(titles:label[lang=__PROP[locale.secondary]])</p>
