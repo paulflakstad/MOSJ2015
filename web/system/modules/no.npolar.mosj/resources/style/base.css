@@ -1624,6 +1624,9 @@ img.highslide-image {
 .galleryimage-dl-separator {
     display:none;
 }
+.hc-chart {
+    height: 540px;
+}
 
 
 
