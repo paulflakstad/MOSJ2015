@@ -20,11 +20,11 @@
             <!-- Parameter ID: Hooks the parameter to its data set(s) -->
             <!--<xsd:element name="ID" type="OpenCmsString" />-->
             <xsd:element name="Title" type="OpenCmsString" />
-            <xsd:element name="Image" type="OpenCmsVfsFile" minOccurs="0" maxOccurs="1" />
             <xsd:element name="TimeSeries" type="OpenCmsMOSJTimeSeriesCustomization" minOccurs="0" maxOccurs="100" />
             <xsd:element name="ChartCustomization" type="OpenCmsMOSJChartCustomization" minOccurs="0" maxOccurs="1" />
             <xsd:element name="ChartAltText" type="OpenCmsHtml" />
             <xsd:element name="ChartCaption" type="OpenCmsHtml" />
+            <xsd:element name="Image" type="OpenCmsVfsFile" minOccurs="0" maxOccurs="1" />
         </xsd:sequence>
         <xsd:attribute name="language" type="OpenCmsLocale" use="optional" />
     </xsd:complexType>
@@ -35,9 +35,9 @@
             <mappings />
             <layouts>
                 <!--<layout element="ID" widget="StringSuggestWidget" configuration="{conf_uri:'conf/mosj-param-id.conf'}" />-->
-                <layout element="Image" widget="ImageGalleryWidget" configuration="{useformat:true}" />
                 <layout element="ChartAltText" widget="HtmlWidget" configuration="source,style,link" />
                 <layout element="ChartCaption" widget="HtmlWidget" configuration="source,style,link" />
+                <layout element="Image" widget="ImageGalleryWidget" configuration="{useformat:true}" />
             </layouts>
             <validationrules>
                 <rule element="Title" regex="!(^$)|(^\s.*)|(.*\s$)" type="warning" message="Please avoid empty value, trailing space, and leading space here." />
