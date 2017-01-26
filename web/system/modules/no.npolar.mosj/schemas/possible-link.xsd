@@ -22,20 +22,7 @@
 
     <xsd:annotation>
         <xsd:appinfo>
-            <resourcebundles>
-                <xmlbundle name="no.npolar.mosj">
-                    <bundle locale="en">
-                        <resource key="label.OpenCmsMOSJPossibleLink.Text">Text</resource>
-                        <resource key="label.OpenCmsMOSJPossibleLink.URL">URL</resource>
-                        <resource key="label.OpenCmsMOSJPossibleLink.Comment">Comment</resource>
-                    </bundle>
-                    <bundle locale="no">
-                        <resource key="label.OpenCmsMOSJPossibleLink.Text">Text</resource>
-                        <resource key="label.OpenCmsMOSJPossibleLink.URL">URL</resource>
-                        <resource key="label.OpenCmsMOSJPossibleLink.Comment">Comment</resource>
-                    </bundle>
-                </xmlbundle>
-            </resourcebundles>
+            <resourcebundle name="no.npolar.mosj"/>
             <mappings />
             <layouts />
             <validationrules>

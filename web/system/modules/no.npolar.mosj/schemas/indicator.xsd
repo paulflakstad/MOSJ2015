@@ -2,7 +2,7 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	elementFormDefault="qualified">
 
-	<xsd:include schemaLocation="opencms://opencms-xmlcontent.xsd" />
+    <xsd:include schemaLocation="opencms://opencms-xmlcontent.xsd" />
     <xsd:include schemaLocation="opencms://system/modules/no.npolar.mosj/schemas/parameter.xsd"/>
     <xsd:include schemaLocation="opencms://system/modules/no.npolar.mosj/schemas/monitoring-data.xsd"/>
     <xsd:include schemaLocation="opencms://system/modules/no.npolar.mosj/schemas/manual-list.xsd"/>
@@ -46,23 +46,7 @@
 
     <xsd:annotation>
         <xsd:appinfo>
-            <resourcebundles>
-                <xmlbundle name="no.npolar.mosj">
-                    <bundle locale="en">
-                        <resource key="label.OpenCmsMOSJIndicator.Title">Title</resource>
-                        <resource key="label.OpenCmsMOSJIndicator.Title.help">The title of this indicator.</resource>
-                        <!--<resource key="dev.demo.ddheadincludearticle.default.Title">New article for Dev Demo template using
-                                headinclude tag</resource>-->
-                        <resource key="label.OpenCmsMOSJIndicator.Summary">Summary</resource>
-                        <resource key="label.OpenCmsMOSJIndicator.Summary.help">The summary.</resource>
-                        <!--<resource key="dev.demo.ddheadincludearticle.default.Text">Add the summary here.</resource>-->
-                        <resource key="label.OpenCmsMOSJIndicator.Image">Image</resource>
-                        <resource key="label.OpenCmsMOSJIndicator.Image.help">The image for this indicator.</resource>
-                        <resource key="label.OpenCmsMOSJIndicator.TimeSeries">Time series</resource>
-                        <resource key="label.OpenCmsMOSJIndicator.TimeSeries.help">Start typing.</resource>
-                    </bundle>
-                </xmlbundle>
-            </resourcebundles>
+            <resourcebundle name="no.npolar.mosj"/>
             <mappings>
                 <mapping element="Title" mapto="property:Title" />
                 <mapping element="Summary" mapto="property:Description" />

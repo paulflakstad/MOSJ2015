@@ -21,14 +21,7 @@
 
     <xsd:annotation>
         <xsd:appinfo>
-            <resourcebundles>
-                <xmlbundle name="no.npolar.mosj">
-                    <bundle locale="en">
-                        <resource key="label.OpenCmsMOSJReference.ID">ID</resource>
-                        <resource key="label.OpenCmsMOSJReference.Text">Text</resource>
-                    </bundle>
-                </xmlbundle>
-            </resourcebundles>
+            <resourcebundle name="no.npolar.mosj"/>
             <layouts>
                 <layout element="ID" widget="StringSuggestWidget" configuration="{conf_uri:'conf/mosj-publication-id.conf'}" />
                 <layout element="Text" widget="HtmlWidget" configuration="link,source" />

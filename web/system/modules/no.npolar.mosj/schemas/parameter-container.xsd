@@ -31,24 +31,17 @@
 
     <xsd:annotation>
         <xsd:appinfo>
-            <resourcebundles>
-                <xmlbundle name="no.npolar.mosj">
-                    <bundle locale="en">
-                        <resource key="label.OpenCmsMOSJParameterContainer.ID">ID</resource>
-                        <resource key="label.OpenCmsMOSJParameterContainer.ID.help">The ID of this parameter.</resource>
-                    </bundle>
-                </xmlbundle>
-            </resourcebundles>
-            <!--<mappings>
-                <mapping element="ID" mapto="property:parameter.id" />
-            </mappings>-->
+            <resourcebundle name="no.npolar.mosj"/>
+            <mappings />
             <layouts>
-                <layout element="Image" widget="ImageGalleryWidget" configuration="{useformat:true}" />
                 <layout element="ID" widget="StringSuggestWidget" configuration="{conf_uri:'conf/mosj-param-id.conf'}" />
+                <layout element="Image" widget="ImageGalleryWidget" configuration="{useformat:true}" />
                 <layout element="ChartAltText" widget="HtmlWidget" configuration="source,style,link" />
                 <layout element="ChartCaption" widget="HtmlWidget" configuration="source,style,link" />
             </layouts>
-            <validationrules />
+            <validationrules>
+                <rule element="Title" regex="!(^$)|(^\s.*)|(.*\s$)" type="warning" message="Please avoid empty value, trailing space, and leading space here." />
+            </validationrules>
             <relations />
         </xsd:appinfo>
     </xsd:annotation>

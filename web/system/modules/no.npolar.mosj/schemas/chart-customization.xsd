@@ -25,16 +25,7 @@
 
     <xsd:annotation>
         <xsd:appinfo>
-            <resourcebundles>
-                <xmlbundle name="no.npolar.mosj">
-                    <bundle locale="en">
-                        <resource key="label.OpenCmsMOSJParameter.ParameterCustomization">Chart customization</resource>
-                        <resource key="label.OpenCmsMOSJParameter.ParameterCustomization.help">Custom settings for the chart visualization of all time series in this parameter.</resource>
-                        <resource key="label.OpenCmsMOSJParameter.TimeSeriesCustomization">Time series customization</resource>
-                        <resource key="label.OpenCmsMOSJParameter.TimeSeriesCustomization.help">Custom settings for the chart visualization of individual time series in this parameter.</resource>
-                    </bundle>
-                </xmlbundle>
-            </resourcebundles>
+            <resourcebundle name="no.npolar.mosj"/>
             <mappings />
             <layouts />
             <validationrules />

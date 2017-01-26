@@ -1,12 +1,14 @@
 <?xml version="1.0"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	elementFormDefault="qualified">
-
+        
     <xsd:include schemaLocation="opencms://opencms-xmlcontent.xsd" />
     <xsd:include schemaLocation="opencms://system/modules/no.npolar.mosj/schemas/time-series-customization.xsd"/>
     <xsd:include schemaLocation="opencms://system/modules/no.npolar.mosj/schemas/custom-setting.xsd"/>
     <xsd:include schemaLocation="opencms://system/modules/no.npolar.common.pageelements/schemas/linklist.xsd"/>
-
+    
+    <!-- THIS DEFINITION IS NO LONGER USED ANYWHERE!  -->
+    
     <xsd:element name="MOSJParameters" type="OpenCmsMOSJParameters" />
 
     <xsd:complexType name="OpenCmsMOSJParameters">
@@ -38,28 +40,7 @@
 
     <xsd:annotation>
         <xsd:appinfo>
-            <resourcebundles>
-                <xmlbundle name="no.npolar.mosj">
-                    <bundle locale="en">
-                        <resource key="label.OpenCmsMOSJParameter.ID">ID</resource>
-                        <resource key="label.OpenCmsMOSJParameter.ID.help">The ID of this parameter.</resource>
-                        <!--<resource key="dev.demo.ddheadincludearticle.default.Title">New article for Dev Demo template using
-                                headinclude tag</resource>-->
-                        <resource key="label.OpenCmsMOSJParameter.ParameterCustomization">Parameter customization</resource>
-                        <resource key="label.OpenCmsMOSJParameter.ParameterCustomization.help">Custom settings for the chart visualization of all time series in this parameter.</resource>
-                        <resource key="label.OpenCmsMOSJParameter.TimeSeriesCustomization">Time series customization</resource>
-                        <resource key="label.OpenCmsMOSJParameter.TimeSeriesCustomization.help">Custom settings for the chart visualization of individual time series in this parameter.</resource>
-                        <resource key="label.OpenCmsMOSJParameter.UpdateInterval">Update interval</resource>
-                        <resource key="label.OpenCmsMOSJParameter.NextUpdate">Next update</resource>
-                        <resource key="label.OpenCmsMOSJParameter.Method">Method</resource>
-                        <resource key="label.OpenCmsMOSJParameter.Quality">Quality</resource>
-                        <resource key="label.OpenCmsMOSJParameter.ReferenceLevel">Reference level</resource>
-                        <resource key="label.OpenCmsMOSJParameter.AuthorativeInstitutions">Authorative institution(s)</resource>
-                        <resource key="label.OpenCmsMOSJParameter.ExecutiveInstitutions">Executive institution(s)</resource>
-                        <resource key="label.OpenCmsMOSJParameter.Contact persons">Contact person(s)</resource>
-                    </bundle>
-                </xmlbundle>
-            </resourcebundles>
+            <resourcebundle name="no.npolar.mosj"/>
             <!--<mappings>
                 <mapping element="ID" mapto="property:parameter.id" />
             </mappings>-->

@@ -33,20 +33,7 @@
 
     <xsd:annotation>
         <xsd:appinfo>
-            <resourcebundles>
-                <xmlbundle name="no.npolar.mosj">
-                    <bundle locale="en">
-                        <resource key="label.OpenCmsMOSJParameter.UpdateInterval">Update interval</resource>
-                        <resource key="label.OpenCmsMOSJParameter.NextUpdate">Next update</resource>
-                        <resource key="label.OpenCmsMOSJParameter.Method">Method</resource>
-                        <resource key="label.OpenCmsMOSJParameter.Quality">Quality</resource>
-                        <resource key="label.OpenCmsMOSJParameter.ReferenceLevel">Reference level</resource>
-                        <resource key="label.OpenCmsMOSJParameter.AuthorativeInstitutions">Authorative institution(s)</resource>
-                        <resource key="label.OpenCmsMOSJParameter.ExecutiveInstitutions">Executive institution(s)</resource>
-                        <resource key="label.OpenCmsMOSJParameter.Contact persons">Contact person(s)</resource>
-                    </bundle>
-                </xmlbundle>
-            </resourcebundles>
+            <resourcebundle name="no.npolar.mosj"/>
             <!--<mappings>
                 <mapping element="ID" mapto="property:parameter.id" />
             </mappings>-->

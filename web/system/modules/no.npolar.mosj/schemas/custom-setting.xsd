@@ -24,18 +24,7 @@
 
     <xsd:annotation>
         <xsd:appinfo>
-            <resourcebundles>
-                <xmlbundle name="no.npolar.mosj">
-                    <bundle locale="en">
-                        <resource key="label.OpenCmsMOSJCustomSetting.Name">Setting name</resource>
-                        <resource key="label.OpenCmsMOSJCustomSetting.Name.help">The name of the setting.</resource>
-                        <!--<resource key="dev.demo.ddheadincludearticle.default.Title">New article for Dev Demo template using
-                                headinclude tag</resource>-->
-                        <resource key="label.OpenCmsMOSJCustomSetting.Value">Value</resource>
-                        <resource key="label.OpenCmsMOSJCustomSetting.Value.help">The custom value.</resource>
-                    </bundle>
-                </xmlbundle>
-            </resourcebundles>
+            <resourcebundle name="no.npolar.mosj"/>
             <layouts>
                 <layout element="Name" widget="SelectorWidget" 
                         configuration="name|type*|step|enforceEqualSteps|dots|maxStaggerLines|xLabelRotation|stacking|errorToggler|trendLine|orderIndex|connectNulls|color|dashStyle|lineThickness|dotThickness|minValue|integerValues|xAxisOnTop|invertGrouping" />

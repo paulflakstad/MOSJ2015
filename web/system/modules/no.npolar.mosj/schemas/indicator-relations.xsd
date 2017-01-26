@@ -27,26 +27,7 @@
 
     <xsd:annotation>
         <xsd:appinfo>
-            <resourcebundles>
-                <xmlbundle name="no.npolar.mosj">
-                    <bundle locale="en">
-                        <resource key="label.OpenCmsMOSJIndicatorRelation.Text">Text</resource>
-                        <resource key="label.OpenCmsMOSJIndicatorRelation.MonitoringProgramme">Monitoring programme</resource>
-                        <resource key="label.OpenCmsMOSJIndicatorRelation.InternationalAgreements">International agreements</resource>
-                        <resource key="label.OpenCmsMOSJIndicatorRelation.VoluntaryInternationalCooperation">Voluntary international cooperation</resource>
-                        <resource key="label.OpenCmsMOSJIndicatorRelation.RelatedStuff">Related monitoring</resource>
-                        <resource key="label.OpenCmsMOSJIndicatorRelation.Other">Other</resource>
-                    </bundle>
-                    <bundle locale="no">
-                        <resource key="label.OpenCmsMOSJIndicatorRelation.Text">Text</resource>
-                        <resource key="label.OpenCmsMOSJIndicatorRelation.MonitoringProgramme">Monitoring programme</resource>
-                        <resource key="label.OpenCmsMOSJIndicatorRelation.InternationalAgreements">International agreements</resource>
-                        <resource key="label.OpenCmsMOSJIndicatorRelation.VoluntaryInternationalCooperation">Voluntary international cooperation</resource>
-                        <resource key="label.OpenCmsMOSJIndicatorRelation.RelatedStuff">Related monitoring</resource>
-                        <resource key="label.OpenCmsMOSJIndicatorRelation.Other">Other</resource>
-                    </bundle>
-                </xmlbundle>
-            </resourcebundles>
+            <resourcebundle name="no.npolar.mosj"/>
             <mappings />
             <layouts>
                 <layout element="Text" widget="HtmlWidget" configuration="link,source" />

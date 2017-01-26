@@ -26,14 +26,7 @@
 
     <xsd:annotation>
         <xsd:appinfo>
-            <resourcebundles>
-                <xmlbundle name="no.npolar.mosj">
-                    <bundle locale="en">
-                        <resource key="label.OpenCmsMOSJMonitoringData.Title">Title override</resource>
-                        <resource key="label.OpenCmsMOSJMonitoringData.Title.help">Add a title manually. Especially useful when combining multiple charts in a single data container.</resource>
-                    </bundle>
-                </xmlbundle>
-            </resourcebundles>
+            <resourcebundle name="no.npolar.mosj"/>
             <validationrules />
             <relations />
             <searchsettings>
