@@ -18,7 +18,7 @@
     <xsd:complexType name="OpenCmsMOSJChartCustomization">
         <xsd:sequence>
             <xsd:element name="ParameterCustomization" type="OpenCmsMOSJCustomSetting" minOccurs="0" maxOccurs="30" />
-            <xsd:element name="TimeSeriesCustomization" type="OpenCmsMOSJTimeSeriesCustomization" minOccurs="0" maxOccurs="30" />
+            <!--<xsd:element name="TimeSeriesCustomization" type="OpenCmsMOSJTimeSeriesCustomization" minOccurs="0" maxOccurs="30" />-->
         </xsd:sequence>
         <xsd:attribute name="language" type="OpenCmsLocale" use="optional" />
     </xsd:complexType>

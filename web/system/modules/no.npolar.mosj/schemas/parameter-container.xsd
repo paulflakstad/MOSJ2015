@@ -18,7 +18,7 @@
     <xsd:complexType name="OpenCmsMOSJParameterContainer">
         <xsd:sequence>
             <!-- Parameter ID: Hooks the parameter to its data set(s) -->
-            <xsd:element name="ID" type="OpenCmsString" />
+            <!--<xsd:element name="ID" type="OpenCmsString" />-->
             <xsd:element name="Title" type="OpenCmsString" />
             <xsd:element name="Image" type="OpenCmsVfsFile" minOccurs="0" maxOccurs="1" />
             <xsd:element name="TimeSeries" type="OpenCmsMOSJTimeSeriesCustomization" minOccurs="0" maxOccurs="100" />
@@ -34,7 +34,7 @@
             <resourcebundle name="no.npolar.mosj"/>
             <mappings />
             <layouts>
-                <layout element="ID" widget="StringSuggestWidget" configuration="{conf_uri:'conf/mosj-param-id.conf'}" />
+                <!--<layout element="ID" widget="StringSuggestWidget" configuration="{conf_uri:'conf/mosj-param-id.conf'}" />-->
                 <layout element="Image" widget="ImageGalleryWidget" configuration="{useformat:true}" />
                 <layout element="ChartAltText" widget="HtmlWidget" configuration="source,style,link" />
                 <layout element="ChartCaption" widget="HtmlWidget" configuration="source,style,link" />
