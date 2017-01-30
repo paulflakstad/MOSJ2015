@@ -107,7 +107,7 @@ a#toggle-nav:hover,
     font-family:Arial,sans-serif;
     font-size:0.9em;
     width:100%;
-    max-width:480px;
+    /*max-width:480px;*/
     transition:all .5s ease;
     box-shadow:0 3em 3em #000;
     box-shadow:0 3em 5em rgba(0,0,0,0.9);
