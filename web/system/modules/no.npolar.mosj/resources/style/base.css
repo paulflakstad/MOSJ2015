@@ -1153,6 +1153,9 @@ h1 .scientific-name {
 }
 
 /* Page sections (i.e. <section class="paragraph"> ... </section>) */
+/* Note: would prooobably be better to use a wider scoping qualifier, such as 
+ *       "main" or ".main-article".
+ */
 .paragraph {
     overflow:auto;
     /*display:table;*/ /* NOOOOO! This breaks everything with responsive tables! (display:table was used to re-arrange order of elements - which is not a good approach ...) */
@@ -1167,13 +1170,14 @@ h1 .scientific-name {
     line-height:1.5em;
     margin-bottom:1.5em;
 }
+
 .paragraph p {
     margin-top: 0;
 }
 .paragraph ul, 
 .paragraph ol, 
 .paragraph dd {
-    margin-left:4em;
+    margin-left:2.2em;
 }
 .paragraph li {
     display:list-item;
@@ -1201,8 +1205,10 @@ h1 .scientific-name {
     margin-bottom: 2em;
 }
 .parameter-standard-meta dd {
-    margin-left: 3em;
     padding-bottom: 0.5em;
+}
+.parameter-standard-meta p {
+    margin-bottom: 0;
 }
 
 /* Embedded text box (typically "fact box") */
