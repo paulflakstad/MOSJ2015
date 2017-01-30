@@ -156,7 +156,8 @@ a#toggle-nav:hover,
     text-decoration: none;
 }
 #nav.nav-colorscheme-dark a {
-    color:#8cf;
+    /*color:#8cf;*/
+    color: #b9d2df;
 }
 /* all lists + items in menu */
 #nav ul,
@@ -198,12 +199,18 @@ a#toggle-nav:hover,
 #nav.nav-colorscheme-dark ul {
 	color:#ddd;
 }
-/* "Inpath" item */
+/* "in path" item */
 #nav > ul > li.inpath {
 	border-left:3px solid orange;
 }
+/* "in path" AND current AND top-level item */
+#nav > ul > li.inpath.current.level1 {
+    border-left: none;
+}
+
 #nav.nav-colorscheme-dark > ul > li.inpath {
-	border-left-color:#8cf;
+    /*border-left-color:#8cf;*/
+    border-left-color: #b9d2df;
 }
 /* manually "SHOW submenu" */
 #nav ul > li.visible-sub > ul,
@@ -262,10 +269,11 @@ a#toggle-nav:hover,
 	color:#fff;
 }
 #nav.nav-colorscheme-dark li.current > a {
-	background-color:#adf;
-	color:#333;
-    background-color:#8cf;
+    /*background-color:#adf;*/
+    /*color:#333;*/
+    /*background-color:#8cf;*/
     color:#1f2e3d;
+    background-color: #b9d2df;
 }
 #nav li.inpath.hidden-sub > ul {
 	max-height:0;
@@ -288,7 +296,8 @@ a#toggle-nav:hover,
     color:#fff;
 }
 #nav.nav-colorscheme-dark li a.visible-sub-toggle {
-	color:#bbb;
+    /*color:#bbb;*/
+    color: #b9d2df;
 }
 #nav.nav-colorscheme-dark li.current a.visible-sub-toggle {
 	color:#1f2e3d;

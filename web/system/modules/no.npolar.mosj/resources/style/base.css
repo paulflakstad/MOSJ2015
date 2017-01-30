@@ -264,7 +264,8 @@ body {
     /*color:#888;*/
     /*color:#444;*/
     /*color:#b9d2df;*/
-    color:#adf;
+    /*color:#adf;*/
+    color: #b9d2df;
 }
 #header a:hover {
     color:#fff;
@@ -2058,7 +2059,9 @@ h4.news-title {
 } 
 #search-global input[type="button"], 
 #search-global .search-button {
-    background-color:#adf;
+    /*background-color:#adf;*/
+    background-color: #b9d2df;
+    color:#234;
 }
 /*
 #search-global #query {
