@@ -267,7 +267,9 @@ body {
     /*color:#adf;*/
     color: #b9d2df;
 }
-#header a:hover {
+#header a:hover,
+.navigating #toggle-nav,
+.search-open #toggle-search {
     color:#fff;
 }
 #header-mid {
