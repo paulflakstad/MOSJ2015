@@ -1200,6 +1200,32 @@ h1 .scientific-name {
     margin-bottom:0;
 }
 
+/* An inline-style description list: "Term: Description"  */
+.paragraph dl.inline:after {
+    /* we'll be floating stuff inside, so clear the list */
+    content:"";
+    display: block;
+    clear: both;
+}
+.paragraph dl.inline dt,
+.paragraph dl.inline dd {
+    float: left;
+}
+.paragraph dl.inline dt {
+    clear: left;
+}
+.paragraph dl.inline dt:after {
+    content: ":";
+}
+.paragraph dl.inline dd {
+    margin: 0 0 0 0.35em;
+}
+.paragraph dl.inline dd::after {
+    content: "";
+    display: block;
+    margin-top: 1em;
+}
+
 /* Metadata list found under "details on these data" */
 .parameter-standard-meta {
     margin-bottom: 2em;
