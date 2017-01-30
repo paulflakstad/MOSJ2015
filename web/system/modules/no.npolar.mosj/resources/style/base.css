@@ -1196,6 +1196,7 @@ h1 .scientific-name {
 .paragraph .parameter-standard-meta dd.parameter-meta-data {
     display:block;
 }
+.paragraph dd.parameter-meta-data p,
 .paragraph li.parameter-meta-data p {
     margin-bottom:0;
 }
