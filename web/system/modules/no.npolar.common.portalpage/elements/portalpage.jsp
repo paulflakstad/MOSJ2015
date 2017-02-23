@@ -140,31 +140,64 @@ while (container.hasMoreContent()) {
     heroImage = cms.contentloop(container, "HeroImage");
     while (heroImage.hasMoreResources()) {
         
+        /*
+        // ToDo: Improve this "standard model" to accept the "auto" keyword
+        //          wich could be passed to indicate that alt text, credit, etc. 
+        //          should be read directly from the image file. 
         ImageUtil figure = new ImageUtil(cms, heroImage);
         heroImageHtml = figure.getImage("", null, 100, 1200, 100, "800px");
+        //*/
         
-        /*String heroImageUri = cms.contentshow(heroImage, "URI");
-        String heroImageCaption = cms.contentshow(heroImage, "Text");
-        String heroImageSource = cms.contentshow(heroImage, "Source");
+        
+        String heroImageUri = cms.contentshow(heroImage, ImageUtil.OCMS_EL_NAME_IMAGE_URI);
         
         if (cmso.existsResource(heroImageUri)) {
-            heroImageHtml += "<figure>" + ImageUtil.getImage(cms, heroImageUri, null, null, 1200, 100, ImageUtil.SIZE_L, 100, "800px");
-            if (CmsAgent.elementExists(heroImageCaption)
-                    || CmsAgent.elementExists(heroImageSource)) {
+            String heroImageAlt = cms.contentshow(heroImage, ImageUtil.OCMS_EL_NAME_IMAGE_TITLE);
+            String heroImageCaption = cms.contentshow(heroImage, ImageUtil.OCMS_EL_NAME_IMAGE_TEXT);
+            String heroImageSource = cms.contentshow(heroImage, ImageUtil.OCMS_EL_NAME_IMAGE_SOURCE);
+            
+            boolean isAutoSource = false;
+
+            // This auto stuff should be moved to the ImageUtil class
+            if ("auto".equalsIgnoreCase(heroImageAlt)) {
+                heroImageAlt = cmso.readPropertyObject(heroImageUri, "Description", false).getValue("");
+            }
+            if ("auto".equalsIgnoreCase(heroImageSource)) {
+                isAutoSource = true;
+                heroImageSource = cmso.readPropertyObject(heroImageUri, "byline", false).getValue("");
+            }
+        
+            heroImageHtml += "<figure>";
+                        // + ImageUtil.getImage(cms, heroImageUri, null, null, 1200, 100, ImageUtil.SIZE_L, 100, "800px");
+            try {
+                heroImageHtml += ImageUtil.getImage(
+                                    cms
+                                    ,heroImageUri
+                                    ,heroImageAlt
+                                    ,ImageUtil.CROP_RATIO_NO_CROP
+                                    ,1200
+                                    ,100
+                                    ,ImageUtil.SIZE_L
+                                    ,100
+                                    ,"800px");
+            } catch (Exception e) {
+                heroImageHtml += "<!-- ERROR generating img element: " + e.getMessage() + " -->";
+            }
+            if (CmsAgent.elementExists(heroImageCaption) || CmsAgent.elementExists(heroImageSource)) {
                 heroImageHtml += "<figcaption>";
                 if (CmsAgent.elementExists(heroImageCaption)) {
                     heroImageHtml += heroImageCaption;
                 }
                 if (CmsAgent.elementExists(heroImageSource)) {
                     heroImageHtml += "<span class=\"credit\">" 
-                                        + cms.labelUnicode("label.pageelements." + cms.contentshow(heroImage, "ImageType").toLowerCase()) 
-                                        + ": " + heroImageSource 
+                                        + (isAutoSource ? "" : (cms.labelUnicode("label.pageelements." + cms.contentshow(heroImage, "ImageType").toLowerCase()) + ": "))
+                                        + heroImageSource 
                                     + "</span>";
                 }
                 heroImageHtml += "</figcaption>";
             }
             heroImageHtml += "</figure>";
-        }*/
+        }
     }
     
     
