@@ -218,7 +218,7 @@ public String getCiteString(CmsAgent cms, TimeSeriesCollection tsc) {
  * which must be of type "pointer".
  */
 public String lookupNameForId(String id, CmsAgent cms, Locale inLocale) {
-    String name = id;
+    String name = id + " " + TimeSeries.AUTHOR_NAME_UNKNOWN; // Same as in TimeSeries
     CmsObject cmso = cms.getCmsObject();
     try {
         CmsResource orgRes = cmso.readResource(
@@ -576,7 +576,9 @@ while (structuredContent.hasMoreResources()) {
                                 
                                 for (int iAuthors = 0; iAuthors < authors.size(); iAuthors++) {
                                     Contributor a = authors.get(iAuthors);
-                                    if (a.hasId() && a.getName().equals(a.getId())) {
+                                    
+                                    if (a.hasId() 
+                                            && a.getName().contains(TimeSeries.AUTHOR_NAME_UNKNOWN)) {
                                         // => name unknown (same as ID)
                                         a = new Contributor(
                                                 a.getId(), 
