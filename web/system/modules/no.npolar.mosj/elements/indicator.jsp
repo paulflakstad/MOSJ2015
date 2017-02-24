@@ -3,7 +3,8 @@
     Description: Template for OpenCms files of type "mosj_indicator" (MOSJ indicator).
     Created on : Dec 10, 2014, 1:30:18 PM
     Author     : Paul-Inge Flakstad, Norwegian Polar Institute
---%><%@page import="org.apache.commons.lang.StringEscapeUtils,
+--%><%@page import="org.opencms.file.types.CmsResourceTypePointer"%>
+<%@page import="org.apache.commons.lang.StringEscapeUtils,
             org.opencms.util.CmsHtmlExtractor,
             org.opencms.jsp.*,
             org.opencms.file.*,
@@ -206,6 +207,29 @@ public String getCiteString(CmsAgent cms, TimeSeriesCollection tsc) {
             );
 
     return s;
+}
+
+/**
+ * Tries to lookup an organization name, based on the organization ID.
+ * <p>
+ * E.g. given "npolar.no" as ID, should return "Norwegian Polar Institute".
+ * <p>
+ * The lookup is done by reading the title of VFS resource /[no|en]/org/[id]
+ * which must be of type "pointer".
+ */
+public String lookupNameForId(String id, CmsAgent cms, Locale inLocale) {
+    String name = id;
+    CmsObject cmso = cms.getCmsObject();
+    try {
+        CmsResource orgRes = cmso.readResource(
+                "/"+inLocale.toString()+"/org/"+id, 
+                CmsResourceFilter.ALL.addRequireType(CmsResourceTypePointer.getStaticTypeId())
+        );
+        name = cmso.readPropertyObject(orgRes, "Title", false).getValue(id);
+    } catch (Exception e) {
+        // no such resource...
+    }
+    return name;
 }
 %><%
 CmsAgent cms                = new CmsAgent(pageContext, request, response);
@@ -544,6 +568,33 @@ while (structuredContent.hasMoreResources()) {
                         } else {
                             tsc = service.get(pid).getTimeSeriesCollection();
                         }
+                        
+                        // Try to patch organizations with no name (only ID)
+                        try {
+                            for (TimeSeries ts : tsc.getTimeSeries()) {
+                                List<Contributor> authors = ts.getAuthors();
+                                
+                                for (int iAuthors = 0; iAuthors < authors.size(); iAuthors++) {
+                                    Contributor a = authors.get(iAuthors);
+                                    if (a.hasId() && a.getName().equals(a.getId())) {
+                                        // => name unknown (same as ID)
+                                        a = new Contributor(
+                                                a.getId(), 
+                                                lookupNameForId(
+                                                        a.getId(), 
+                                                        cms, 
+                                                        locale
+                                                )
+                                        );
+                                        authors.remove(iAuthors);
+                                        authors.add(iAuthors, a);
+                                    }
+                                }
+                            }
+                        } catch (Exception e) {
+                            out.println("<!-- Unable to patch organization: " + e.getMessage() + " -->");
+                        }
+                        
                         try {
                             citeString = getCiteString(cms, tsc);
                         } catch (Exception e) {}
