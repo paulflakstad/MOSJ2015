@@ -27,7 +27,7 @@
             <resourcebundle name="no.npolar.mosj"/>
             <layouts>
                 <layout element="Name" widget="SelectorWidget" 
-                        configuration="name|type*|step|enforceEqualSteps|dots|maxStaggerLines|xLabelRotation|stacking|errorToggler|trendLine|orderIndex|connectNulls|color|dashStyle|lineThickness|dotThickness|minValue|integerValues|xAxisOnTop|invertGrouping" />
+                        configuration="name|type*|step|enforceEqualSteps|dots|maxStaggerLines|xLabelRotation|stacking|errorToggler|offByDefault|trendLine|orderIndex|connectNulls|color|dashStyle|lineThickness|dotThickness|minValue|integerValues|xAxisOnTop|invertGrouping" />
                 <!--<layout element="Stacking" widget="SelectorWidget" configuration="normal*|percent" />-->
             </layouts>
             <validationrules>
