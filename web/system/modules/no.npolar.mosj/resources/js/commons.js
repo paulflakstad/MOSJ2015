@@ -98,7 +98,7 @@ var HC_LABELS = {
         printChart: 'Print chart',
         resetZoom: 'Reset zoom',
         resetZoomTitle: 'Reset zoom level to 1:1',
-        thousandsSep: ','
+        thousandsSep: ' '
     }
 };
 
